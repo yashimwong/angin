@@ -1,0 +1,55 @@
+.angin-root,
+.angin-root * {
+    box-sizing: border-box;
+}
+
+.angin-root {
+    color: var(--angin-color-gray-900);
+    font-family: var(--angin-font-family);
+    font-size: var(--angin-font-size-md);
+    line-height: var(--angin-line-height-normal);
+}
+
+.angin-root button,
+.angin-root input,
+.angin-root select,
+.angin-root textarea {
+    font: inherit;
+}
+
+.angin-root button,
+.angin-root [role='button'],
+.angin-root input,
+.angin-root select,
+.angin-root textarea,
+.angin-root a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+.angin-root :where(button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])):focus-visible {
+    outline: none;
+    box-shadow: var(--angin-focus-ring);
+}
+
+.angin-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .angin-root *,
+    .angin-root *::before,
+    .angin-root *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
