@@ -1,0 +1,23 @@
+# Angin
+
+Angin is a small React component library built around composable primitives,
+predictable class names, and accessible defaults.
+
+## Development
+
+```sh
+npm install
+npm test
+npm run typecheck
+npm run build
+```
+
+Import the stylesheet once near the root of an application:
+
+```tsx
+import 'angin/src/styles/index.css';
+```
+
+Components expose native HTML props wherever possible. Every interactive
+component supports `className`, and components with an `on*` callback keep the
+usual React event semantics.
