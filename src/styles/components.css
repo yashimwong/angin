@@ -36,3 +36,44 @@
 .angin-text--danger {
     color: var(--angin-color-red-600);
 }
+
+.angin-heading {
+    margin: 0;
+    color: var(--angin-color-gray-900);
+    font-weight: 700;
+    line-height: var(--angin-line-height-tight);
+}
+
+.angin-heading--1 {
+    font-size: var(--angin-font-size-2xl);
+}
+
+.angin-heading--2 {
+    font-size: var(--angin-font-size-xl);
+}
+
+.angin-heading--3 {
+    font-size: var(--angin-font-size-lg);
+}
+
+.angin-heading--4,
+.angin-heading--5,
+.angin-heading--6 {
+    font-size: var(--angin-font-size-md);
+}
+
+.angin-heading--primary {
+    color: var(--angin-color-primary-600);
+}
+
+.angin-heading--success {
+    color: var(--angin-color-green-600);
+}
+
+.angin-heading--warning {
+    color: var(--angin-color-amber-600);
+}
+
+.angin-heading--danger {
+    color: var(--angin-color-red-600);
+}
