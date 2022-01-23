@@ -1,2 +1,38 @@
 /* Component styles are kept in one importable file so consumers can ship
  * the library's tokens, foundation, and component rules as a single sheet. */
+
+.angin-text {
+    margin: 0;
+}
+
+.angin-text--sm {
+    font-size: var(--angin-font-size-sm);
+}
+
+.angin-text--md {
+    font-size: var(--angin-font-size-md);
+}
+
+.angin-text--lg {
+    font-size: var(--angin-font-size-lg);
+}
+
+.angin-text--neutral {
+    color: var(--angin-color-gray-700);
+}
+
+.angin-text--primary {
+    color: var(--angin-color-primary-600);
+}
+
+.angin-text--success {
+    color: var(--angin-color-green-600);
+}
+
+.angin-text--warning {
+    color: var(--angin-color-amber-600);
+}
+
+.angin-text--danger {
+    color: var(--angin-color-red-600);
+}
