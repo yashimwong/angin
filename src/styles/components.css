@@ -77,3 +77,18 @@
 .angin-heading--danger {
     color: var(--angin-color-red-600);
 }
+
+.angin-link {
+    color: var(--angin-color-primary-600);
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.angin-link:hover {
+    color: var(--angin-color-primary-500);
+}
+
+.angin-link--muted {
+    color: var(--angin-color-gray-700);
+}
