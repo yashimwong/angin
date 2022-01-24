@@ -204,3 +204,61 @@
     width: 3rem;
     height: 3rem;
 }
+
+.angin-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--angin-space-2);
+}
+
+.angin-field__label {
+    color: var(--angin-color-gray-700);
+    font-size: var(--angin-font-size-sm);
+    font-weight: 600;
+}
+
+.angin-input {
+    width: 100%;
+    border: 1px solid var(--angin-color-gray-200);
+    border-radius: var(--angin-radius-md);
+    color: var(--angin-color-gray-900);
+    background: var(--angin-color-white);
+    transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.angin-input:focus {
+    border-color: var(--angin-color-primary-500);
+    outline: none;
+    box-shadow: var(--angin-focus-ring);
+}
+
+.angin-input--sm {
+    min-height: 2rem;
+    padding: 0 var(--angin-space-3);
+    font-size: var(--angin-font-size-sm);
+}
+
+.angin-input--md {
+    min-height: 2.5rem;
+    padding: 0 var(--angin-space-3);
+    font-size: var(--angin-font-size-md);
+}
+
+.angin-input--lg {
+    min-height: 3rem;
+    padding: 0 var(--angin-space-4);
+    font-size: var(--angin-font-size-lg);
+}
+
+.angin-input--error {
+    border-color: var(--angin-color-red-600);
+}
+
+.angin-field__message {
+    color: var(--angin-color-gray-500);
+    font-size: var(--angin-font-size-sm);
+}
+
+.angin-field__message--error {
+    color: var(--angin-color-red-600);
+}
