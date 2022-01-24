@@ -298,3 +298,34 @@
 .angin-textarea--error {
     border-color: var(--angin-color-red-600);
 }
+
+.angin-select {
+    width: 100%;
+    border: 1px solid var(--angin-color-gray-200);
+    border-radius: var(--angin-radius-md);
+    color: var(--angin-color-gray-900);
+    background: var(--angin-color-white);
+    cursor: pointer;
+}
+
+.angin-select--sm {
+    min-height: 2rem;
+    padding: 0 var(--angin-space-3);
+    font-size: var(--angin-font-size-sm);
+}
+
+.angin-select--md {
+    min-height: 2.5rem;
+    padding: 0 var(--angin-space-3);
+    font-size: var(--angin-font-size-md);
+}
+
+.angin-select--lg {
+    min-height: 3rem;
+    padding: 0 var(--angin-space-4);
+    font-size: var(--angin-font-size-lg);
+}
+
+.angin-select--error {
+    border-color: var(--angin-color-red-600);
+}
