@@ -174,3 +174,33 @@
 .angin-button__label--loading {
     opacity: 0.85;
 }
+
+.angin-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--angin-radius-md);
+    cursor: pointer;
+}
+
+.angin-icon-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.angin-icon-button--sm {
+    width: 2rem;
+    height: 2rem;
+}
+
+.angin-icon-button--md {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.angin-icon-button--lg {
+    width: 3rem;
+    height: 3rem;
+}
