@@ -360,3 +360,58 @@
 .angin-check-field--error .angin-check-field__message {
     color: var(--angin-color-red-600);
 }
+
+.angin-switch-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--angin-space-1);
+}
+
+.angin-switch-field__label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--angin-space-2);
+    color: var(--angin-color-gray-700);
+    cursor: pointer;
+}
+
+.angin-switch-field__input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.angin-switch-field__track {
+    display: inline-flex;
+    align-items: center;
+    width: 2.5rem;
+    height: 1.5rem;
+    padding: 0.125rem;
+    border-radius: var(--angin-radius-full);
+    background: var(--angin-color-gray-400);
+    transition: background-color 120ms ease;
+}
+
+.angin-switch-field__thumb {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: var(--angin-radius-full);
+    background: var(--angin-color-white);
+    box-shadow: var(--angin-shadow-sm);
+    transition: transform 120ms ease;
+}
+
+.angin-switch-field__input:checked + .angin-switch-field__track {
+    background: var(--angin-color-primary-600);
+}
+
+.angin-switch-field__input:checked + .angin-switch-field__track .angin-switch-field__thumb {
+    transform: translateX(1rem);
+}
+
+.angin-switch-field__message {
+    padding-left: 3.25rem;
+    color: var(--angin-color-gray-500);
+    font-size: var(--angin-font-size-sm);
+}
