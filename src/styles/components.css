@@ -329,3 +329,34 @@
 .angin-select--error {
     border-color: var(--angin-color-red-600);
 }
+
+.angin-check-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--angin-space-1);
+}
+
+.angin-check-field__label {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--angin-space-2);
+    color: var(--angin-color-gray-700);
+    cursor: pointer;
+}
+
+.angin-check-field__control {
+    width: 1rem;
+    height: 1rem;
+    margin: 0.2rem 0 0;
+    accent-color: var(--angin-color-primary-600);
+}
+
+.angin-check-field__message {
+    padding-left: 1.5rem;
+    color: var(--angin-color-gray-500);
+    font-size: var(--angin-font-size-sm);
+}
+
+.angin-check-field--error .angin-check-field__message {
+    color: var(--angin-color-red-600);
+}
