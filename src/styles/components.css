@@ -415,3 +415,56 @@
     color: var(--angin-color-gray-500);
     font-size: var(--angin-font-size-sm);
 }
+
+.angin-badge {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: var(--angin-radius-full);
+    font-weight: 600;
+    line-height: 1;
+}
+
+.angin-badge--sm {
+    padding: var(--angin-space-1) var(--angin-space-2);
+    font-size: var(--angin-font-size-xs);
+}
+
+.angin-badge--md {
+    padding: var(--angin-space-2) var(--angin-space-3);
+    font-size: var(--angin-font-size-sm);
+}
+
+.angin-badge--lg {
+    padding: var(--angin-space-2) var(--angin-space-4);
+    font-size: var(--angin-font-size-md);
+}
+
+.angin-badge--neutral {
+    color: var(--angin-color-gray-700);
+    background: var(--angin-color-gray-100);
+}
+
+.angin-badge--primary {
+    color: var(--angin-color-primary-600);
+    background: var(--angin-color-primary-50);
+}
+
+.angin-badge--success {
+    color: var(--angin-color-green-600);
+    background: var(--angin-color-green-50);
+}
+
+.angin-badge--warning {
+    color: var(--angin-color-amber-600);
+    background: var(--angin-color-amber-50);
+}
+
+.angin-badge--danger {
+    color: var(--angin-color-red-600);
+    background: var(--angin-color-red-50);
+}
+
+.angin-badge--outline {
+    background: transparent;
+}
