@@ -15,3 +15,4 @@ export * from './components/Badge';
 export * from './components/Alert';
 export * from './components/Card';
 export * from './components/Stack';
+export * from './components/Divider';

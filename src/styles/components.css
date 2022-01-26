@@ -584,3 +584,32 @@
 .angin-stack--gap-lg {
     gap: var(--angin-space-6);
 }
+
+.angin-divider {
+    display: flex;
+    align-items: center;
+    color: var(--angin-color-gray-500);
+}
+
+.angin-divider::before,
+.angin-divider::after {
+    content: '';
+    flex: 1;
+    border-top: 1px solid var(--angin-color-gray-200);
+}
+
+.angin-divider--vertical {
+    width: 1px;
+    min-height: 1rem;
+    background: var(--angin-color-gray-200);
+}
+
+.angin-divider--vertical::before,
+.angin-divider--vertical::after {
+    display: none;
+}
+
+.angin-divider__label {
+    padding: 0 var(--angin-space-3);
+    font-size: var(--angin-font-size-sm);
+}
