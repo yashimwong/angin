@@ -522,3 +522,41 @@
     border-color: var(--angin-color-red-600);
     background: var(--angin-color-red-50);
 }
+
+.angin-card {
+    overflow: hidden;
+    border: 1px solid var(--angin-color-gray-200);
+    border-radius: var(--angin-radius-lg);
+    background: var(--angin-color-white);
+    box-shadow: var(--angin-shadow-sm);
+}
+
+.angin-card--interactive {
+    cursor: pointer;
+    transition: box-shadow 120ms ease, transform 120ms ease;
+}
+
+.angin-card--interactive:hover {
+    box-shadow: var(--angin-shadow-md);
+    transform: translateY(-1px);
+}
+
+.angin-card__header,
+.angin-card__footer {
+    padding: var(--angin-space-4) var(--angin-space-5);
+    color: var(--angin-color-gray-700);
+}
+
+.angin-card__header {
+    border-bottom: 1px solid var(--angin-color-gray-200);
+    font-weight: 700;
+}
+
+.angin-card__body {
+    padding: var(--angin-space-5);
+}
+
+.angin-card__footer {
+    border-top: 1px solid var(--angin-color-gray-200);
+    font-size: var(--angin-font-size-sm);
+}
