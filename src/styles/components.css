@@ -468,3 +468,57 @@
 .angin-badge--outline {
     background: transparent;
 }
+
+.angin-alert {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--angin-space-4);
+    padding: var(--angin-space-4);
+    border: 1px solid;
+    border-radius: var(--angin-radius-md);
+}
+
+.angin-alert__content {
+    display: grid;
+    gap: var(--angin-space-1);
+}
+
+.angin-alert__title {
+    font-weight: 700;
+}
+
+.angin-alert__dismiss {
+    flex: 0 0 auto;
+    padding: 0;
+    border: 0;
+    color: currentColor;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.angin-alert--primary {
+    color: var(--angin-color-primary-600);
+    border-color: var(--angin-color-primary-500);
+    background: var(--angin-color-primary-50);
+}
+
+.angin-alert--success {
+    color: var(--angin-color-green-600);
+    border-color: var(--angin-color-green-600);
+    background: var(--angin-color-green-50);
+}
+
+.angin-alert--warning {
+    color: var(--angin-color-amber-600);
+    border-color: var(--angin-color-amber-600);
+    background: var(--angin-color-amber-50);
+}
+
+.angin-alert--danger {
+    color: var(--angin-color-red-600);
+    border-color: var(--angin-color-red-600);
+    background: var(--angin-color-red-50);
+}
