@@ -560,3 +560,27 @@
     border-top: 1px solid var(--angin-color-gray-200);
     font-size: var(--angin-font-size-sm);
 }
+
+.angin-stack {
+    display: flex;
+}
+
+.angin-stack--row {
+    flex-direction: row;
+}
+
+.angin-stack--column {
+    flex-direction: column;
+}
+
+.angin-stack--gap-sm {
+    gap: var(--angin-space-2);
+}
+
+.angin-stack--gap-md {
+    gap: var(--angin-space-4);
+}
+
+.angin-stack--gap-lg {
+    gap: var(--angin-space-6);
+}

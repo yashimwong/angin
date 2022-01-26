@@ -14,3 +14,4 @@ export * from './components/Switch';
 export * from './components/Badge';
 export * from './components/Alert';
 export * from './components/Card';
+export * from './components/Stack';
