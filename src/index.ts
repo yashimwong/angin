@@ -17,3 +17,4 @@ export * from './components/Card';
 export * from './components/Stack';
 export * from './components/Divider';
 export * from './components/Spinner';
+export * from './components/Avatar';

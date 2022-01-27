@@ -650,3 +650,39 @@
         transform: rotate(360deg);
     }
 }
+
+.angin-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    overflow: hidden;
+    border-radius: var(--angin-radius-full);
+    color: var(--angin-color-primary-600);
+    background: var(--angin-color-primary-50);
+    font-weight: 700;
+}
+
+.angin-avatar--sm {
+    width: 2rem;
+    height: 2rem;
+    font-size: var(--angin-font-size-xs);
+}
+
+.angin-avatar--md {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: var(--angin-font-size-sm);
+}
+
+.angin-avatar--lg {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: var(--angin-font-size-lg);
+}
+
+.angin-avatar__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
