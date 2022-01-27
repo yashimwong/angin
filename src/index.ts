@@ -18,3 +18,4 @@ export * from './components/Stack';
 export * from './components/Divider';
 export * from './components/Spinner';
 export * from './components/Avatar';
+export * from './components/Modal';

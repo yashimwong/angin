@@ -686,3 +686,61 @@
     height: 100%;
     object-fit: cover;
 }
+
+.angin-modal__backdrop {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--angin-space-5);
+    background: rgb(15 23 42 / 0.5);
+}
+
+.angin-modal {
+    width: min(100%, 32rem);
+    max-height: min(90vh, 40rem);
+    overflow: auto;
+    border-radius: var(--angin-radius-lg);
+    background: var(--angin-color-white);
+    box-shadow: var(--angin-shadow-md);
+}
+
+.angin-modal__header,
+.angin-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--angin-space-4);
+    padding: var(--angin-space-4) var(--angin-space-5);
+}
+
+.angin-modal__header {
+    border-bottom: 1px solid var(--angin-color-gray-200);
+}
+
+.angin-modal__title {
+    margin: 0;
+    font-size: var(--angin-font-size-lg);
+}
+
+.angin-modal__close {
+    padding: var(--angin-space-1) var(--angin-space-2);
+    border: 0;
+    border-radius: var(--angin-radius-sm);
+    color: var(--angin-color-gray-500);
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.angin-modal__body {
+    padding: var(--angin-space-5);
+}
+
+.angin-modal__footer {
+    justify-content: flex-end;
+    border-top: 1px solid var(--angin-color-gray-200);
+}
