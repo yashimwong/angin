@@ -20,3 +20,4 @@ export * from './components/Spinner';
 export * from './components/Avatar';
 export * from './components/Modal';
 export * from './components/Tabs';
+export * from './components/Calendar';

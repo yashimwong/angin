@@ -790,3 +790,88 @@
 .angin-tabs__panel {
     padding: var(--angin-space-5) 0;
 }
+
+.angin-calendar {
+    width: min(100%, 22rem);
+    padding: var(--angin-space-4);
+    border: 1px solid var(--angin-color-gray-200);
+    border-radius: var(--angin-radius-lg);
+    background: var(--angin-color-white);
+    box-shadow: var(--angin-shadow-sm);
+}
+
+.angin-calendar__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--angin-space-4);
+}
+
+.angin-calendar__month {
+    color: var(--angin-color-gray-900);
+}
+
+.angin-calendar__nav {
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+    border-radius: var(--angin-radius-md);
+    color: var(--angin-color-gray-700);
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.angin-calendar__nav:hover {
+    background: var(--angin-color-gray-100);
+}
+
+.angin-calendar__weekdays,
+.angin-calendar__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--angin-space-1);
+}
+
+.angin-calendar__weekdays {
+    margin-bottom: var(--angin-space-1);
+    color: var(--angin-color-gray-500);
+    font-size: var(--angin-font-size-xs);
+    text-align: center;
+}
+
+.angin-calendar__day {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: var(--angin-radius-full);
+    color: var(--angin-color-gray-700);
+    background: transparent;
+    cursor: pointer;
+}
+
+.angin-calendar__day:hover:not(:disabled) {
+    background: var(--angin-color-primary-50);
+}
+
+.angin-calendar__day--outside {
+    color: var(--angin-color-gray-400);
+}
+
+.angin-calendar__day--today {
+    border-color: var(--angin-color-primary-500);
+}
+
+.angin-calendar__day--selected {
+    color: var(--angin-color-white);
+    background: var(--angin-color-primary-600);
+}
+
+.angin-calendar__day:disabled {
+    cursor: not-allowed;
+    opacity: 0.35;
+}
