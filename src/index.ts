@@ -23,3 +23,4 @@ export * from './components/Tabs';
 export * from './components/Calendar';
 export * from './components/Accordion';
 export * from './components/TabbedNavigation';
+export * from './components/Drawer';
