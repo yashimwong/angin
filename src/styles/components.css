@@ -1045,3 +1045,110 @@
     justify-content: flex-end;
     border-top: 1px solid var(--angin-color-gray-200);
 }
+
+.angin-stepper {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.angin-stepper--horizontal {
+    align-items: flex-start;
+}
+
+.angin-stepper--vertical {
+    flex-direction: column;
+}
+
+.angin-stepper__step {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    flex: 1;
+}
+
+.angin-stepper--vertical .angin-stepper__step {
+    width: 100%;
+    min-height: 4.5rem;
+}
+
+.angin-stepper__button {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--angin-space-2);
+    padding: 0;
+    border: 0;
+    color: var(--angin-color-gray-500);
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+}
+
+.angin-stepper__step--current .angin-stepper__button,
+.angin-stepper__step--completed .angin-stepper__button {
+    color: var(--angin-color-primary-600);
+}
+
+.angin-stepper__step:not(:last-child) {
+    padding-right: var(--angin-space-4);
+}
+
+.angin-stepper__indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    border: 2px solid var(--angin-color-gray-200);
+    border-radius: var(--angin-radius-full);
+    background: var(--angin-color-white);
+    font-size: var(--angin-font-size-sm);
+    font-weight: 700;
+}
+
+.angin-stepper__step--current .angin-stepper__indicator,
+.angin-stepper__step--completed .angin-stepper__indicator {
+    border-color: var(--angin-color-primary-600);
+    color: var(--angin-color-white);
+    background: var(--angin-color-primary-600);
+}
+
+.angin-stepper__copy {
+    display: grid;
+    gap: var(--angin-space-1);
+    padding-top: var(--angin-space-1);
+}
+
+.angin-stepper__label {
+    font-weight: 600;
+}
+
+.angin-stepper__description {
+    color: var(--angin-color-gray-500);
+    font-size: var(--angin-font-size-sm);
+}
+
+.angin-stepper__connector {
+    position: absolute;
+    top: 1rem;
+    right: var(--angin-space-4);
+    left: 2.5rem;
+    height: 2px;
+    background: var(--angin-color-gray-200);
+}
+
+.angin-stepper__step--completed .angin-stepper__connector {
+    background: var(--angin-color-primary-600);
+}
+
+.angin-stepper--vertical .angin-stepper__connector {
+    top: 2rem;
+    bottom: 0;
+    left: 1rem;
+    width: 2px;
+    height: auto;
+}
