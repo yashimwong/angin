@@ -2,7 +2,7 @@ import React, { HTMLAttributes, ReactNode, useEffect } from 'react';
 import { BaseProps } from '../types';
 import { cx, dataTestId } from '../utils/cx';
 
-export interface DrawerProps extends HTMLAttributes<HTMLDivElement>, BaseProps {
+export interface DrawerProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>, BaseProps {
     children: ReactNode;
     closeOnEscape?: boolean;
     footer?: ReactNode;

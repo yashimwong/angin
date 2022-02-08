@@ -2,7 +2,7 @@ import React, { HTMLAttributes, useMemo, useState } from 'react';
 import { BaseProps } from '../types';
 import { cx, dataTestId } from '../utils/cx';
 
-export interface CalendarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>, BaseProps {
+export interface CalendarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange'>, BaseProps {
     defaultValue?: Date;
     locale?: string;
     maxDate?: Date;

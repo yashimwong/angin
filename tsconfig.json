@@ -4,6 +4,7 @@
         "target": "ES2018",
         "module": "CommonJS",
         "moduleResolution": "Node",
+        "lib": ["DOM", "ESNext"],
         "outDir": "dist/cjs",
         "rootDir": "src",
         "jsx": "react",

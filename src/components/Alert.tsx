@@ -2,7 +2,7 @@ import React, { HTMLAttributes, ReactNode } from 'react';
 import { BaseProps, Tone } from '../types';
 import { cx, dataTestId } from '../utils/cx';
 
-export interface AlertProps extends HTMLAttributes<HTMLDivElement>, BaseProps {
+export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>, BaseProps {
     children: ReactNode;
     title?: ReactNode;
     tone?: Exclude<Tone, 'neutral'>;

@@ -1,6 +1,8 @@
-import classNames, { ArgumentArray } from 'classnames';
+import classNames from 'classnames';
 
-export function cx(...values: ArgumentArray): string {
+type ClassNamesArguments = Parameters<typeof classNames>;
+
+export function cx(...values: ClassNamesArguments): string {
     return classNames(...values);
 }
 
