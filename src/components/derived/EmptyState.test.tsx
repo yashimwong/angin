@@ -1,6 +1,6 @@
 import React from 'react';
-import { render } from '../test/render';
-import { Button } from './Button';
+import { render } from '../../test/render';
+import { Button } from '../base/Button';
 import { EmptyState } from './EmptyState';
 
 describe('EmptyState', () => {

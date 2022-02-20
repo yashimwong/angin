@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '../test/render';
+import { render } from '../../test/render';
 import { Modal } from './Modal';
 
 describe('Modal', () => {

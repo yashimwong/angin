@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, ReactNode, useEffect, useState } from 'react';
-import { BaseProps } from '../types';
-import { cx, dataTestId } from '../utils/cx';
+import { BaseProps } from '../../types';
+import { cx, dataTestId } from '../../utils/cx';
 
 export interface MenuItem {
     disabled?: boolean;

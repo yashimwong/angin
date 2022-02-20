@@ -1,6 +1,6 @@
 import React, { HTMLAttributes, ReactNode, useEffect } from 'react';
-import { BaseProps, Tone } from '../types';
-import { cx, dataTestId } from '../utils/cx';
+import { BaseProps, Tone } from '../../types';
+import { cx, dataTestId } from '../../utils/cx';
 
 export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>, BaseProps {
     children: ReactNode;
