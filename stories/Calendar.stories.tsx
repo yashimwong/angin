@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import { Calendar, CalendarProps } from '../src/components/Calendar';
+import { Calendar, CalendarProps } from '../src/components/derived/Calendar';
 
 export default { title: 'Components/Calendar', component: Calendar } as Meta;
 

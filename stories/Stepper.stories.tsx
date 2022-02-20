@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import { Stepper, StepperProps } from '../src/components/Stepper';
+import { Stepper, StepperProps } from '../src/components/derived/Stepper';
 
 export default { title: 'Components/Stepper', component: Stepper } as Meta;
 

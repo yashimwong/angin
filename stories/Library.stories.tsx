@@ -1,11 +1,11 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import { Badge } from '../src/components/Badge';
-import { Button, ButtonProps } from '../src/components/Button';
-import { Card } from '../src/components/Card';
-import { Heading } from '../src/components/Heading';
-import { Input } from '../src/components/Input';
-import { Stack } from '../src/components/Stack';
+import { Badge } from '../src/components/base/Badge';
+import { Button, ButtonProps } from '../src/components/base/Button';
+import { Card } from '../src/components/base/Card';
+import { Heading } from '../src/components/base/Heading';
+import { Input } from '../src/components/base/Input';
+import { Stack } from '../src/components/base/Stack';
 
 export default {
     title: 'Library/Overview',

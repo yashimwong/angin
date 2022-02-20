@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
-import { Button } from '../src/components/Button';
-import { Drawer, DrawerProps } from '../src/components/Drawer';
+import { Button } from '../src/components/base/Button';
+import { Drawer, DrawerProps } from '../src/components/derived/Drawer';
 
 export default { title: 'Components/Drawer', component: Drawer } as Meta;
 
