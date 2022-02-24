@@ -10,14 +10,15 @@
         "src/styles"
     ],
     "scripts": {
-        "build": "npm run build:cjs && npm run build:esm",
+        "build": "npm run clean && npm run build:cjs && npm run build:esm",
         "build:cjs": "tsc -p tsconfig.json",
         "build:esm": "tsc -p tsconfig.esm.json",
         "build-storybook": "build-storybook",
         "storybook": "start-storybook -p 6006",
         "test": "jest --runInBand",
         "test:watch": "jest --watch",
-        "typecheck": "tsc -p tsconfig.test.json"
+        "typecheck": "tsc -p tsconfig.test.json",
+        "clean": "node scripts/clean.js"
     },
     "author": "yashimwong",
     "license": "MIT",
