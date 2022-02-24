@@ -4,11 +4,24 @@
         "target": "ES2018",
         "module": "CommonJS",
         "moduleResolution": "Node",
-        "lib": ["DOM", "ESNext"],
+        "lib": [
+            "DOM",
+            "ESNext"
+        ],
         "outDir": "dist/cjs",
         "rootDir": "src",
         "jsx": "react",
         "isolatedModules": false
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx"]
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "src/**/*.test.ts",
+        "src/**/*.test.tsx",
+        "src/test"
+    ]
 }
