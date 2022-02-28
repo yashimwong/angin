@@ -48,5 +48,71 @@
     "peerDependencies": {
         "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
         "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/esm/index.d.ts",
+            "node": "./dist/cjs/index.js",
+            "import": "./dist/esm/index.js",
+            "require": "./dist/cjs/index.js",
+            "default": "./dist/esm/index.js"
+        },
+        "./base": {
+            "types": "./dist/esm/components/base/index.d.ts",
+            "node": "./dist/cjs/components/base/index.js",
+            "import": "./dist/esm/components/base/index.js",
+            "require": "./dist/cjs/components/base/index.js",
+            "default": "./dist/esm/components/base/index.js"
+        },
+        "./base/*": {
+            "types": "./dist/esm/components/base/*.d.ts",
+            "node": "./dist/cjs/components/base/*.js",
+            "import": "./dist/esm/components/base/*.js",
+            "require": "./dist/cjs/components/base/*.js",
+            "default": "./dist/esm/components/base/*.js"
+        },
+        "./derived": {
+            "types": "./dist/esm/components/derived/index.d.ts",
+            "node": "./dist/cjs/components/derived/index.js",
+            "import": "./dist/esm/components/derived/index.js",
+            "require": "./dist/cjs/components/derived/index.js",
+            "default": "./dist/esm/components/derived/index.js"
+        },
+        "./derived/*": {
+            "types": "./dist/esm/components/derived/*.d.ts",
+            "node": "./dist/cjs/components/derived/*.js",
+            "import": "./dist/esm/components/derived/*.js",
+            "require": "./dist/cjs/components/derived/*.js",
+            "default": "./dist/esm/components/derived/*.js"
+        },
+        "./utils": {
+            "types": "./dist/esm/utils/cx.d.ts",
+            "node": "./dist/cjs/utils/cx.js",
+            "import": "./dist/esm/utils/cx.js",
+            "require": "./dist/cjs/utils/cx.js",
+            "default": "./dist/esm/utils/cx.js"
+        },
+        "./src/styles/*": "./src/styles/*",
+        "./dist/*": "./dist/*",
+        "./package.json": "./package.json"
+    },
+    "typesVersions": {
+        "*": {
+            "base": [
+                "dist/esm/components/base/index.d.ts"
+            ],
+            "base/*": [
+                "dist/esm/components/base/*.d.ts"
+            ],
+            "derived": [
+                "dist/esm/components/derived/index.d.ts"
+            ],
+            "derived/*": [
+                "dist/esm/components/derived/*.d.ts"
+            ],
+            "utils": [
+                "dist/esm/utils/cx.d.ts"
+            ]
+        }
     }
 }
