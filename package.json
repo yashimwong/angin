@@ -19,7 +19,8 @@
         "test:watch": "jest --watch",
         "typecheck": "tsc -p tsconfig.test.json",
         "clean": "node scripts/clean.js",
-        "check:package": "node scripts/check-package.js"
+        "check:package": "node scripts/check-package.js",
+        "check:bundle": "node scripts/check-bundle.js"
     },
     "author": "yashimwong",
     "license": "MIT",
