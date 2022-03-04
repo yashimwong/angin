@@ -20,7 +20,8 @@
         "typecheck": "tsc -p tsconfig.test.json",
         "clean": "node scripts/clean.js",
         "check:package": "node scripts/check-package.js",
-        "check:bundle": "node scripts/check-bundle.js"
+        "check:bundle": "node scripts/check-bundle.js",
+        "check:types": "node scripts/check-types.js"
     },
     "author": "yashimwong",
     "license": "MIT",
