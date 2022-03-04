@@ -18,7 +18,8 @@
         "test": "jest --runInBand",
         "test:watch": "jest --watch",
         "typecheck": "tsc -p tsconfig.test.json",
-        "clean": "node scripts/clean.js"
+        "clean": "node scripts/clean.js",
+        "check:package": "node scripts/check-package.js"
     },
     "author": "yashimwong",
     "license": "MIT",
