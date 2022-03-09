@@ -24,3 +24,9 @@ describe('Button', () => {
         expect(button?.querySelector('.angin-button__spinner')).not.toBeNull();
     });
 });
+
+ it('Button forwards its native element ref', () => {
+    const ref = React.createRef<HTMLButtonElement>();
+    const container = render(<Button ref={ref} children="Save" />);
+    expect(ref.current).toBe(container.querySelector('button'));
+ });

@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, ReactNode } from 'react';
+import React, { forwardRef, ButtonHTMLAttributes, ReactNode } from 'react';
 import { BaseProps, Size } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
 
@@ -12,7 +12,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, Ba
     variant?: ButtonVariant;
 }
 
-export function Button({
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button({
     children,
     className,
     disabled = false,
@@ -23,9 +23,10 @@ export function Button({
     type = 'button',
     variant = 'solid',
     ...props
-}: ButtonProps) {
+}: ButtonProps, ref) {
     return (
         <button
+            ref={ref}
             {...props}
             {...dataTestId(testId)}
             aria-busy={loading || undefined}
@@ -37,4 +38,4 @@ export function Button({
             <span className={loading ? 'angin-button__label angin-button__label--loading' : 'angin-button__label'}>{children}</span>
         </button>
     );
-}
+});
