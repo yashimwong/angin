@@ -13,3 +13,9 @@ describe('IconButton', () => {
         expect(button?.textContent).toBe('+');
     });
 });
+
+ it('IconButton forwards its native element ref', () => {
+    const ref = React.createRef<HTMLButtonElement>();
+    const container = render(<IconButton ref={ref} icon={<span />} label="Save" />);
+    expect(ref.current).toBe(container.querySelector('button'));
+ });

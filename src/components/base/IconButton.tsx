@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, ReactNode } from 'react';
+import React, { forwardRef, ButtonHTMLAttributes, ReactNode } from 'react';
 import { BaseProps, Size } from '../../types';
 import { ButtonVariant } from './Button';
 import { cx, dataTestId } from '../../utils/cx';
@@ -10,9 +10,10 @@ export interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>
     variant?: ButtonVariant;
 }
 
-export function IconButton({ icon, label, className, disabled = false, size = 'md', testId, type = 'button', variant = 'ghost', ...props }: IconButtonProps) {
+export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(function IconButton({ icon, label, className, disabled = false, size = 'md', testId, type = 'button', variant = 'ghost', ...props }: IconButtonProps, ref) {
     return (
         <button
+            ref={ref}
             {...props}
             {...dataTestId(testId)}
             aria-label={label}
@@ -23,4 +24,4 @@ export function IconButton({ icon, label, className, disabled = false, size = 'm
             {icon}
         </button>
     );
-}
+});
