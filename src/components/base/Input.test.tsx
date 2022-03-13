@@ -15,3 +15,9 @@ describe('Input', () => {
         expect(message?.textContent).toBe('Enter a valid email');
     });
 });
+
+ it('Input forwards its native element ref', () => {
+    const ref = React.createRef<HTMLInputElement>();
+    const container = render(<Input ref={ref}  />);
+    expect(ref.current).toBe(container.querySelector('input'));
+ });

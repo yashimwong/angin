@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, ReactNode } from 'react';
+import React, { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 import { BaseProps, Size } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
 
@@ -9,7 +9,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement>, BaseP
     controlSize?: Size;
 }
 
-export function Input({
+export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({
     className,
     controlSize = 'md',
     error,
@@ -18,7 +18,7 @@ export function Input({
     label,
     testId,
     ...props
-}: InputProps) {
+}: InputProps, ref) {
     const descriptionId = id ? `${id}-description` : undefined;
     const describedBy = props['aria-describedby'] || descriptionId;
 
@@ -30,6 +30,7 @@ export function Input({
                 </label>
             )}
             <input
+            ref={ref}
                 {...props}
                 {...dataTestId(testId)}
                 aria-describedby={describedBy}
@@ -44,4 +45,4 @@ export function Input({
             )}
         </div>
     );
-}
+});
