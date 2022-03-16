@@ -12,3 +12,9 @@ describe('Checkbox', () => {
         expect(container.querySelector('label')?.textContent).toContain('Accept terms');
     });
 });
+
+ it('Checkbox forwards its native element ref', () => {
+    const ref = React.createRef<HTMLInputElement>();
+    const container = render(<Checkbox ref={ref} label="Agree" />);
+    expect(ref.current).toBe(container.querySelector('input'));
+ });

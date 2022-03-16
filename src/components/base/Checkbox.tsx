@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, ReactNode } from 'react';
+import React, { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 import { BaseProps } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
 
@@ -8,13 +8,14 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
     error?: ReactNode;
 }
 
-export function Checkbox({ description, error, id, label, className, testId, ...props }: CheckboxProps) {
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({ description, error, id, label, className, testId, ...props }: CheckboxProps, ref) {
     const descriptionId = id ? `${id}-description` : undefined;
 
     return (
         <div className={cx('angin-check-field', error && 'angin-check-field--error', className)}>
             <label className="angin-check-field__label" htmlFor={id}>
                 <input
+            ref={ref}
                     {...props}
                     {...dataTestId(testId)}
                     aria-describedby={props['aria-describedby'] || descriptionId}
@@ -32,4 +33,4 @@ export function Checkbox({ description, error, id, label, className, testId, ...
             )}
         </div>
     );
-}
+});
