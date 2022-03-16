@@ -1,4 +1,4 @@
-import React, { ReactNode, SelectHTMLAttributes } from 'react';
+import React, { forwardRef, ReactNode, SelectHTMLAttributes } from 'react';
 import { BaseProps, Size } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
 
@@ -16,7 +16,7 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement>, Ba
     controlSize?: Size;
 }
 
-export function Select({
+export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select({
     children,
     className,
     controlSize = 'md',
@@ -27,7 +27,7 @@ export function Select({
     options,
     testId,
     ...props
-}: SelectProps) {
+}: SelectProps, ref) {
     const descriptionId = id ? `${id}-description` : undefined;
 
     return (
@@ -38,6 +38,7 @@ export function Select({
                 </label>
             )}
             <select
+            ref={ref}
                 {...props}
                 {...dataTestId(testId)}
                 aria-describedby={props['aria-describedby'] || descriptionId}
@@ -54,4 +55,4 @@ export function Select({
             )}
         </div>
     );
-}
+});

@@ -22,3 +22,9 @@ describe('Select', () => {
         expect(select.options[0].textContent).toBe('Malaysia');
     });
 });
+
+ it('Select forwards its native element ref', () => {
+    const ref = React.createRef<HTMLSelectElement>();
+    const container = render(<Select ref={ref}  />);
+    expect(ref.current).toBe(container.querySelector('select'));
+ });
