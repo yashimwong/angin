@@ -1,4 +1,4 @@
-import React, { ReactNode, TextareaHTMLAttributes } from 'react';
+import React, { forwardRef, ReactNode, TextareaHTMLAttributes } from 'react';
 import { BaseProps, Size } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
 
@@ -9,7 +9,7 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
     controlSize?: Size;
 }
 
-export function Textarea({
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea({
     className,
     controlSize = 'md',
     error,
@@ -18,7 +18,7 @@ export function Textarea({
     label,
     testId,
     ...props
-}: TextareaProps) {
+}: TextareaProps, ref) {
     const descriptionId = id ? `${id}-description` : undefined;
     const describedBy = props['aria-describedby'] || descriptionId;
 
@@ -30,6 +30,7 @@ export function Textarea({
                 </label>
             )}
             <textarea
+            ref={ref}
                 {...props}
                 {...dataTestId(testId)}
                 aria-describedby={describedBy}
@@ -44,4 +45,4 @@ export function Textarea({
             )}
         </div>
     );
-}
+});

@@ -12,3 +12,9 @@ describe('Textarea', () => {
         expect(container.querySelector('.angin-field__message')?.textContent).toBe('Keep it brief');
     });
 });
+
+ it('Textarea forwards its native element ref', () => {
+    const ref = React.createRef<HTMLTextAreaElement>();
+    const container = render(<Textarea ref={ref}  />);
+    expect(ref.current).toBe(container.querySelector('textarea'));
+ });
