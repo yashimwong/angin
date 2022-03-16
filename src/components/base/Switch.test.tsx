@@ -12,3 +12,9 @@ describe('Switch', () => {
         expect(container.querySelector('.angin-switch-field__track')).not.toBeNull();
     });
 });
+
+ it('Switch forwards its native element ref', () => {
+    const ref = React.createRef<HTMLInputElement>();
+    const container = render(<Switch ref={ref} label="Enabled" />);
+    expect(ref.current).toBe(container.querySelector('input'));
+ });

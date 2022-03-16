@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, ReactNode } from 'react';
+import React, { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 import { BaseProps } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
 
@@ -7,13 +7,14 @@ export interface SwitchProps extends Omit<InputHTMLAttributes<HTMLInputElement>,
     description?: ReactNode;
 }
 
-export function Switch({ description, id, label, className, testId, ...props }: SwitchProps) {
+export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch({ description, id, label, className, testId, ...props }: SwitchProps, ref) {
     const descriptionId = id ? `${id}-description` : undefined;
 
     return (
         <div className={cx('angin-switch-field', className)}>
             <label className="angin-switch-field__label" htmlFor={id}>
                 <input
+            ref={ref}
                     {...props}
                     {...dataTestId(testId)}
                     aria-describedby={props['aria-describedby'] || descriptionId}
@@ -34,4 +35,4 @@ export function Switch({ description, id, label, className, testId, ...props }: 
             )}
         </div>
     );
-}
+});
