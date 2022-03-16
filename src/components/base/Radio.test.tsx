@@ -13,3 +13,9 @@ describe('Radio', () => {
         expect(radio.checked).toBe(true);
     });
 });
+
+ it('Radio forwards its native element ref', () => {
+    const ref = React.createRef<HTMLInputElement>();
+    const container = render(<Radio ref={ref} label="Choice" />);
+    expect(ref.current).toBe(container.querySelector('input'));
+ });
