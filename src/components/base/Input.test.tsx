@@ -21,3 +21,10 @@ describe('Input', () => {
     const container = render(<Input ref={ref}  />);
     expect(ref.current).toBe(container.querySelector('input'));
  });
+
+it('Input references only rendered descriptions and preserves external descriptions', () => {
+    const empty = render(<Input id="empty"  />);
+    expect(empty.querySelector('input')?.hasAttribute('aria-describedby')).toBe(false);
+    const container = render(<Input id="field"  helperText="Details" aria-describedby="external" />);
+    expect(container.querySelector('input')?.getAttribute('aria-describedby')).toBe('external field-description');
+});
