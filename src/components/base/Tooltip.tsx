@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, useState } from 'react';
+import React, { forwardRef, HTMLAttributes, ReactNode, useState } from 'react';
 import { BaseProps } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
 
@@ -12,7 +12,7 @@ export interface TooltipProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'con
     placement?: TooltipPlacement;
 }
 
-export function Tooltip({
+export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Tooltip({
     children,
     className,
     content,
@@ -26,7 +26,7 @@ export function Tooltip({
     placement = 'top',
     testId,
     ...props
-}: TooltipProps) {
+}: TooltipProps, ref) {
     const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
     const visible = open === undefined ? uncontrolledOpen : open;
     const tooltipId = id ? `${id}-tooltip` : testId ? `${testId}-content` : 'angin-tooltip-content';
@@ -35,6 +35,7 @@ export function Tooltip({
 
     return (
         <span
+            ref={ref}
             {...props}
             {...dataTestId(testId)}
             aria-describedby={visible ? tooltipId : undefined}
@@ -65,4 +66,4 @@ export function Tooltip({
             )}
         </span>
     );
-}
+});

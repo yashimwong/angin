@@ -12,3 +12,9 @@ describe('Tooltip', () => {
         expect(container.querySelector('[data-testid="help"]')?.getAttribute('aria-describedby')).toBe('help-content');
     });
 });
+
+ it('Tooltip forwards its native element ref', () => {
+    const ref = React.createRef<HTMLSpanElement>();
+    const container = render(<Tooltip ref={ref} content="Help" children={<button>Help</button>}  />);
+    expect(ref.current).toBe(container.querySelector('span'));
+ });
