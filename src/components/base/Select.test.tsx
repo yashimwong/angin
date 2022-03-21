@@ -28,3 +28,10 @@ describe('Select', () => {
     const container = render(<Select ref={ref}  />);
     expect(ref.current).toBe(container.querySelector('select'));
  });
+
+it('Select references only rendered descriptions and preserves external descriptions', () => {
+    const empty = render(<Select id="empty"  />);
+    expect(empty.querySelector('select')?.hasAttribute('aria-describedby')).toBe(false);
+    const container = render(<Select id="field"  helperText="Details" aria-describedby="external" />);
+    expect(container.querySelector('select')?.getAttribute('aria-describedby')).toBe('external field-description');
+});

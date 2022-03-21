@@ -28,7 +28,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
     testId,
     ...props
 }: SelectProps, ref) {
-    const descriptionId = id ? `${id}-description` : undefined;
+    const descriptionId = id && (error || helperText) ? `${id}-description` : undefined;
 
     return (
         <div className="angin-field">
@@ -41,7 +41,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
             ref={ref}
                 {...props}
                 {...dataTestId(testId)}
-                aria-describedby={props['aria-describedby'] || descriptionId}
+                aria-describedby={[props['aria-describedby'], descriptionId].filter(Boolean).join(' ') || undefined}
                 aria-invalid={error ? true : props['aria-invalid']}
                 className={cx('angin-select', `angin-select--${controlSize}`, error && 'angin-select--error', className)}
                 id={id}
