@@ -9,7 +9,7 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
 }
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox({ description, error, id, label, className, testId, ...props }: CheckboxProps, ref) {
-    const descriptionId = id ? `${id}-description` : undefined;
+    const descriptionId = id && (error || description) ? `${id}-description` : undefined;
 
     return (
         <div className={cx('angin-check-field', error && 'angin-check-field--error', className)}>
@@ -18,7 +18,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
             ref={ref}
                     {...props}
                     {...dataTestId(testId)}
-                    aria-describedby={props['aria-describedby'] || descriptionId}
+                    aria-describedby={[props['aria-describedby'], descriptionId].filter(Boolean).join(' ') || undefined}
                     aria-invalid={error ? true : props['aria-invalid']}
                     className="angin-check-field__control"
                     id={id}
