@@ -19,3 +19,10 @@ describe('Radio', () => {
     const container = render(<Radio ref={ref} label="Choice" />);
     expect(ref.current).toBe(container.querySelector('input'));
  });
+
+it('Radio references only rendered descriptions and preserves external descriptions', () => {
+    const empty = render(<Radio id="empty" label="Choice" />);
+    expect(empty.querySelector('input')?.hasAttribute('aria-describedby')).toBe(false);
+    const container = render(<Radio id="field" label="Choice" description="Details" aria-describedby="external" />);
+    expect(container.querySelector('input')?.getAttribute('aria-describedby')).toBe('external field-description');
+});

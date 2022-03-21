@@ -8,7 +8,7 @@ export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
 }
 
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ description, id, label, className, testId, ...props }: RadioProps, ref) {
-    const descriptionId = id ? `${id}-description` : undefined;
+    const descriptionId = id && (description) ? `${id}-description` : undefined;
 
     return (
         <div className={cx('angin-check-field', className)}>
@@ -17,7 +17,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({ d
             ref={ref}
                     {...props}
                     {...dataTestId(testId)}
-                    aria-describedby={props['aria-describedby'] || descriptionId}
+                    aria-describedby={[props['aria-describedby'], descriptionId].filter(Boolean).join(' ') || undefined}
                     className="angin-check-field__control"
                     id={id}
                     type="radio"
