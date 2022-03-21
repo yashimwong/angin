@@ -18,3 +18,10 @@ describe('Textarea', () => {
     const container = render(<Textarea ref={ref}  />);
     expect(ref.current).toBe(container.querySelector('textarea'));
  });
+
+it('Textarea references only rendered descriptions and preserves external descriptions', () => {
+    const empty = render(<Textarea id="empty"  />);
+    expect(empty.querySelector('textarea')?.hasAttribute('aria-describedby')).toBe(false);
+    const container = render(<Textarea id="field"  helperText="Details" aria-describedby="external" />);
+    expect(container.querySelector('textarea')?.getAttribute('aria-describedby')).toBe('external field-description');
+});

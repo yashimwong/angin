@@ -19,8 +19,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
     testId,
     ...props
 }: TextareaProps, ref) {
-    const descriptionId = id ? `${id}-description` : undefined;
-    const describedBy = props['aria-describedby'] || descriptionId;
+    const descriptionId = id && (error || helperText) ? `${id}-description` : undefined;
+    const describedBy = [props['aria-describedby'], descriptionId].filter(Boolean).join(' ') || undefined;
 
     return (
         <div className="angin-field">
