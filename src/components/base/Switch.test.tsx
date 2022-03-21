@@ -18,3 +18,10 @@ describe('Switch', () => {
     const container = render(<Switch ref={ref} label="Enabled" />);
     expect(ref.current).toBe(container.querySelector('input'));
  });
+
+it('Switch references only rendered descriptions and preserves external descriptions', () => {
+    const empty = render(<Switch id="empty" label="Choice" />);
+    expect(empty.querySelector('input')?.hasAttribute('aria-describedby')).toBe(false);
+    const container = render(<Switch id="field" label="Choice" description="Details" aria-describedby="external" />);
+    expect(container.querySelector('input')?.getAttribute('aria-describedby')).toBe('external field-description');
+});

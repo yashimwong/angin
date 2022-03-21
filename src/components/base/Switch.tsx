@@ -8,7 +8,7 @@ export interface SwitchProps extends Omit<InputHTMLAttributes<HTMLInputElement>,
 }
 
 export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch({ description, id, label, className, testId, ...props }: SwitchProps, ref) {
-    const descriptionId = id ? `${id}-description` : undefined;
+    const descriptionId = id && (description) ? `${id}-description` : undefined;
 
     return (
         <div className={cx('angin-switch-field', className)}>
@@ -17,7 +17,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
             ref={ref}
                     {...props}
                     {...dataTestId(testId)}
-                    aria-describedby={props['aria-describedby'] || descriptionId}
+                    aria-describedby={[props['aria-describedby'], descriptionId].filter(Boolean).join(' ') || undefined}
                     className="angin-switch-field__input"
                     id={id}
                     role="switch"
