@@ -1,5 +1,6 @@
 import React, { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 import { BaseProps, Size } from '../../types';
+import { useControlId } from '../../utils/controlId';
 import { cx, dataTestId } from '../../utils/cx';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement>, BaseProps {
@@ -14,11 +15,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({
     controlSize = 'md',
     error,
     helperText,
-    id,
+    id: suppliedId,
     label,
     testId,
     ...props
 }: InputProps, ref) {
+    const id = useControlId(suppliedId);
     const descriptionId = id && (error || helperText) ? `${id}-description` : undefined;
     const describedBy = [props['aria-describedby'], descriptionId].filter(Boolean).join(' ') || undefined;
 

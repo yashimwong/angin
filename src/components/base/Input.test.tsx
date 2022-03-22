@@ -28,3 +28,12 @@ it('Input references only rendered descriptions and preserves external descripti
     const container = render(<Input id="field"  helperText="Details" aria-describedby="external" />);
     expect(container.querySelector('input')?.getAttribute('aria-describedby')).toBe('external field-description');
 });
+
+it('Input generates stable distinct IDs for labels without explicit IDs', () => {
+    const container = render(<><Input label="First" helperText="Help" /><Input label="Second" /></>);
+    const controls = container.querySelectorAll('input');
+    const labels = container.querySelectorAll('label');
+    expect(labels[0].htmlFor).toBe(controls[0].id);
+    expect(controls[0].id).not.toBe(controls[1].id);
+    expect(controls[0].getAttribute('aria-describedby')).toBe(`${controls[0].id}-description`);
+});
