@@ -1,5 +1,6 @@
 import React, { forwardRef, ReactNode, SelectHTMLAttributes } from 'react';
 import { BaseProps, Size } from '../../types';
+import { useControlId } from '../../utils/controlId';
 import { cx, dataTestId } from '../../utils/cx';
 
 export interface SelectOption {
@@ -22,12 +23,13 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
     controlSize = 'md',
     error,
     helperText,
-    id,
+    id: suppliedId,
     label,
     options,
     testId,
     ...props
 }: SelectProps, ref) {
+    const id = useControlId(suppliedId);
     const descriptionId = id && (error || helperText) ? `${id}-description` : undefined;
 
     return (
