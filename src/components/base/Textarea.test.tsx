@@ -25,3 +25,12 @@ it('Textarea references only rendered descriptions and preserves external descri
     const container = render(<Textarea id="field"  helperText="Details" aria-describedby="external" />);
     expect(container.querySelector('textarea')?.getAttribute('aria-describedby')).toBe('external field-description');
 });
+
+it('Textarea generates stable distinct IDs for labels without explicit IDs', () => {
+    const container = render(<><Textarea label="First" helperText="Help" /><Textarea label="Second" /></>);
+    const controls = container.querySelectorAll('textarea');
+    const labels = container.querySelectorAll('label');
+    expect(labels[0].htmlFor).toBe(controls[0].id);
+    expect(controls[0].id).not.toBe(controls[1].id);
+    expect(controls[0].getAttribute('aria-describedby')).toBe(`${controls[0].id}-description`);
+});

@@ -1,5 +1,6 @@
 import React, { forwardRef, ReactNode, TextareaHTMLAttributes } from 'react';
 import { BaseProps, Size } from '../../types';
+import { useControlId } from '../../utils/controlId';
 import { cx, dataTestId } from '../../utils/cx';
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>, BaseProps {
@@ -14,11 +15,12 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
     controlSize = 'md',
     error,
     helperText,
-    id,
+    id: suppliedId,
     label,
     testId,
     ...props
 }: TextareaProps, ref) {
+    const id = useControlId(suppliedId);
     const descriptionId = id && (error || helperText) ? `${id}-description` : undefined;
     const describedBy = [props['aria-describedby'], descriptionId].filter(Boolean).join(' ') || undefined;
 
