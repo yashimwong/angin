@@ -30,3 +30,8 @@ describe('Button', () => {
     const container = render(<Button ref={ref} children="Save" />);
     expect(ref.current).toBe(container.querySelector('button'));
  });
+
+it('preserves caller busy state when not loading', () => {
+    const container = render(<Button aria-busy="true">Save</Button>);
+    expect(container.querySelector('button')?.getAttribute('aria-busy')).toBe('true');
+});

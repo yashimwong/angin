@@ -29,7 +29,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
             ref={ref}
             {...props}
             {...dataTestId(testId)}
-            aria-busy={loading || undefined}
+            aria-busy={loading || props['aria-busy']}
             className={cx('angin-button', `angin-button--${size}`, `angin-button--${variant}`, fullWidth && 'angin-button--full', className)}
             disabled={disabled || loading}
             type={type}
