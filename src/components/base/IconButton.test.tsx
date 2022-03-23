@@ -19,3 +19,11 @@ describe('IconButton', () => {
     const container = render(<IconButton ref={ref} icon={<span />} label="Save" />);
     expect(ref.current).toBe(container.querySelector('button'));
  });
+
+it('disables a loading icon button and keeps its accessible label', () => {
+    const container = render(<IconButton label="Save" icon={<span>Icon</span>} loading />);
+    const button = container.querySelector('button');
+    expect(button?.disabled).toBe(true);
+    expect(button?.getAttribute('aria-busy')).toBe('true');
+    expect(button?.getAttribute('aria-label')).toBe('Save');
+});
