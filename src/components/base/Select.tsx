@@ -13,7 +13,7 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement>, Ba
     error?: ReactNode;
     helperText?: ReactNode;
     label?: ReactNode;
-    options?: SelectOption[];
+    options?: readonly SelectOption[];
     controlSize?: Size;
 }
 

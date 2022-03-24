@@ -44,3 +44,9 @@ it('Select generates stable distinct IDs for labels without explicit IDs', () =>
     expect(controls[0].id).not.toBe(controls[1].id);
     expect(controls[0].getAttribute('aria-describedby')).toBe(`${controls[0].id}-description`);
 });
+
+it('accepts immutable option collections and preserves disabled options', () => {
+    const options = [{ label: 'Unavailable', value: 'none', disabled: true }] as const;
+    const container = render(<Select options={options} />);
+    expect(container.querySelector('option')?.disabled).toBe(true);
+});
