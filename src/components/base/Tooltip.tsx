@@ -21,6 +21,7 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
     id,
     onBlur,
     onFocus,
+    onKeyDown,
     onMouseEnter,
     onMouseLeave,
     open,
@@ -43,6 +44,10 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
             aria-describedby={[props['aria-describedby'], visible ? tooltipId : undefined].filter(Boolean).join(' ') || undefined}
             className={cx('angin-tooltip', className)}
             id={id}
+            onKeyDown={(event) => {
+                onKeyDown?.(event);
+                if (event.key === 'Escape' && !event.defaultPrevented) hide();
+            }}
             onBlur={(event) => {
                 hide();
                 onBlur?.(event);

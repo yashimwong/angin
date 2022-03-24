@@ -24,3 +24,10 @@ it('gives simultaneously visible tooltips distinct descriptions', () => {
     const tips = container.querySelectorAll('[role="tooltip"]');
     expect(tips[0].id).not.toBe(tips[1].id);
 });
+
+it('allows Escape to dismiss an uncontrolled tooltip', () => {
+    const container = render(<Tooltip content="Help" defaultOpen><button>Help</button></Tooltip>);
+    const event = new KeyboardEvent('keydown', { key: 'Escape', bubbles: true });
+    container.querySelector('button')?.dispatchEvent(event);
+    expect(container.querySelector('[role="tooltip"]')).toBeNull();
+});
