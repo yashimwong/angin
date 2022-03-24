@@ -18,3 +18,9 @@ describe('Tooltip', () => {
     const container = render(<Tooltip ref={ref} content="Help" children={<button>Help</button>}  />);
     expect(ref.current).toBe(container.querySelector('span'));
  });
+
+it('gives simultaneously visible tooltips distinct descriptions', () => {
+    const container = render(<><Tooltip content="First" open><button>First</button></Tooltip><Tooltip content="Second" open><button>Second</button></Tooltip></>);
+    const tips = container.querySelectorAll('[role="tooltip"]');
+    expect(tips[0].id).not.toBe(tips[1].id);
+});

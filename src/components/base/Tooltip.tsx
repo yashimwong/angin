@@ -1,5 +1,6 @@
 import React, { forwardRef, HTMLAttributes, ReactNode, useState } from 'react';
 import { BaseProps } from '../../types';
+import { useControlId } from '../../utils/controlId';
 import { cx, dataTestId } from '../../utils/cx';
 
 export type TooltipPlacement = 'bottom' | 'left' | 'right' | 'top';
@@ -29,7 +30,8 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
 }: TooltipProps, ref) {
     const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
     const visible = open === undefined ? uncontrolledOpen : open;
-    const tooltipId = id ? `${id}-tooltip` : testId ? `${testId}-content` : 'angin-tooltip-content';
+    const fallbackId = useControlId(undefined, 'angin-tooltip');
+    const tooltipId = id ? `${id}-tooltip` : testId ? `${testId}-content` : `${fallbackId}-content`;
     const show = () => open === undefined && setUncontrolledOpen(true);
     const hide = () => open === undefined && setUncontrolledOpen(false);
 
@@ -38,7 +40,7 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
             ref={ref}
             {...props}
             {...dataTestId(testId)}
-            aria-describedby={visible ? tooltipId : undefined}
+            aria-describedby={[props['aria-describedby'], visible ? tooltipId : undefined].filter(Boolean).join(' ') || undefined}
             className={cx('angin-tooltip', className)}
             id={id}
             onBlur={(event) => {
