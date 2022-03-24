@@ -43,6 +43,15 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
     const show = () => changeOpen(true);
     const hide = () => changeOpen(false);
 
+    // Native single-element triggers accept ARIA directly. Leave composite and
+    // multi-child content untouched because their DOM forwarding is unknown.
+    const trigger = React.isValidElement<HTMLAttributes<HTMLElement>>(children) && typeof children.type === 'string'
+        ? React.cloneElement(children, {
+            'aria-describedby': [children.props['aria-describedby'], props['aria-describedby'], visible ? tooltipId : undefined]
+                .filter(Boolean).join(' ') || undefined,
+        })
+        : children;
+
     return (
         <span
             ref={ref}
@@ -72,7 +81,7 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
                 onMouseLeave?.(event);
             }}
         >
-            {children}
+            {trigger}
             {visible && (
                 <span className={cx('angin-tooltip__content', `angin-tooltip__content--${placement}`)} id={tooltipId} role="tooltip">
                     {content}
