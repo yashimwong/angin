@@ -10,6 +10,7 @@ export interface TooltipProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'con
     content: ReactNode;
     defaultOpen?: boolean;
     open?: boolean;
+    onOpenChange?: (open: boolean) => void;
     placement?: TooltipPlacement;
 }
 
@@ -25,6 +26,7 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
     onMouseEnter,
     onMouseLeave,
     open,
+    onOpenChange,
     placement = 'top',
     testId,
     ...props
@@ -33,8 +35,13 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
     const visible = open === undefined ? uncontrolledOpen : open;
     const fallbackId = useControlId(undefined, 'angin-tooltip');
     const tooltipId = id ? `${id}-tooltip` : testId ? `${testId}-content` : `${fallbackId}-content`;
-    const show = () => open === undefined && setUncontrolledOpen(true);
-    const hide = () => open === undefined && setUncontrolledOpen(false);
+    const changeOpen = (nextOpen: boolean) => {
+        if (visible === nextOpen) return;
+        if (open === undefined) setUncontrolledOpen(nextOpen);
+        onOpenChange?.(nextOpen);
+    };
+    const show = () => changeOpen(true);
+    const hide = () => changeOpen(false);
 
     return (
         <span

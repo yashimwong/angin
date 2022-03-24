@@ -31,3 +31,11 @@ it('allows Escape to dismiss an uncontrolled tooltip', () => {
     container.querySelector('button')?.dispatchEvent(event);
     expect(container.querySelector('[role="tooltip"]')).toBeNull();
 });
+
+it('requests controlled visibility changes without mutating controlled state', () => {
+    const onOpenChange = jest.fn();
+    const container = render(<Tooltip content="Help" open onOpenChange={onOpenChange}><button>Help</button></Tooltip>);
+    container.querySelector('button')?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+    expect(container.querySelector('[role="tooltip"]')).not.toBeNull();
+});
