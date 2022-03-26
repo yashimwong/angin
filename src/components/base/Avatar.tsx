@@ -18,10 +18,10 @@ function initials(name: string): string {
         .toUpperCase();
 }
 
-export function Avatar({ className, name, size = 'md', src, testId, ...props }: AvatarProps) {
+export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(function Avatar({ className, name, size = 'md', src, testId, ...props }: AvatarProps, ref) {
     return (
-        <span {...props} {...dataTestId(testId)} aria-label={name} className={cx('angin-avatar', `angin-avatar--${size}`, className)} role="img">
+        <span ref={ref} {...props} {...dataTestId(testId)} aria-label={name} className={cx('angin-avatar', `angin-avatar--${size}`, className)} role="img">
             {src ? <img alt={name} className="angin-avatar__image" src={src} /> : initials(name)}
         </span>
     );
-}
+});

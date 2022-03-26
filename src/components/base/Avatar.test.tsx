@@ -12,3 +12,9 @@ describe('Avatar', () => {
         expect(avatar?.textContent).toBe('AL');
     });
 });
+
+it("forwards Avatar refs to its root", () => {
+    const ref = React.createRef<HTMLSpanElement>();
+    const container = render(<Avatar ref={ref} name="Ada" />);
+    expect(ref.current).toBe(container.firstElementChild);
+});
