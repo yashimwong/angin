@@ -16,3 +16,9 @@ describe('Card', () => {
         expect(container.querySelector('.angin-card__footer')?.textContent).toBe('Updated today');
     });
 });
+
+it("forwards Card refs to its root", () => {
+    const ref = React.createRef<HTMLElement>();
+    const container = render(<Card ref={ref} children="Body" />);
+    expect(ref.current).toBe(container.firstElementChild);
+});
