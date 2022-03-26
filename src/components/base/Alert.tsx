@@ -10,9 +10,9 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'
     dismissLabel?: string;
 }
 
-export function Alert({ children, className, dismissLabel = 'Dismiss alert', onDismiss, testId, title, tone = 'primary', ...props }: AlertProps) {
+export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert({ children, className, dismissLabel = 'Dismiss alert', onDismiss, testId, title, tone = 'primary', ...props }: AlertProps, ref) {
     return (
-        <div {...props} {...dataTestId(testId)} className={cx('angin-alert', `angin-alert--${tone}`, className)} role="alert">
+        <div ref={ref} {...props} {...dataTestId(testId)} className={cx('angin-alert', `angin-alert--${tone}`, className)} role="alert">
             <div className="angin-alert__content">
                 {title && <strong className="angin-alert__title">{title}</strong>}
                 <div>{children}</div>
@@ -24,4 +24,4 @@ export function Alert({ children, className, dismissLabel = 'Dismiss alert', onD
             )}
         </div>
     );
-}
+});

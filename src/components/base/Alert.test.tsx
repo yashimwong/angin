@@ -16,3 +16,9 @@ describe('Alert', () => {
         expect(onDismiss).toHaveBeenCalledTimes(1);
     });
 });
+
+it("forwards Alert refs to its root", () => {
+    const ref = React.createRef<HTMLDivElement>();
+    const container = render(<Alert ref={ref} children="Message" />);
+    expect(ref.current).toBe(container.firstElementChild);
+});
