@@ -12,3 +12,9 @@ describe('Divider', () => {
         expect(divider?.className).toContain('angin-divider--vertical');
     });
 });
+
+it("forwards Divider refs to its root", () => {
+    const ref = React.createRef<HTMLDivElement>();
+    const container = render(<Divider ref={ref}  />);
+    expect(ref.current).toBe(container.firstElementChild);
+});

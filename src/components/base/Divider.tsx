@@ -7,9 +7,9 @@ export interface DividerProps extends HTMLAttributes<HTMLDivElement>, BaseProps 
     orientation?: 'horizontal' | 'vertical';
 }
 
-export function Divider({ className, label, orientation = 'horizontal', testId, ...props }: DividerProps) {
+export const Divider = React.forwardRef<HTMLDivElement, DividerProps>(function Divider({ className, label, orientation = 'horizontal', testId, ...props }: DividerProps, ref) {
     return (
-        <div
+        <div ref={ref}
             {...props}
             {...dataTestId(testId)}
             aria-label={label ? undefined : props['aria-label']}
@@ -20,4 +20,4 @@ export function Divider({ className, label, orientation = 'horizontal', testId, 
             {label && <span className="angin-divider__label">{label}</span>}
         </div>
     );
-}
+});
