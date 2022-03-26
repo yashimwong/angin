@@ -9,10 +9,10 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement>, BaseProps {
     outline?: boolean;
 }
 
-export function Badge({ children, className, outline = false, size = 'md', testId, tone = 'neutral', ...props }: BadgeProps) {
+export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(function Badge({ children, className, outline = false, size = 'md', testId, tone = 'neutral', ...props }: BadgeProps, ref) {
     return (
-        <span className={cx('angin-badge', `angin-badge--${size}`, `angin-badge--${tone}`, outline && 'angin-badge--outline', className)} {...dataTestId(testId)} {...props}>
+        <span ref={ref} className={cx('angin-badge', `angin-badge--${size}`, `angin-badge--${tone}`, outline && 'angin-badge--outline', className)} {...dataTestId(testId)} {...props}>
             {children}
         </span>
     );
-}
+});

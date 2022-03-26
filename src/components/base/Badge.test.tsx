@@ -16,3 +16,9 @@ describe('Badge', () => {
         expect(badge?.textContent).toBe('Active');
     });
 });
+
+it("forwards Badge refs to its root", () => {
+    const ref = React.createRef<HTMLSpanElement>();
+    const container = render(<Badge ref={ref} children="New" />);
+    expect(ref.current).toBe(container.firstElementChild);
+});
