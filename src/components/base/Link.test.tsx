@@ -16,3 +16,9 @@ describe('Link', () => {
         expect(link?.textContent).toBe('Read the docs');
     });
 });
+
+it("forwards Link refs to its root", () => {
+    const ref = React.createRef<HTMLAnchorElement>();
+    const container = render(<Link ref={ref} children="Link" />);
+    expect(ref.current).toBe(container.firstElementChild);
+});

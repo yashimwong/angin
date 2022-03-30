@@ -7,10 +7,10 @@ export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement>, Base
     muted?: boolean;
 }
 
-export function Link({ children, className, muted = false, testId, ...props }: LinkProps) {
+export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link({ children, className, muted = false, testId, ...props }: LinkProps, ref) {
     return (
-        <a className={cx('angin-link', muted && 'angin-link--muted', className)} {...dataTestId(testId)} {...props}>
+        <a ref={ref} className={cx('angin-link', muted && 'angin-link--muted', className)} {...dataTestId(testId)} {...props}>
             {children}
         </a>
     );
-}
+});
