@@ -10,12 +10,12 @@ export interface HeadingProps extends HTMLAttributes<HTMLHeadingElement>, BasePr
 
 type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
-export function Heading({ children, className, level = 2, tone = 'neutral', testId, ...props }: HeadingProps) {
+export const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>(function Heading({ children, className, level = 2, tone = 'neutral', testId, ...props }: HeadingProps, ref) {
     const Component = `h${level}` as HeadingTag;
 
     return (
-        <Component className={cx('angin-heading', `angin-heading--${level}`, `angin-heading--${tone}`, className)} {...dataTestId(testId)} {...props}>
+        <Component ref={ref} className={cx('angin-heading', `angin-heading--${level}`, `angin-heading--${tone}`, className)} {...dataTestId(testId)} {...props}>
             {children}
         </Component>
     );
-}
+});

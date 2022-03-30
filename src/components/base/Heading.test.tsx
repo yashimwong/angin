@@ -12,3 +12,9 @@ describe('Heading', () => {
         expect(heading?.textContent).toBe('Welcome');
     });
 });
+
+it("forwards Heading refs to its root", () => {
+    const ref = React.createRef<HTMLHeadingElement>();
+    const container = render(<Heading ref={ref} children="Title" />);
+    expect(ref.current).toBe(container.firstElementChild);
+});
