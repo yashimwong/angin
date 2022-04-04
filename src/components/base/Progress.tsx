@@ -10,7 +10,7 @@ export interface ProgressProps extends HTMLAttributes<HTMLDivElement>, BaseProps
     value?: number;
 }
 
-export function Progress({
+export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(function Progress({
     className,
     label,
     max = 100,
@@ -19,13 +19,13 @@ export function Progress({
     testId,
     value,
     ...props
-}: ProgressProps) {
+}: ProgressProps, ref) {
     const safeMax = Math.max(max, 1);
     const normalizedValue = value === undefined ? undefined : Math.min(Math.max(value, 0), safeMax);
     const percentage = normalizedValue === undefined ? undefined : (normalizedValue / safeMax) * 100;
 
     return (
-        <div {...props} {...dataTestId(testId)} className={cx('angin-progress', `angin-progress--${size}`, value === undefined && 'angin-progress--indeterminate', className)}>
+        <div ref={ref} {...props} {...dataTestId(testId)} className={cx('angin-progress', `angin-progress--${size}`, value === undefined && 'angin-progress--indeterminate', className)}>
             {(label || showValue) && (
                 <div className="angin-progress__header">
                     {label && <span className="angin-progress__label">{label}</span>}
@@ -44,4 +44,4 @@ export function Progress({
             </div>
         </div>
     );
-}
+});

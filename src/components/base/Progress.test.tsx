@@ -20,3 +20,9 @@ describe('Progress', () => {
         expect(container.querySelector('[data-testid="loading"]')?.className).toContain('angin-progress--indeterminate');
     });
 });
+
+it("forwards Progress refs to its root", () => {
+    const ref = React.createRef<HTMLDivElement>();
+    const container = render(<Progress ref={ref} value={20} />);
+    expect(ref.current).toBe(container.firstElementChild);
+});
