@@ -13,7 +13,7 @@ export interface StackProps extends HTMLAttributes<HTMLDivElement>, BaseProps {
     wrap?: CSSProperties['flexWrap'];
 }
 
-export function Stack({
+export const Stack = React.forwardRef<HTMLDivElement, StackProps>(function Stack({
     align,
     children,
     className,
@@ -24,7 +24,7 @@ export function Stack({
     testId,
     wrap,
     ...props
-}: StackProps) {
+}: StackProps, ref) {
     const gapClass = typeof gap === 'string' && ['sm', 'md', 'lg'].includes(gap) ? `angin-stack--gap-${gap}` : undefined;
     const inlineStyle = {
         ...style,
@@ -35,7 +35,7 @@ export function Stack({
     } as CSSProperties;
 
     return (
-        <div
+        <div ref={ref}
             {...props}
             {...dataTestId(testId)}
             className={cx('angin-stack', `angin-stack--${direction}`, gapClass, className)}
@@ -44,4 +44,4 @@ export function Stack({
             {children}
         </div>
     );
-}
+});

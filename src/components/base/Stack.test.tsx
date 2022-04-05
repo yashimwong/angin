@@ -18,3 +18,9 @@ describe('Stack', () => {
         expect(stack.style.justifyContent).toBe('space-between');
     });
 });
+
+it("forwards Stack refs to its root", () => {
+    const ref = React.createRef<HTMLDivElement>();
+    const container = render(<Stack ref={ref} children="Body" />);
+    expect(ref.current).toBe(container.firstElementChild);
+});
