@@ -13,3 +13,9 @@ describe('Skeleton', () => {
         expect(skeleton.style.width).toBe('3rem');
     });
 });
+
+it("forwards Skeleton refs to its root", () => {
+    const ref = React.createRef<HTMLDivElement>();
+    const container = render(<Skeleton ref={ref}  />);
+    expect(ref.current).toBe(container.firstElementChild);
+});

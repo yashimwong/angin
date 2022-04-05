@@ -9,9 +9,9 @@ export interface SkeletonProps extends HTMLAttributes<HTMLDivElement>, BaseProps
     width?: CSSProperties['width'];
 }
 
-export function Skeleton({ circle = false, className, height, label, style, testId, width, ...props }: SkeletonProps) {
+export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(function Skeleton({ circle = false, className, height, label, style, testId, width, ...props }: SkeletonProps, ref) {
     return (
-        <div
+        <div ref={ref}
             {...props}
             {...dataTestId(testId)}
             aria-label={label}
@@ -20,4 +20,4 @@ export function Skeleton({ circle = false, className, height, label, style, test
             style={{ ...style, height, width }}
         />
     );
-}
+});
