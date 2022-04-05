@@ -7,10 +7,10 @@ export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement>, BaseProps
     size?: Size;
 }
 
-export function Spinner({ className, label = 'Loading', size = 'md', testId, ...props }: SpinnerProps) {
+export const Spinner = React.forwardRef<HTMLSpanElement, SpinnerProps>(function Spinner({ className, label = 'Loading', size = 'md', testId, ...props }: SpinnerProps, ref) {
     return (
-        <span {...props} {...dataTestId(testId)} aria-label={label} className={cx('angin-spinner', `angin-spinner--${size}`, className)} role="status">
+        <span ref={ref} {...props} {...dataTestId(testId)} aria-label={label} className={cx('angin-spinner', `angin-spinner--${size}`, className)} role="status">
             <span aria-hidden="true" className="angin-spinner__circle" />
         </span>
     );
-}
+});

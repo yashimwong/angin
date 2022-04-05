@@ -12,3 +12,9 @@ describe('Spinner', () => {
         expect(spinner?.querySelector('[aria-hidden="true"]')).not.toBeNull();
     });
 });
+
+it("forwards Spinner refs to its root", () => {
+    const ref = React.createRef<HTMLSpanElement>();
+    const container = render(<Spinner ref={ref}  />);
+    expect(ref.current).toBe(container.firstElementChild);
+});
