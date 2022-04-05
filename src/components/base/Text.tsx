@@ -11,12 +11,12 @@ export interface TextProps extends HTMLAttributes<HTMLElement>, BaseProps {
     tone?: Tone;
 }
 
-export function Text({ as = 'p', children, className, size = 'md', tone = 'neutral', testId, ...props }: TextProps) {
+export const Text = React.forwardRef<HTMLElement, TextProps>(function Text({ as = 'p', children, className, size = 'md', tone = 'neutral', testId, ...props }: TextProps, ref) {
     const Component = as;
 
     return (
-        <Component className={cx('angin-text', `angin-text--${size}`, `angin-text--${tone}`, className)} {...dataTestId(testId)} {...props}>
+        <Component ref={ref as React.Ref<HTMLParagraphElement & HTMLDivElement>} className={cx('angin-text', `angin-text--${size}`, `angin-text--${tone}`, className)} {...dataTestId(testId)} {...props}>
             {children}
         </Component>
     );
-}
+});
