@@ -12,9 +12,9 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement>, BaseProps {
 export const Card = React.forwardRef<HTMLElement, CardProps>(function Card({ children, className, footer, header, interactive = false, testId, ...props }: CardProps, ref) {
     return (
         <section ref={ref} {...props} {...dataTestId(testId)} className={cx('angin-card', interactive && 'angin-card--interactive', className)}>
-            {header && <header className="angin-card__header">{header}</header>}
+            {header != null && typeof header !== 'boolean' && <header className="angin-card__header">{header}</header>}
             <div className="angin-card__body">{children}</div>
-            {footer && <footer className="angin-card__footer">{footer}</footer>}
+            {footer != null && typeof footer !== 'boolean' && <footer className="angin-card__footer">{footer}</footer>}
         </section>
     );
 });

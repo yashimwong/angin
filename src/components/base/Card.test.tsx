@@ -22,3 +22,15 @@ it("forwards Card refs to its root", () => {
     const container = render(<Card ref={ref} children="Body" />);
     expect(ref.current).toBe(container.firstElementChild);
 });
+
+it("render numeric header and footer slots", () => {
+    const container = render(<Card header={0} footer={0}>Body</Card>);
+    expect(container.querySelector("header")?.textContent).toBe("0");
+    expect(container.querySelector("footer")?.textContent).toBe("0");
+});
+
+it("ignores boolean header,footer slots", () => {
+    const container = render(<Card header={false} footer={false}>Body</Card>);
+    expect(container.querySelector("header")).toBeNull();
+    expect(container.querySelector("footer")).toBeNull();
+});
