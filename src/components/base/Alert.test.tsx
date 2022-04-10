@@ -22,3 +22,14 @@ it("forwards Alert refs to its root", () => {
     const container = render(<Alert ref={ref} children="Message" />);
     expect(ref.current).toBe(container.firstElementChild);
 });
+
+it("preserve zero titles and caller roles", () => {
+    const container = render(<Alert title={0} role="status">Saved</Alert>);
+    expect(container.querySelector("strong")?.textContent).toBe("0");
+    expect(container.firstElementChild?.getAttribute("role")).toBe("status");
+});
+
+it("ignores boolean title slots", () => {
+    const container = render(<Alert title={false}>Message</Alert>);
+    expect(container.querySelector("strong")).toBeNull();
+});
