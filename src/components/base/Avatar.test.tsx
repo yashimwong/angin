@@ -18,3 +18,8 @@ it("forwards Avatar refs to its root", () => {
     const container = render(<Avatar ref={ref} name="Ada" />);
     expect(ref.current).toBe(container.firstElementChild);
 });
+
+it("derive Unicode initials safely", () => {
+    const container = render(<Avatar name="😀 Ada" />);
+    expect(container.firstElementChild?.textContent).toBe("😀A");
+});
