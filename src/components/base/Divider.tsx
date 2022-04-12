@@ -12,12 +12,12 @@ export const Divider = React.forwardRef<HTMLDivElement, DividerProps>(function D
         <div ref={ref}
             {...props}
             {...dataTestId(testId)}
-            aria-label={label ? undefined : props['aria-label']}
+            aria-label={props['aria-label'] ?? (typeof label === 'string' ? label : undefined)}
             aria-orientation={orientation}
-            className={cx('angin-divider', `angin-divider--${orientation}`, label && 'angin-divider--labelled', className)}
+            className={cx('angin-divider', `angin-divider--${orientation}`, label != null && typeof label !== 'boolean' && 'angin-divider--labelled', className)}
             role="separator"
         >
-            {label && <span className="angin-divider__label">{label}</span>}
+            {label != null && typeof label !== 'boolean' && <span className="angin-divider__label">{label}</span>}
         </div>
     );
 });
