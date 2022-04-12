@@ -19,9 +19,10 @@ function initials(name: string): string {
 }
 
 export const Avatar = React.forwardRef<HTMLSpanElement, AvatarProps>(function Avatar({ className, name, size = 'md', src, testId, ...props }: AvatarProps, ref) {
+    const [failedSrc, setFailedSrc] = React.useState<string>();
     return (
         <span ref={ref} {...props} {...dataTestId(testId)} aria-label={name} className={cx('angin-avatar', `angin-avatar--${size}`, className)} role="img">
-            {src ? <img alt={name} className="angin-avatar__image" src={src} /> : initials(name)}
+            {src && src !== failedSrc ? <img onError={() => setFailedSrc(src)} alt={name} className="angin-avatar__image" src={src} /> : initials(name)}
         </span>
     );
 });

@@ -23,3 +23,11 @@ it("derive Unicode initials safely", () => {
     const container = render(<Avatar name="😀 Ada" />);
     expect(container.firstElementChild?.textContent).toBe("😀A");
 });
+
+it("fall back to initials after image failure", () => {
+    const container = render(<Avatar name="Ada Lovelace" src="missing.png" />);
+    const image = container.querySelector("img")!;
+    image.dispatchEvent(new Event("error"));
+    expect(container.querySelector("img")).toBeNull();
+    expect(container.firstElementChild?.textContent).toBe("AL");
+});
