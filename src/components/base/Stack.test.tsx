@@ -24,3 +24,11 @@ it("forwards Stack refs to its root", () => {
     const container = render(<Stack ref={ref} children="Body" />);
     expect(ref.current).toBe(container.firstElementChild);
 });
+
+it("preserve inline layout unless props override it", () => {
+    const container = render(<Stack style={{ alignItems: "center", flexWrap: "wrap", justifyContent: "end" }}>Body</Stack>);
+    const stack = container.firstElementChild as HTMLElement;
+    expect(stack.style.alignItems).toBe("center");
+    expect(stack.style.flexWrap).toBe("wrap");
+    expect(stack.style.justifyContent).toBe("end");
+});

@@ -29,9 +29,9 @@ export const Stack = React.forwardRef<HTMLDivElement, StackProps>(function Stack
     const inlineStyle = {
         ...style,
         ...(gapClass ? {} : { gap }),
-        alignItems: align,
-        flexWrap: wrap,
-        justifyContent: justify,
+        ...(align === undefined ? {} : { alignItems: align }),
+        ...(wrap === undefined ? {} : { flexWrap: wrap }),
+        ...(justify === undefined ? {} : { justifyContent: justify }),
     } as CSSProperties;
 
     return (
