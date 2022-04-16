@@ -1545,3 +1545,19 @@
         opacity: 0.5;
     }
 }
+
+/* Components retain a keyboard focus indicator without a root wrapper. */
+:where(.angin-button, .angin-icon-button, .angin-link,
+    .angin-alert__dismiss, .angin-card[tabindex], .angin-select,
+    .angin-accordion__trigger, .angin-tabs__tab,
+    .angin-modal__close, .angin-drawer__close,
+    .angin-menu__item, .angin-calendar__day,
+    .angin-stepper__button, .angin-tabbed-navigation__item):focus-visible {
+    outline: 2px solid var(--angin-color-primary-500);
+    outline-offset: 2px;
+}
+
+.angin-switch-field__input:focus-visible + .angin-switch-field__track {
+    outline: 2px solid var(--angin-color-primary-500);
+    outline-offset: 2px;
+}
