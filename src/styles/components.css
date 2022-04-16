@@ -1561,3 +1561,24 @@
     outline: 2px solid var(--angin-color-primary-500);
     outline-offset: 2px;
 }
+
+/* Flex layouts must be able to shrink below their content's intrinsic width. */
+.angin-stack > *,
+.angin-alert__content,
+.angin-card__body,
+.angin-progress__label {
+    min-width: 0;
+}
+
+.angin-text,
+.angin-heading,
+.angin-alert__content,
+.angin-card__body {
+    overflow-wrap: anywhere;
+}
+
+.angin-alert__dismiss,
+.angin-avatar,
+.angin-spinner {
+    flex-shrink: 0;
+}
