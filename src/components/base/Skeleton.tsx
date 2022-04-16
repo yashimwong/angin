@@ -17,7 +17,7 @@ export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(function
             aria-label={label}
             className={cx('angin-skeleton', circle && 'angin-skeleton--circle', className)}
             role={label ? 'status' : undefined}
-            style={{ ...style, height, width }}
+            style={{ ...style, ...(height === undefined ? {} : { height }), ...(width === undefined ? {} : { width }) }}
         />
     );
 });

@@ -19,3 +19,10 @@ it("forwards Skeleton refs to its root", () => {
     const container = render(<Skeleton ref={ref}  />);
     expect(ref.current).toBe(container.firstElementChild);
 });
+
+it("preserve style dimensions when props are omitted", () => {
+    const container = render(<Skeleton style={{ height: 20, width: 30 }} />);
+    const skeleton = container.firstElementChild as HTMLElement;
+    expect(skeleton.style.height).toBe("20px");
+    expect(skeleton.style.width).toBe("30px");
+});
