@@ -1529,3 +1529,19 @@
     width: 2px;
     height: auto;
 }
+
+/* Loading indicators can be used outside an angin-root wrapper. */
+@media (prefers-reduced-motion: reduce) {
+    .angin-spinner__circle,
+    .angin-button__spinner,
+    .angin-skeleton,
+    .angin-progress__bar {
+        animation: none;
+        transition: none;
+    }
+
+    .angin-progress--indeterminate .angin-progress__bar {
+        width: 100%;
+        opacity: 0.5;
+    }
+}
