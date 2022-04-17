@@ -56,7 +56,9 @@ export function Calendar({
         return Array.from({ length: 42 }, (_, index) => new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), index - firstDay + 1));
     }, [visibleMonth]);
 
-    const isUnavailable = (date: Date) => Boolean((minDate && date < startOfDay(minDate)) || (maxDate && date > startOfDay(maxDate)));
+    const minimum = minDate ? startOfDay(minDate).getTime() : -Infinity;
+    const maximum = maxDate ? startOfDay(maxDate).getTime() : Infinity;
+    const isUnavailable = (date: Date) => date.getTime() < minimum || date.getTime() > maximum;
     const selectDate = (date: Date) => {
         if (isUnavailable(date)) {
             return;

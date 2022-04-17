@@ -25,3 +25,5 @@ describe('Calendar', () => {
 });
 
 it('opens the default selected month', () => { const c = render(<Calendar defaultValue={new Date(2001, 3, 12)} />); expect(c.querySelector('.angin-calendar__month')?.textContent).toBe('April 2001'); });
+
+it('includes a boundary date regardless of its time', () => { const c = render(<Calendar month={new Date(2001, 3, 1)} minDate={new Date(2001, 3, 12, 18)} maxDate={new Date(2001, 3, 12, 19)} />); expect((c.querySelector('[data-date="2001-04-12"]') as HTMLButtonElement).disabled).toBe(false); });
