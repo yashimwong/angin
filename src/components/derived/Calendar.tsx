@@ -45,7 +45,7 @@ export function Calendar({
     ...props
 }: CalendarProps) {
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(defaultValue);
-    const [uncontrolledMonth, setUncontrolledMonth] = useState(() => startOfMonth(month || value || new Date()));
+    const [uncontrolledMonth, setUncontrolledMonth] = useState(() => startOfMonth(month || value || defaultValue || new Date()));
     const visibleMonth = startOfMonth(month || uncontrolledMonth);
     const today = startOfDay(new Date());
     const formatter = useMemo(() => new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }), [locale]);

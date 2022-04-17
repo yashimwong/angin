@@ -23,3 +23,5 @@ describe('Calendar', () => {
         expect((container.querySelector('[data-date="2024-01-15"]') as HTMLButtonElement).disabled).toBe(false);
     });
 });
+
+it('opens the default selected month', () => { const c = render(<Calendar defaultValue={new Date(2001, 3, 12)} />); expect(c.querySelector('.angin-calendar__month')?.textContent).toBe('April 2001'); });
