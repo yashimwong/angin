@@ -21,3 +21,5 @@ describe('Tabs', () => {
         expect(container.querySelector('[role="tabpanel"]')?.textContent).toBe('Second panel');
     });
 });
+
+it('uses distinct relationships for repeated tab keys', () => { const tabs = [{ key: 'one', label: 'One', content: 'Panel' }]; const c = render(<><Tabs tabs={tabs} /><Tabs tabs={tabs} /></>); const buttons = c.querySelectorAll('[role="tab"]'); expect(buttons[0].id).not.toBe(buttons[1].id); });
