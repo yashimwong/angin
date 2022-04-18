@@ -5,6 +5,8 @@ import { cx, dataTestId } from '../../utils/cx';
 export interface CalendarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'onChange'>, BaseProps {
     defaultValue?: Date;
     locale?: string;
+    previousMonthLabel?: string;
+    nextMonthLabel?: string;
     maxDate?: Date;
     minDate?: Date;
     month?: Date;
@@ -35,6 +37,8 @@ export function Calendar({
     className,
     defaultValue,
     locale = 'en-US',
+    previousMonthLabel = 'Previous month',
+    nextMonthLabel = 'Next month',
     maxDate,
     minDate,
     month,
@@ -85,11 +89,11 @@ export function Calendar({
     return (
         <div {...props} {...dataTestId(testId)} className={cx('angin-calendar', className)}>
             <div className="angin-calendar__header">
-                <button aria-label="Previous month" className="angin-calendar__nav" onClick={() => changeMonth(-1)} type="button">
+                <button aria-label={previousMonthLabel} className="angin-calendar__nav" onClick={() => changeMonth(-1)} type="button">
                     ‹
                 </button>
                 <strong aria-live="polite" className="angin-calendar__month">{formatter.format(visibleMonth)}</strong>
-                <button aria-label="Next month" className="angin-calendar__nav" onClick={() => changeMonth(1)} type="button">
+                <button aria-label={nextMonthLabel} className="angin-calendar__nav" onClick={() => changeMonth(1)} type="button">
                     ›
                 </button>
             </div>
