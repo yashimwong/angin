@@ -11,6 +11,7 @@ export interface CalendarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'def
     onChange?: (date: Date) => void;
     onMonthChange?: (month: Date) => void;
     value?: Date;
+    weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 
@@ -41,6 +42,7 @@ export function Calendar({
     onMonthChange,
     testId,
     value,
+    weekStartsOn = 0,
     ...props
 }: CalendarProps) {
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(defaultValue);
@@ -52,12 +54,12 @@ export function Calendar({
     const dayFormatter = useMemo(() => new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }), [locale]);
     const weekdays = useMemo(() => {
         const format = new Intl.DateTimeFormat(locale, { weekday: 'short' });
-        return Array.from({ length: 7 }, (_, index) => format.format(new Date(2023, 0, index + 1)));
-    }, [locale]);
+        return Array.from({ length: 7 }, (_, index) => format.format(new Date(2023, 0, index + 1 + weekStartsOn)));
+    }, [locale, weekStartsOn]);
     const days = useMemo(() => {
-        const firstDay = visibleMonth.getDay();
+        const firstDay = (visibleMonth.getDay() - weekStartsOn + 7) % 7;
         return Array.from({ length: 42 }, (_, index) => new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), index - firstDay + 1));
-    }, [visibleMonth]);
+    }, [visibleMonth, weekStartsOn]);
 
     const minimum = minDate ? startOfDay(minDate).getTime() : -Infinity;
     const maximum = maxDate ? startOfDay(maxDate).getTime() : Infinity;

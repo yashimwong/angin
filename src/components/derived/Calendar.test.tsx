@@ -29,3 +29,5 @@ it('opens the default selected month', () => { const c = render(<Calendar defaul
 it('includes a boundary date regardless of its time', () => { const c = render(<Calendar month={new Date(2001, 3, 1)} minDate={new Date(2001, 3, 12, 18)} maxDate={new Date(2001, 3, 12, 19)} />); expect((c.querySelector('[data-date="2001-04-12"]') as HTMLButtonElement).disabled).toBe(false); });
 
 it('localizes weekday headings', () => { const c = render(<Calendar locale="fr-FR" />); expect(c.querySelector('.angin-calendar__weekdays')?.textContent).toContain('lun.'); });
+
+it('supports a Monday week start', () => { const c = render(<Calendar month={new Date(2023, 0, 1)} weekStartsOn={1} />); expect(c.querySelector('.angin-calendar__weekdays span')?.textContent).toBe('Mon'); expect(c.querySelector('[data-date]')?.getAttribute('data-date')).toBe('2022-12-26'); });
