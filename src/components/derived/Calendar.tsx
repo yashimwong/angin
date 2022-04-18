@@ -13,7 +13,6 @@ export interface CalendarProps extends Omit<HTMLAttributes<HTMLDivElement>, 'def
     value?: Date;
 }
 
-const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 function startOfDay(date: Date): Date {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -51,6 +50,10 @@ export function Calendar({
     const today = startOfDay(new Date());
     const formatter = useMemo(() => new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }), [locale]);
     const dayFormatter = useMemo(() => new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }), [locale]);
+    const weekdays = useMemo(() => {
+        const format = new Intl.DateTimeFormat(locale, { weekday: 'short' });
+        return Array.from({ length: 7 }, (_, index) => format.format(new Date(2023, 0, index + 1)));
+    }, [locale]);
     const days = useMemo(() => {
         const firstDay = visibleMonth.getDay();
         return Array.from({ length: 42 }, (_, index) => new Date(visibleMonth.getFullYear(), visibleMonth.getMonth(), index - firstDay + 1));
