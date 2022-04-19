@@ -19,9 +19,9 @@ export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChang
 
 export function Tabs({ activeKey, className, defaultActiveKey, onChange, tabs, testId, ...props }: TabsProps) {
     const instanceId = useDerivedId('angin-tabs', props.id);
-    const [uncontrolledKey, setUncontrolledKey] = useState(defaultActiveKey || tabs[0]?.key || '');
+    const [uncontrolledKey, setUncontrolledKey] = useState(defaultActiveKey ?? tabs.find((tab) => !tab.disabled)?.key ?? '');
     const selectedKey = activeKey === undefined ? uncontrolledKey : activeKey;
-    const selectedTab = tabs.find((tab) => tab.key === selectedKey) || tabs[0];
+    const selectedTab = tabs.find((tab) => tab.key === selectedKey && !tab.disabled) || tabs.find((tab) => !tab.disabled);
 
     const selectTab = (key: string) => {
         if (activeKey === undefined) {
