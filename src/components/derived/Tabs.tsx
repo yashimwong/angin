@@ -11,7 +11,7 @@ export interface Tab {
 }
 
 export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>, BaseProps {
-    tabs: Tab[];
+    tabs: readonly Tab[];
     activeKey?: string;
     defaultActiveKey?: string;
     onChange?: (key: string) => void;
