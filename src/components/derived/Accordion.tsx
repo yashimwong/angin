@@ -1,4 +1,5 @@
 import React, { HTMLAttributes, ReactNode, useState } from 'react';
+import { useDerivedId } from '../../utils/derivedId';
 import { BaseProps } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
 
@@ -27,6 +28,7 @@ export function Accordion({
     testId,
     ...props
 }: AccordionProps) {
+    const instanceId = useDerivedId('angin-accordion', props.id);
     const [uncontrolledKeys, setUncontrolledKeys] = useState(defaultOpenKeys);
     const expandedKeys = openKeys || uncontrolledKeys;
 
@@ -50,8 +52,9 @@ export function Accordion({
                     <div className={cx('angin-accordion__item', expanded && 'angin-accordion__item--expanded')} key={item.key}>
                         <h3 className="angin-accordion__heading">
                             <button
-                                aria-controls={`angin-accordion-panel-${item.key}`}
+                                aria-controls={`${instanceId}-panel-${item.key}`}
                                 aria-expanded={expanded}
+                                id={`${instanceId}-trigger-${item.key}`}
                                 className="angin-accordion__trigger"
                                 disabled={item.disabled}
                                 onClick={() => toggle(item.key)}
@@ -63,9 +66,10 @@ export function Accordion({
                         </h3>
                         <div
                             aria-hidden={!expanded}
+                            aria-labelledby={`${instanceId}-trigger-${item.key}`}
                             className="angin-accordion__panel"
                             hidden={!expanded}
-                            id={`angin-accordion-panel-${item.key}`}
+                            id={`${instanceId}-panel-${item.key}`}
                             role="region"
                         >
                             {item.content}

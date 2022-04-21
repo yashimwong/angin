@@ -19,6 +19,6 @@ describe('Accordion', () => {
         trigger.click();
         expect(trigger.getAttribute('aria-expanded')).toBe('true');
         expect(onChange).toHaveBeenCalledWith(['first']);
-        expect(container.querySelector('#angin-accordion-panel-first')?.textContent).toBe('First answer');
+        expect(container.querySelector('[role="region"]')?.textContent).toBe('First answer');
     });
 });
