@@ -22,3 +22,10 @@ describe('Accordion', () => {
         expect(container.querySelector('[role="region"]')?.textContent).toBe('First answer');
     });
 });
+
+it('moves heading focus with End without opening a panel', () => {
+    const c = render(<Accordion items={[{ key: 'a', title: 'A', content: 'A' }, { key: 'b', title: 'B', content: 'B', disabled: true }, { key: 'c', title: 'C', content: 'C' }]} />);
+    const buttons = c.querySelectorAll('button'); buttons[0].focus();
+    buttons[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
+    expect(document.activeElement).toBe(buttons[2]); expect(buttons[2].getAttribute('aria-expanded')).toBe('false');
+});

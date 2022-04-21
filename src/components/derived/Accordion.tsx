@@ -58,6 +58,15 @@ export function Accordion({
                                 className="angin-accordion__trigger"
                                 disabled={item.disabled}
                                 onClick={() => toggle(item.key)}
+                                onKeyDown={(event) => {
+                                    const root = event.currentTarget.closest('.angin-accordion');
+                                    const buttons = Array.from(root!.querySelectorAll<HTMLButtonElement>('.angin-accordion__trigger:not(:disabled)')).filter((button) => button.closest('.angin-accordion') === root && !button.closest('[hidden]'));
+                                    const index = buttons.indexOf(event.currentTarget);
+                                    const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : event.key === 'ArrowDown' ? (index + 1) % buttons.length : event.key === 'ArrowUp' ? (index - 1 + buttons.length) % buttons.length : -1;
+                                    if (next < 0) return;
+                                    event.preventDefault();
+                                    buttons[next]?.focus();
+                                }}
                                 type="button"
                             >
                                 <span>{item.title}</span>
