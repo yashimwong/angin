@@ -11,11 +11,11 @@ export interface AccordionItem {
 }
 
 export interface AccordionProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>, BaseProps {
-    defaultOpenKeys?: string[];
-    items: AccordionItem[];
+    defaultOpenKeys?: readonly string[];
+    items: readonly AccordionItem[];
     multiple?: boolean;
     onChange?: (openKeys: string[]) => void;
-    openKeys?: string[];
+    openKeys?: readonly string[];
 }
 
 export function Accordion({
