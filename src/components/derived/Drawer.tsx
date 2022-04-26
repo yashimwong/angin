@@ -1,4 +1,5 @@
 import React, { HTMLAttributes, ReactNode, useEffect } from 'react';
+import { useDerivedId } from '../../utils/derivedId';
 import { BaseProps } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
 
@@ -24,6 +25,7 @@ export function Drawer({
     title,
     ...props
 }: DrawerProps) {
+    const instanceId = useDerivedId('angin-drawer', props.id);
     useEffect(() => {
         if (!open || !closeOnEscape) {
             return undefined;
@@ -47,13 +49,13 @@ export function Drawer({
             <aside
                 {...props}
                 {...dataTestId(testId)}
-                aria-labelledby={title ? 'angin-drawer-title' : undefined}
+                aria-labelledby={props['aria-labelledby'] || (title !== undefined && title !== null ? `${instanceId}-title` : undefined)}
                 aria-modal="true"
                 className={cx('angin-drawer', `angin-drawer--${placement}`, className)}
                 role="dialog"
             >
                 <header className="angin-drawer__header">
-                    {title && <h2 className="angin-drawer__title" id="angin-drawer-title">{title}</h2>}
+                    {title !== undefined && title !== null && <h2 className="angin-drawer__title" id={`${instanceId}-title`}>{title}</h2>}
                     <button aria-label="Close drawer" className="angin-drawer__close" onClick={onClose} type="button">×</button>
                 </header>
                 <div className="angin-drawer__body">{children}</div>

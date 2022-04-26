@@ -13,7 +13,7 @@ describe('Drawer', () => {
 
         const drawer = container.querySelector('[data-testid="drawer"]');
         expect(drawer?.className).toContain('angin-drawer--left');
-        expect(drawer?.getAttribute('aria-labelledby')).toBe('angin-drawer-title');
+        expect(drawer?.getAttribute('aria-labelledby')).toBe(container.querySelector('h2')?.id);
         (container.querySelector('.angin-drawer__close') as HTMLButtonElement).click();
         expect(onClose).toHaveBeenCalledTimes(1);
     });
