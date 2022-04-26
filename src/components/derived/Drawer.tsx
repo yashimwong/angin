@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, useEffect } from 'react';
+import React, { HTMLAttributes, ReactNode, useEffect, useRef } from 'react';
 import { useDerivedId } from '../../utils/derivedId';
 import { BaseProps } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
@@ -25,7 +25,26 @@ export function Drawer({
     title,
     ...props
 }: DrawerProps) {
+    const dialogRef = useRef<HTMLElement | null>(null);
     const instanceId = useDerivedId('angin-drawer', props.id);
+    useEffect(() => {
+        if (!open) return undefined;
+        const previous = document.activeElement as HTMLElement | null;
+        const dialog = dialogRef.current;
+        const focusable = () => Array.from(dialog?.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]') || []).filter((element) => element.tabIndex >= 0 && !element.matches('input[type="hidden"]') && !element.closest('[hidden], [aria-hidden="true"]'));
+        (focusable()[0] || dialog)?.focus();
+        const trap = (event: KeyboardEvent) => {
+            if (event.key !== 'Tab') return;
+            const elements = focusable();
+            const first = elements[0];
+            const last = elements[elements.length - 1];
+            if (!first) { event.preventDefault(); dialog?.focus(); }
+            else if (event.shiftKey && (document.activeElement === first || document.activeElement === dialog)) { event.preventDefault(); last.focus(); }
+            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+        };
+        dialog?.addEventListener('keydown', trap);
+        return () => { dialog?.removeEventListener('keydown', trap); if (previous?.isConnected) previous.focus(); };
+    }, [open]);
     useEffect(() => {
         if (!open || !closeOnEscape) {
             return undefined;
@@ -51,6 +70,8 @@ export function Drawer({
                 {...dataTestId(testId)}
                 aria-labelledby={props['aria-labelledby'] || (title !== undefined && title !== null ? `${instanceId}-title` : undefined)}
                 aria-modal="true"
+                ref={(element) => { dialogRef.current = element; }}
+                tabIndex={-1}
                 className={cx('angin-drawer', `angin-drawer--${placement}`, className)}
                 role="dialog"
             >
