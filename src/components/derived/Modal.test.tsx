@@ -12,7 +12,7 @@ describe('Modal', () => {
         );
 
         const dialog = container.querySelector('[data-testid="dialog"]');
-        expect(dialog?.getAttribute('aria-labelledby')).toBe('angin-modal-title');
+        expect(dialog?.getAttribute('aria-labelledby')).toBe(container.querySelector('h2')?.id);
         (container.querySelector('.angin-modal__close') as HTMLButtonElement).click();
         expect(onClose).toHaveBeenCalledTimes(1);
     });

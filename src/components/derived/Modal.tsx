@@ -1,4 +1,5 @@
 import React, { HTMLAttributes, ReactNode, useEffect } from 'react';
+import { useDerivedId } from '../../utils/derivedId';
 import { BaseProps } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
 
@@ -22,6 +23,7 @@ export function Modal({
     title,
     ...props
 }: ModalProps) {
+    const instanceId = useDerivedId('angin-modal', props.id);
     useEffect(() => {
         if (!open || !closeOnEscape) {
             return undefined;
@@ -41,20 +43,20 @@ export function Modal({
         return null;
     }
 
-    const titleId = title ? 'angin-modal-title' : undefined;
+    const titleId = title !== undefined && title !== null ? `${instanceId}-title` : undefined;
 
     return (
         <div className="angin-modal__backdrop" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
             <div
                 {...props}
                 {...dataTestId(testId)}
-                aria-labelledby={titleId}
+                aria-labelledby={props['aria-labelledby'] || titleId}
                 aria-modal="true"
                 className={cx('angin-modal', className)}
                 role="dialog"
             >
                 <div className="angin-modal__header">
-                    {title && <h2 className="angin-modal__title" id={titleId}>{title}</h2>}
+                    {title !== undefined && title !== null && <h2 className="angin-modal__title" id={titleId}>{title}</h2>}
                     <button aria-label="Close dialog" className="angin-modal__close" onClick={onClose} type="button">
                         ×
                     </button>
