@@ -1,3 +1,5 @@
+import { act } from 'react-dom/test-utils';
+import ReactDOM from 'react-dom';
 import React from 'react';
 import { render } from '../../test/render';
 import { Menu } from './Menu';
@@ -21,4 +23,13 @@ describe('Menu', () => {
         expect(onSelect).toHaveBeenCalledWith('edit');
         expect(container.querySelector('[role="menu"]')).toBeNull();
     });
+});
+
+
+it('uses the latest controlled open callback for Escape', () => {
+    const first = jest.fn(); const latest = jest.fn(); let c!: HTMLElement;
+    act(() => { c = render(<Menu open onOpenChange={first} label="Actions" items={[]} />); });
+    act(() => { ReactDOM.render(<Menu open onOpenChange={latest} label="Actions" items={[]} />, c); });
+    act(() => { document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })); });
+    expect(first).not.toHaveBeenCalled(); expect(latest).toHaveBeenCalledWith(false);
 });

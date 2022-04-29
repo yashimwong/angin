@@ -52,7 +52,7 @@ export function Menu({
         };
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [isOpen]);
+    }, [isOpen, open, onOpenChange]);
 
     return (
         <div {...props} {...dataTestId(testId)} className={cx('angin-menu', className)}>
