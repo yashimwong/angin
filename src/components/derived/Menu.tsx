@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, useEffect, useState } from 'react';
+import React, { HTMLAttributes, ReactNode, useEffect, useRef, useState } from 'react';
 import { useDerivedId } from '../../utils/derivedId';
 import { BaseProps } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
@@ -29,6 +29,8 @@ export function Menu({
     testId,
     ...props
 }: MenuProps) {
+    const openAtEnd = useRef(false);
+    const rootRef = useRef<HTMLDivElement>(null);
     const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
     const isOpen = open === undefined ? uncontrolledOpen : open;
     const instanceId = useDerivedId('angin-menu', props.id);
@@ -42,12 +44,20 @@ export function Menu({
     };
 
     useEffect(() => {
+        if (isOpen) {
+            const buttons = rootRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitem"]:not(:disabled)');
+            buttons?.[openAtEnd.current ? buttons.length - 1 : 0]?.focus();
+            openAtEnd.current = false;
+        }
+    }, [isOpen]);
+    useEffect(() => {
         if (!isOpen) {
             return undefined;
         }
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === 'Escape') {
                 setOpen(false);
+                rootRef.current?.querySelector<HTMLButtonElement>('.angin-menu__trigger')?.focus();
             }
         };
         document.addEventListener('keydown', handleKeyDown);
@@ -55,7 +65,7 @@ export function Menu({
     }, [isOpen, open, onOpenChange]);
 
     return (
-        <div {...props} {...dataTestId(testId)} className={cx('angin-menu', className)}>
+        <div {...props} ref={rootRef} {...dataTestId(testId)} className={cx('angin-menu', className)}>
             <button
                 aria-controls={isOpen ? menuId : undefined}
                 id={`${instanceId}-trigger`}
@@ -63,12 +73,22 @@ export function Menu({
                 aria-haspopup="menu"
                 className="angin-menu__trigger"
                 onClick={() => setOpen(!isOpen)}
+                onKeyDown={(event) => {
+                    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); openAtEnd.current = event.key === 'ArrowUp'; setOpen(true); }
+                }}
                 type="button"
             >
                 {label}
             </button>
             {isOpen && (
-                <ul className="angin-menu__list" id={menuId} aria-labelledby={`${instanceId}-trigger`} role="menu">
+                <ul className="angin-menu__list" id={menuId} aria-labelledby={`${instanceId}-trigger`} role="menu" onKeyDown={(event) => {
+                    if (event.key === 'Tab') { setOpen(false); return; }
+                    const buttons = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('button:not(:disabled)'));
+                    const index = buttons.indexOf(document.activeElement as HTMLButtonElement);
+                    const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : event.key === 'ArrowDown' ? (index + 1) % buttons.length : event.key === 'ArrowUp' ? (index - 1 + buttons.length) % buttons.length : -1;
+                    if (next < 0 || !buttons[next]) return;
+                    event.preventDefault(); buttons[next].focus();
+                }}>
                     {items.map((item) => (
                         <li key={item.key} role="none">
                             <button
@@ -80,7 +100,9 @@ export function Menu({
                                     }
                                     onSelect?.(item.key);
                                     setOpen(false);
+                rootRef.current?.querySelector<HTMLButtonElement>('.angin-menu__trigger')?.focus();
                                 }}
+                                tabIndex={-1}
                                 role="menuitem"
                                 type="button"
                             >
