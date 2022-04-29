@@ -1,4 +1,5 @@
 import React, { HTMLAttributes, ReactNode, useEffect, useState } from 'react';
+import { useDerivedId } from '../../utils/derivedId';
 import { BaseProps } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
 
@@ -30,7 +31,8 @@ export function Menu({
 }: MenuProps) {
     const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
     const isOpen = open === undefined ? uncontrolledOpen : open;
-    const menuId = testId ? `${testId}-list` : 'angin-menu-list';
+    const instanceId = useDerivedId('angin-menu', props.id);
+    const menuId = `${instanceId}-list`;
 
     const setOpen = (nextOpen: boolean) => {
         if (open === undefined) {
@@ -55,7 +57,8 @@ export function Menu({
     return (
         <div {...props} {...dataTestId(testId)} className={cx('angin-menu', className)}>
             <button
-                aria-controls={menuId}
+                aria-controls={isOpen ? menuId : undefined}
+                id={`${instanceId}-trigger`}
                 aria-expanded={isOpen}
                 aria-haspopup="menu"
                 className="angin-menu__trigger"
@@ -65,7 +68,7 @@ export function Menu({
                 {label}
             </button>
             {isOpen && (
-                <ul className="angin-menu__list" id={menuId} role="menu">
+                <ul className="angin-menu__list" id={menuId} aria-labelledby={`${instanceId}-trigger`} role="menu">
                     {items.map((item) => (
                         <li key={item.key} role="none">
                             <button
