@@ -40,6 +40,9 @@ function pageItems(page: number, pageCount: number, siblingCount: number): Pagin
 }
 
 export function Pagination({ className, onChange, page, pageCount, siblingCount = 1, testId, ...props }: PaginationProps) {
+    pageCount = Number.isFinite(pageCount) ? Math.max(0, Math.floor(pageCount)) : 0;
+    page = Number.isFinite(page) ? Math.floor(page) : 1;
+    siblingCount = Number.isFinite(siblingCount) ? Math.min(pageCount, Math.max(0, Math.floor(siblingCount))) : 1;
     const currentPage = pageCount > 0 ? Math.min(Math.max(page, 1), pageCount) : 0;
     const items = pageItems(currentPage, pageCount, Math.max(siblingCount, 0));
     const choosePage = (nextPage: number) => {
