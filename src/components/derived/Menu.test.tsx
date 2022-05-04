@@ -33,3 +33,4 @@ it('uses the latest controlled open callback for Escape', () => {
     act(() => { document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })); });
     expect(first).not.toHaveBeenCalled(); expect(latest).toHaveBeenCalledWith(false);
 });
+it('dismisses an open menu on an outside pointer press', () => { let c!: HTMLElement; act(() => { c = render(<Menu defaultOpen label="Actions" items={[]} />); }); act(() => { document.body.dispatchEvent(new MouseEvent('mousedown', { bubbles: true })); }); expect(c.querySelector('[role="menu"]')).toBeNull(); });

@@ -60,8 +60,12 @@ export function Menu({
                 rootRef.current?.querySelector<HTMLButtonElement>('.angin-menu__trigger')?.focus();
             }
         };
+        const handleOutside = (event: MouseEvent) => {
+            if (event.target instanceof Node && !rootRef.current?.contains(event.target)) setOpen(false);
+        };
+        document.addEventListener('mousedown', handleOutside);
         document.addEventListener('keydown', handleKeyDown);
-        return () => document.removeEventListener('keydown', handleKeyDown);
+        return () => { document.removeEventListener('keydown', handleKeyDown); document.removeEventListener('mousedown', handleOutside); };
     }, [isOpen, open, onOpenChange]);
 
     return (
