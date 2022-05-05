@@ -1,4 +1,5 @@
-import React, { HTMLAttributes, ReactNode, useEffect, useRef } from 'react';
+import { useDerivedDialog } from '../../utils/derivedDialog';
+import React, { HTMLAttributes, ReactNode } from 'react';
 import { useDerivedId } from '../../utils/derivedId';
 import { BaseProps } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
@@ -23,61 +24,39 @@ export function Modal({
     title,
     ...props
 }: ModalProps) {
-    const dialogRef = useRef<HTMLElement | null>(null);
+    const dialogRef = useDerivedDialog(open, closeOnEscape, onClose);
     const instanceId = useDerivedId('angin-modal', props.id);
-    useEffect(() => {
-        if (!open) return undefined;
-        const previous = document.activeElement as HTMLElement | null;
-        const dialog = dialogRef.current;
-        const focusable = () => Array.from(dialog?.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]') || []).filter((element) => element.tabIndex >= 0 && !element.matches('input[type="hidden"]') && !element.closest('[hidden], [aria-hidden="true"]'));
-        (focusable()[0] || dialog)?.focus();
-        const trap = (event: KeyboardEvent) => {
-            if (event.key !== 'Tab') return;
-            const elements = focusable();
-            const first = elements[0];
-            const last = elements[elements.length - 1];
-            if (!first) { event.preventDefault(); dialog?.focus(); }
-            else if (event.shiftKey && (document.activeElement === first || document.activeElement === dialog)) { event.preventDefault(); last.focus(); }
-            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-        };
-        dialog?.addEventListener('keydown', trap);
-        return () => { dialog?.removeEventListener('keydown', trap); if (previous?.isConnected) previous.focus(); };
-    }, [open]);
-    useEffect(() => {
-        if (!open || !closeOnEscape) {
-            return undefined;
-        }
-
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                onClose();
-            }
-        };
-
-        document.addEventListener('keydown', handleKeyDown);
-        return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [closeOnEscape, onClose, open]);
+    const hasTitle = title != null && typeof title !== 'boolean';
 
     if (!open) {
         return null;
     }
 
-    const titleId = title !== undefined && title !== null ? `${instanceId}-title` : undefined;
+    const titleId = hasTitle ? `${instanceId}-title` : undefined;
 
     return (
-        <div className="angin-modal__backdrop" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
+        <div
+            className="angin-modal__backdrop"
+            onMouseDown={(event) => event.target === event.currentTarget && onClose()}
+        >
             <div
                 {...props}
                 {...dataTestId(testId)}
                 aria-labelledby={props['aria-labelledby'] || titleId}
                 aria-modal="true"
-                ref={(element) => { dialogRef.current = element; }}
+                ref={(element) => {
+                    dialogRef.current = element;
+                }}
                 tabIndex={-1}
                 className={cx('angin-modal', className)}
                 role="dialog"
             >
                 <div className="angin-modal__header">
-                    {title !== undefined && title !== null && <h2 className="angin-modal__title" id={titleId}>{title}</h2>}
+                    {hasTitle && (
+                        <h2 className="angin-modal__title" id={titleId}>
+                            {title}
+                        </h2>
+                    )}
                     <button aria-label="Close dialog" className="angin-modal__close" onClick={onClose} type="button">
                         ×
                     </button>

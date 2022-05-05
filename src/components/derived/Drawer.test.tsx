@@ -21,14 +21,60 @@ describe('Drawer', () => {
     });
 });
 
-it('focuses the dialog close button when opened', () => { let c!: HTMLElement; act(() => { c = render(<Drawer open onClose={() => {}}>Body</Drawer>); }); expect(document.activeElement).toBe(c.querySelector('button')); });
+it('focuses the dialog close button when opened', () => {
+    let c!: HTMLElement;
+    act(() => {
+        c = render(
+            <Drawer open onClose={() => {}}>
+                Body
+            </Drawer>,
+        );
+    });
+    expect(document.activeElement).toBe(c.querySelector('button'));
+});
 
 it('wraps Tab focus and restores the opener after closing', () => {
-    const opener = document.createElement('button'); document.body.appendChild(opener); opener.focus();
-    let c!: HTMLElement; act(() => { c = render(<Drawer open onClose={() => {}}><button>Last</button><input type="hidden" /><button tabIndex={-1}>Skipped</button></Drawer>); });
-    const buttons = c.querySelectorAll('button'); buttons[1].focus();
+    const opener = document.createElement('button');
+    document.body.appendChild(opener);
+    opener.focus();
+    let c!: HTMLElement;
+    act(() => {
+        c = render(
+            <Drawer open onClose={() => {}}>
+                <button>Last</button>
+                <input type="hidden" />
+                <button tabIndex={-1}>Skipped</button>
+                <div style={{ display: 'none' }}>
+                    <button>Hidden by ancestor</button>
+                </div>
+                <div style={{ visibility: 'hidden' }}>
+                    <button>Invisible by ancestor</button>
+                </div>
+            </Drawer>,
+        );
+    });
+    const buttons = c.querySelectorAll('button');
+    buttons[1].focus();
     buttons[1].dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }));
     expect(document.activeElement).toBe(buttons[0]);
-    act(() => { ReactDOM.render(<Drawer open={false} onClose={() => {}}>Body</Drawer>, c); });
-    expect(document.activeElement).toBe(opener); opener.remove();
+    act(() => {
+        ReactDOM.render(
+            <Drawer open={false} onClose={() => {}}>
+                Body
+            </Drawer>,
+            c,
+        );
+    });
+    expect(document.activeElement).toBe(opener);
+    opener.remove();
+});
+
+it('omits dialog title relationships for a false title', () => {
+    const c = render(
+        <Drawer open title={false} onClose={() => {}}>
+            Body
+        </Drawer>,
+    );
+    expect(c.querySelector('h2')).toBeNull();
+    expect(c.querySelector('[role="dialog"]')?.hasAttribute('aria-labelledby')).toBe(false);
 });

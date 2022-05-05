@@ -36,8 +36,8 @@ export function Accordion({
         const nextKeys = expandedKeys.includes(key)
             ? expandedKeys.filter((itemKey) => itemKey !== key)
             : multiple
-                ? [...expandedKeys, key]
-                : [key];
+            ? [...expandedKeys, key]
+            : [key];
         if (!openKeys) {
             setUncontrolledKeys(nextKeys);
         }
@@ -49,7 +49,10 @@ export function Accordion({
             {items.map((item) => {
                 const expanded = expandedKeys.includes(item.key);
                 return (
-                    <div className={cx('angin-accordion__item', expanded && 'angin-accordion__item--expanded')} key={item.key}>
+                    <div
+                        className={cx('angin-accordion__item', expanded && 'angin-accordion__item--expanded')}
+                        key={item.key}
+                    >
                         <h3 className="angin-accordion__heading">
                             <button
                                 aria-controls={`${instanceId}-panel-${item.key}`}
@@ -60,9 +63,25 @@ export function Accordion({
                                 onClick={() => toggle(item.key)}
                                 onKeyDown={(event) => {
                                     const root = event.currentTarget.closest('.angin-accordion');
-                                    const buttons = Array.from(root!.querySelectorAll<HTMLButtonElement>('.angin-accordion__trigger:not(:disabled)')).filter((button) => button.closest('.angin-accordion') === root && !button.closest('[hidden]'));
+                                    const buttons = Array.from(
+                                        root!.querySelectorAll<HTMLButtonElement>(
+                                            '.angin-accordion__trigger:not(:disabled)',
+                                        ),
+                                    ).filter(
+                                        (button) =>
+                                            button.closest('.angin-accordion') === root && !button.closest('[hidden]'),
+                                    );
                                     const index = buttons.indexOf(event.currentTarget);
-                                    const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : event.key === 'ArrowDown' ? (index + 1) % buttons.length : event.key === 'ArrowUp' ? (index - 1 + buttons.length) % buttons.length : -1;
+                                    const next =
+                                        event.key === 'Home'
+                                            ? 0
+                                            : event.key === 'End'
+                                            ? buttons.length - 1
+                                            : event.key === 'ArrowDown'
+                                            ? (index + 1) % buttons.length
+                                            : event.key === 'ArrowUp'
+                                            ? (index - 1 + buttons.length) % buttons.length
+                                            : -1;
                                     if (next < 0) return;
                                     event.preventDefault();
                                     buttons[next]?.focus();
@@ -70,7 +89,9 @@ export function Accordion({
                                 type="button"
                             >
                                 <span>{item.title}</span>
-                                <span aria-hidden="true" className="angin-accordion__icon">+</span>
+                                <span aria-hidden="true" className="angin-accordion__icon">
+                                    +
+                                </span>
                             </button>
                         </h3>
                         <div

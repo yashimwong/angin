@@ -55,7 +55,7 @@ export function Menu({
             return undefined;
         }
         const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
+            if (event.key === 'Escape' && !event.defaultPrevented) {
                 setOpen(false);
                 rootRef.current?.querySelector<HTMLButtonElement>('.angin-menu__trigger')?.focus();
             }
@@ -65,7 +65,10 @@ export function Menu({
         };
         document.addEventListener('mousedown', handleOutside);
         document.addEventListener('keydown', handleKeyDown);
-        return () => { document.removeEventListener('keydown', handleKeyDown); document.removeEventListener('mousedown', handleOutside); };
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('mousedown', handleOutside);
+        };
     }, [isOpen, open, onOpenChange]);
 
     return (
@@ -78,21 +81,53 @@ export function Menu({
                 className="angin-menu__trigger"
                 onClick={() => setOpen(!isOpen)}
                 onKeyDown={(event) => {
-                    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') { event.preventDefault(); openAtEnd.current = event.key === 'ArrowUp'; setOpen(true); }
+                    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                        event.preventDefault();
+                        openAtEnd.current = event.key === 'ArrowUp';
+                        setOpen(true);
+                    }
                 }}
                 type="button"
             >
                 {label}
             </button>
             {isOpen && (
-                <ul className="angin-menu__list" id={menuId} aria-labelledby={`${instanceId}-trigger`} role="menu" onKeyDown={(event) => {
-                    if (event.key === 'Tab') { setOpen(false); return; }
-                    const buttons = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>('button:not(:disabled)'));
-                    const index = buttons.indexOf(document.activeElement as HTMLButtonElement);
-                    const next = event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : event.key === 'ArrowDown' ? (index + 1) % buttons.length : event.key === 'ArrowUp' ? (index - 1 + buttons.length) % buttons.length : -1;
-                    if (next < 0 || !buttons[next]) return;
-                    event.preventDefault(); buttons[next].focus();
-                }}>
+                <ul
+                    className="angin-menu__list"
+                    id={menuId}
+                    aria-labelledby={`${instanceId}-trigger`}
+                    role="menu"
+                    onKeyDown={(event) => {
+                        if (event.key === 'Escape') {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            setOpen(false);
+                            rootRef.current?.querySelector<HTMLButtonElement>('.angin-menu__trigger')?.focus();
+                            return;
+                        }
+                        if (event.key === 'Tab') {
+                            setOpen(false);
+                            return;
+                        }
+                        const buttons = Array.from(
+                            event.currentTarget.querySelectorAll<HTMLButtonElement>('button:not(:disabled)'),
+                        );
+                        const index = buttons.indexOf(document.activeElement as HTMLButtonElement);
+                        const next =
+                            event.key === 'Home'
+                                ? 0
+                                : event.key === 'End'
+                                ? buttons.length - 1
+                                : event.key === 'ArrowDown'
+                                ? (index + 1) % buttons.length
+                                : event.key === 'ArrowUp'
+                                ? (index - 1 + buttons.length) % buttons.length
+                                : -1;
+                        if (next < 0 || !buttons[next]) return;
+                        event.preventDefault();
+                        buttons[next].focus();
+                    }}
+                >
                     {items.map((item) => (
                         <li key={item.key} role="none">
                             <button
@@ -104,7 +139,7 @@ export function Menu({
                                     }
                                     onSelect?.(item.key);
                                     setOpen(false);
-                rootRef.current?.querySelector<HTMLButtonElement>('.angin-menu__trigger')?.focus();
+                                    rootRef.current?.querySelector<HTMLButtonElement>('.angin-menu__trigger')?.focus();
                                 }}
                                 tabIndex={-1}
                                 role="menuitem"

@@ -19,9 +19,12 @@ export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChang
 
 export function Tabs({ activeKey, className, defaultActiveKey, onChange, tabs, testId, ...props }: TabsProps) {
     const instanceId = useDerivedId('angin-tabs', props.id);
-    const [uncontrolledKey, setUncontrolledKey] = useState(defaultActiveKey ?? tabs.find((tab) => !tab.disabled)?.key ?? '');
+    const [uncontrolledKey, setUncontrolledKey] = useState(
+        defaultActiveKey ?? tabs.find((tab) => !tab.disabled)?.key ?? '',
+    );
     const selectedKey = activeKey === undefined ? uncontrolledKey : activeKey;
-    const selectedTab = tabs.find((tab) => tab.key === selectedKey && !tab.disabled) || tabs.find((tab) => !tab.disabled);
+    const selectedTab =
+        tabs.find((tab) => tab.key === selectedKey && !tab.disabled) || tabs.find((tab) => !tab.disabled);
 
     const selectTab = (key: string) => {
         if (activeKey === undefined) {
@@ -45,11 +48,23 @@ export function Tabs({ activeKey, className, defaultActiveKey, onChange, tabs, t
                         onKeyDown={(event) => {
                             const enabled = tabs.filter((item) => !item.disabled);
                             const index = enabled.findIndex((item) => item.key === tab.key);
-                            const next = event.key === 'Home' ? 0 : event.key === 'End' ? enabled.length - 1 : event.key === 'ArrowRight' ? (index + 1) % enabled.length : event.key === 'ArrowLeft' ? (index - 1 + enabled.length) % enabled.length : -1;
+                            const next =
+                                event.key === 'Home'
+                                    ? 0
+                                    : event.key === 'End'
+                                    ? enabled.length - 1
+                                    : event.key === 'ArrowRight'
+                                    ? (index + 1) % enabled.length
+                                    : event.key === 'ArrowLeft'
+                                    ? (index - 1 + enabled.length) % enabled.length
+                                    : -1;
                             if (next < 0 || !enabled[next]) return;
                             event.preventDefault();
                             selectTab(enabled[next].key);
-                            const buttons = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>('button:not(:disabled)');
+                            const buttons =
+                                event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>(
+                                    'button:not(:disabled)',
+                                );
                             buttons?.[next]?.focus();
                         }}
                         role="tab"
