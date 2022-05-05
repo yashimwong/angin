@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactNode, useEffect } from 'react';
+import React, { HTMLAttributes, ReactNode, useEffect, useRef } from 'react';
 import { BaseProps, Tone } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
 
@@ -24,13 +24,16 @@ export function Toast({
     tone = 'primary',
     ...props
 }: ToastProps) {
+    const closeRef = useRef(onClose);
+    closeRef.current = onClose;
+    const hasClose = Boolean(onClose);
     useEffect(() => {
-        if (!open || !duration || !onClose) {
+        if (!open || duration === undefined || !Number.isFinite(duration) || duration <= 0 || !hasClose) {
             return undefined;
         }
-        const timeout = window.setTimeout(onClose, duration);
+        const timeout = window.setTimeout(() => closeRef.current?.(), duration);
         return () => window.clearTimeout(timeout);
-    }, [duration, onClose, open]);
+    }, [duration, hasClose, open]);
 
     if (!open) {
         return null;
