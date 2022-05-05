@@ -11,7 +11,7 @@ export interface MenuItem {
 
 export interface MenuProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onSelect'>, BaseProps {
     defaultOpen?: boolean;
-    items: MenuItem[];
+    items: readonly MenuItem[];
     label: ReactNode;
     onOpenChange?: (open: boolean) => void;
     onSelect?: (key: string) => void;

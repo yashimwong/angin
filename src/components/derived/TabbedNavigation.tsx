@@ -12,7 +12,7 @@ export interface TabbedNavigationItem {
 export interface TabbedNavigationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'>, BaseProps {
     activeKey?: string;
     defaultActiveKey?: string;
-    items: TabbedNavigationItem[];
+    items: readonly TabbedNavigationItem[];
     onChange?: (key: string) => void;
     orientation?: 'horizontal' | 'vertical';
 }
@@ -57,11 +57,11 @@ export function TabbedNavigation({
                 };
 
                 return item.href ? (
-                    <a {...sharedProps} aria-disabled={item.disabled || undefined} href={item.disabled ? undefined : item.href} key={item.key}>
+                    <a {...sharedProps} aria-disabled={item.disabled || undefined} tabIndex={item.disabled ? -1 : undefined} href={item.disabled ? undefined : item.href} key={item.key}>
                         {item.label}
                     </a>
                 ) : (
-                    <a {...sharedProps} aria-disabled={item.disabled || undefined} href="#" key={item.key}>
+                    <a {...sharedProps} aria-disabled={item.disabled || undefined} tabIndex={item.disabled ? -1 : undefined} href="#" key={item.key}>
                         {item.label}
                     </a>
                 );

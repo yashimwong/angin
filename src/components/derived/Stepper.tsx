@@ -14,7 +14,7 @@ export interface StepperProps extends Omit<HTMLAttributes<HTMLOListElement>, 'on
     defaultActiveStep?: number;
     onStepChange?: (index: number, key: string) => void;
     orientation?: 'horizontal' | 'vertical';
-    steps: Step[];
+    steps: readonly Step[];
 }
 
 export function Stepper({

@@ -10,7 +10,7 @@ export interface BreadcrumbItem {
 }
 
 export interface BreadcrumbsProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange'>, BaseProps {
-    items: BreadcrumbItem[];
+    items: readonly BreadcrumbItem[];
     onNavigate?: (key: string) => void;
 }
 
@@ -37,6 +37,7 @@ export function Breadcrumbs({ className, items, onNavigate, testId, ...props }: 
                                 <>
                                     <a
                                         aria-disabled={item.disabled || undefined}
+                                        tabIndex={item.disabled ? -1 : undefined}
                                         className="angin-breadcrumbs__link"
                                         href={item.disabled ? undefined : item.href || '#'}
                                         onClick={handleClick}
