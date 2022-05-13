@@ -1,5 +1,5 @@
 // Compile as a consumer installed under node_modules, without source path aliases.
-const { mkdtempSync, mkdirSync, copyFileSync, symlinkSync, rmSync, writeFileSync } = require('fs');
+const { mkdtempSync, mkdirSync, copyFileSync, symlinkSync, rmSync, writeFileSync, readFileSync, readdirSync } = require('fs');
 const { tmpdir } = require('os');
 const { join, resolve } = require('path');
 const { execFileSync } = require('child_process');
@@ -10,9 +10,19 @@ try {
     symlinkSync(root, join(temporary, 'node_modules/angin'), 'junction');
     symlinkSync(join(root, 'node_modules/@types'), join(temporary, 'node_modules/@types'), 'junction');
     copyFileSync(join(__dirname, 'fixtures/consumer.tsx'), join(temporary, 'consumer.tsx'));
+    const files = ['consumer.tsx'];
+    for (const name of readdirSync(join(root, 'docs'))) {
+        if (!name.endsWith('.md')) continue;
+        const source = readFileSync(join(root, 'docs', name), 'utf8');
+        for (const [index, match] of [...source.matchAll(/<!-- typecheck-example -->\s*```tsx\n([\s\S]*?)```/g)].entries()) {
+            const filename = `${name}-${index}.tsx`;
+            writeFileSync(join(temporary, filename), match[1]);
+            files.push(filename);
+        }
+    }
     writeFileSync(join(temporary, 'tsconfig.json'), JSON.stringify({
-        compilerOptions: { strict: true, noEmit: true, jsx: 'react', target: 'ES2018', moduleResolution: 'node', skipLibCheck: false, types: ['react'], lib: ['ES2018', 'DOM'] },
-        files: ['consumer.tsx'],
+        compilerOptions: { strict: true, noEmit: true, jsx: 'react', esModuleInterop: true, target: 'ES2018', moduleResolution: 'node', skipLibCheck: false, types: ['react'], lib: ['ES2018', 'DOM'] },
+        files,
     }));
     execFileSync(process.execPath, [require.resolve('typescript/bin/tsc'), '-p', join(temporary, 'tsconfig.json')], { stdio: 'inherit' });
     console.log('Public declarations and subpath imports verified');
