@@ -1,5 +1,7 @@
 # Props and callbacks
 
+[← Documentation](../README.md#documentation)
+
 Angin components accept native React HTML props where they do not conflict with
 a component-specific value. Avoid forwarding whole application data objects as
 props: unsupported values become DOM attributes.

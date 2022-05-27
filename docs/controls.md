@@ -1,47 +1,172 @@
 # Controls
 
-All controls forward a ref to their native interactive element. `Tooltip` forwards its ref to the wrapper span. Use refs for focus and native form integrations; `onChange` receives the original React change event.
+[← Documentation](../README.md#documentation)
+
+Use native React props for values, validation, and events. Controls forward refs
+to their interactive DOM element; `Tooltip` forwards its ref to a wrapper span.
 
 ## Buttons
 
-`Button` defaults to `type="button"`; set `type="submit"` explicitly for submission. `loading` disables the button and sets `aria-busy`. `IconButton` requires `label` for its accessible name and also supports `loading`. An explicit `aria-busy` survives when loading is false.
+`Button` defaults to `type="button"`. Set `type="submit"` when it should submit a
+form. `loading` disables interaction and sets `aria-busy`; an explicit
+`aria-busy` is preserved when loading is false.
 
+<!-- typecheck-example -->
 ```tsx
-const saveRef = React.createRef<HTMLButtonElement>();
-<Button ref={saveRef} type="submit" loading={saving}>Save</Button>
-<IconButton icon={<SaveIcon />} label="Save changes" loading={saving} />
+import React from 'react';
+import { Button, IconButton, Stack } from 'angin';
+
+export function Actions({ onSave, saving }: { onSave: () => void; saving: boolean }) {
+    return (
+        <Stack direction="row" gap="sm">
+            <Button loading={saving} onClick={onSave}>Save changes</Button>
+            <IconButton
+                icon={<span aria-hidden="true">✓</span>}
+                label="Save changes"
+                loading={saving}
+                onClick={onSave}
+            />
+        </Stack>
+    );
+}
 ```
+
+| Prop | Meaning |
+| --- | --- |
+| `size` | `"sm"`, `"md"` (default), or `"lg"` |
+| `variant` | `"solid"`, `"outline"`, `"ghost"`, or `"danger"` |
+| `loading` | Disable the button and show a spinner |
+| `fullWidth` | Stretch `Button` to its container width |
+| `label` | Required accessible name for `IconButton` |
+
+`Button` defaults to the solid variant; `IconButton` defaults to ghost.
 
 ## Text fields and selects
 
-`Input`, `Textarea`, and `Select` accept `label`, `helperText`, `error`, and `controlSize`. `className` styles the native control, and `testId` identifies it. An error takes precedence over helper text and marks the control invalid. Existing `aria-describedby` IDs are combined with the displayed message ID. Fields without a message do not reference a missing message.
+![A field's label, native input, and helper message mapped to their corresponding props.](assets/field-anatomy.svg)
 
-These three fields generate stable client-side IDs when `id` is omitted. Supply explicit, unique IDs during server rendering so server and hydration markup agree. Explicit IDs also make external labels and message references predictable: a message for `id="email"` uses `email-description`.
+`Input`, `Textarea`, and `Select` share `label`, `helperText`, `error`, and
+`controlSize`. An error replaces helper text and marks the control invalid.
+`className`, `testId`, and `ref` target the native control.
 
+<!-- typecheck-example -->
 ```tsx
-<Input id="email" label="Email" type="email" autoComplete="email"
-       helperText="Use your work address" aria-describedby="privacy-note" />
-<Textarea id="notes" label="Notes" rows={4} />
-const options = [{ label: 'One', value: 'one' }] as const;
-<Select id="choice" label="Choice" options={options} />
+import React from 'react';
+import { Input, Select, Stack, Textarea } from 'angin';
+
+const topics = [
+    { label: 'Support', value: 'support' },
+    { label: 'Feedback', value: 'feedback' },
+] as const;
+
+export function ContactFields() {
+    return (
+        <Stack gap="md">
+            <Input
+                id="contact-email"
+                name="email"
+                label="Email address"
+                type="email"
+                autoComplete="email"
+                helperText="Use your work address."
+                required
+            />
+            <Select id="contact-topic" name="topic" label="Topic" options={topics} />
+            <Textarea id="contact-notes" name="notes" label="Notes" rows={4} />
+        </Stack>
+    );
+}
 ```
 
-`Select` accepts readonly option collections. Each option supports `label`, `value`, and `disabled`. Supply children instead of `options` for custom `<option>` or `<optgroup>` markup. Native `multiple`, `size`, `value`, and `defaultValue` remain available.
+### Labels and descriptions
+
+Fields generate a stable client-side ID when `id` is omitted. For server
+rendering, supply explicit, unique IDs so server and client markup agree.
+A field with `id="email"` uses `email-description` for its displayed message.
+Existing `aria-describedby` IDs are combined with that message ID.
+
+### Native props and option groups
+
+`controlSize` changes visual sizing. Native numeric `size` remains available for
+input width or select row count. Select accepts readonly `options` collections,
+whose entries have `value`, `label`, and optional `disabled`.
+
+Omit `options` to provide native children, including option groups:
+
+```tsx
+<Select id="region" label="Region" defaultValue="my">
+    <optgroup label="Asia">
+        <option value="my">Malaysia</option>
+        <option value="jp">Japan</option>
+    </optgroup>
+</Select>
+```
+
+For async submission and loading/error feedback, see the complete
+[form example](form-example.md).
 
 ## Checkboxes, radios, and switches
 
-`Checkbox`, `Radio`, and `Switch` keep native checked/defaultChecked and event semantics. Their required `label` is rendered inside a wrapping label. `description` renders beneath the label; provide a unique `id` to link that description to the input. `Checkbox` additionally accepts `error`, which overrides its description and marks the input invalid. `className` styles the outer field; `testId` identifies the input.
+All three preserve native `checked`, `defaultChecked`, and change events. Read
+`event.currentTarget.checked` for the next value.
 
-Radio buttons use the same native `name` to form a group. Switches use a checkbox input with `role="switch"`; read `event.currentTarget.checked` in change handlers.
+<!-- typecheck-example -->
+```tsx
+import React, { useState } from 'react';
+import { Checkbox, Stack, Switch } from 'angin';
+
+export function Preferences() {
+    const [enabled, setEnabled] = useState(false);
+
+    return (
+        <Stack>
+            <Checkbox id="terms" name="terms" label="I agree to the terms" required />
+            <Switch
+                id="notifications"
+                label="Email notifications"
+                description="Receive a summary each week."
+                checked={enabled}
+                onChange={(event) => setEnabled(event.currentTarget.checked)}
+            />
+        </Stack>
+    );
+}
+```
+
+- The required `label` is rendered inside a wrapping label.
+- `description` appears below it; provide `id` to link it to the control.
+- Checkbox's `error` replaces its description and sets `aria-invalid`.
+- Give Radio controls the same native `name` to form a group.
+- `className` styles the outer field; `testId` and `ref` identify the input.
 
 ## Tooltips
 
-`Tooltip` shows `content` on focus or hover. `defaultOpen` initializes uncontrolled visibility; `open` controls visibility. `onOpenChange` receives requested visibility changes, including Escape dismissal. In controlled mode, update `open` in response to the callback. `onKeyDown` runs before Escape handling and can prevent the default dismissal.
+Tooltip shows `content` on focus or hover and dismisses it with Escape. Use
+`defaultOpen` for initial visibility, or `open` with `onOpenChange` for controlled
+visibility. The caller must apply requested changes in controlled mode.
 
+<!-- typecheck-example -->
 ```tsx
-<Tooltip content="Save your changes" open={helpOpen} onOpenChange={setHelpOpen}>
-  <button aria-label="Save changes">Save</button>
-</Tooltip>
+import React from 'react';
+import { Tooltip } from 'angin';
+
+export function SaveHelp({ onSave }: { onSave: () => void }) {
+    return (
+        <Tooltip id="save-help" content="Save your current changes">
+            <button type="button" onClick={onSave}>Save</button>
+        </Tooltip>
+    );
+}
 ```
 
-Use a focusable child for keyboard access. For a single native element child, Tooltip merges its visible description onto the child while preserving that child’s ref, event handlers, and existing description IDs. The child still needs its own accessible name. Fragments, multiple children, and composite components retain the wrapper description as a fallback; ARIA descriptions do not inherit into descendants, so use a native element trigger when its focused element needs the tooltip description. `id` yields a predictable `${id}-tooltip` content ID, while `testId` yields `${testId}-content`. Supply unique explicit IDs for server rendering and repeated test IDs. Otherwise each tooltip generates a distinct stable client-side fallback ID. External wrapper `aria-describedby` references are preserved while the content is visible.
+Use a **single native, focusable element** as the trigger. Tooltip merges its
+description onto that element without replacing its ref, event handlers, or
+existing description IDs. The trigger still needs its own accessible name.
+
+Fragments, multiple children, and composite components retain the wrapper
+relationship as a fallback. ARIA descriptions do not inherit into descendants;
+those triggers need their own integration. Tooltip content should be informational,
+without interactive controls.
+
+An explicit `id` produces `${id}-tooltip`; `testId` produces `${testId}-content`.
+Otherwise Tooltip generates a client-side ID. Supply a unique explicit ID for SSR.

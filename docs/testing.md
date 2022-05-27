@@ -1,5 +1,7 @@
 # Testing and validation
 
+[← Documentation](../README.md#documentation)
+
 Run `npm run check` before proposing a change. It combines complementary checks:
 
 | Command | What it proves |

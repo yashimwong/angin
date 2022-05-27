@@ -1,9 +1,13 @@
 # Display and layout components
 
+[← Documentation](../README.md#documentation)
+
 Import display primitives from `angin`. Every display primitive accepts a React
 ref to its root DOM element, native HTML attributes, `className`, `style`, and
 `testId`. `Card` renders a `section`; `Text` defaults to `p` and supports `span`
 and `div`. Choose the heading level for document structure rather than font size.
+
+## Compose a surface
 
 ```tsx
 import React from 'react';
@@ -20,6 +24,8 @@ const cardRef = React.createRef<HTMLElement>();
 </Card>
 ```
 
+## Alerts and progress
+
 `Alert` defaults to the assertive `alert` role. Use `role="status"` for routine
 updates that should not interrupt an announcement. Supply `onDismiss` to show
 a labelled dismiss button; removing the alert remains the parent's responsibility.
@@ -35,17 +41,23 @@ these attributes are forwarded to the progressbar track.
 <Progress label={<strong>Archive</strong>} aria-labelledby="upload-title" />
 ```
 
+## Spacing and wrapping
+
 `Stack` defaults to a column with the `md` spacing token. Use `direction="row"`,
 `wrap="wrap"`, and `gap={12}` for a wrapping row with a 12px gap. Gaps also accept
 CSS lengths such as `"1rem"`. Explicit layout props override corresponding
 `style` properties; omitted alignment, wrapping, and justification props retain
 those style values.
 
+## Identity and loading states
+
 `Avatar` uses up to two Unicode initials from `name`; failed images fall back to
 those initials. Keep `name` descriptive because it also provides the accessible
 name. `Spinner` defaults to a status named “Loading”; customize `label` when
 multiple operations run simultaneously. Give `Skeleton` a `label` only when it
 should announce a status, and use `width`, `height`, or `style` for dimensions.
+
+## Interactive surfaces and separators
 
 `Card`'s `interactive` prop changes appearance. Add appropriate keyboard behavior
 and semantics for your interaction, or put a native link/button inside the card.

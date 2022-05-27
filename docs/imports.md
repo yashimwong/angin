@@ -1,5 +1,7 @@
 # Imports and bundlers
 
+[← Documentation](../README.md#documentation)
+
 The root barrel is convenient and tree shakeable in a production bundler:
 
 ```tsx

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-labelledby="title description">
+  <title id="title">Angin — small components, familiar React</title>
+  <desc id="description">A component illustration using Angin's blue and slate palette: a profile card with an avatar, badge, input, progress bar, and buttons.</desc>
+  <defs>
+    <linearGradient id="background" x2="1" y2="1">
+      <stop stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#172554"/>
+    </linearGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#94a3b8" opacity=".12"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="440" rx="20" fill="url(#background)"/>
+  <rect width="1200" height="440" rx="20" fill="url(#dots)"/>
+  <g font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif">
+    <g transform="translate(52 52)" fill="none" stroke="#60a5fa" stroke-width="4" stroke-linecap="round">
+      <path d="M0 12h36c15 0 15-20 3-20"/>
+      <path d="M0 26h54c18 0 18 25 3 25"/>
+      <path d="M8 40h23"/>
+    </g>
+    <text x="52" y="159" font-size="60" font-weight="750" letter-spacing="-2" fill="#ffffff">Angin</text>
+    <text x="54" y="205" font-size="27" font-weight="500" fill="#e2e8f0">Small components.</text>
+    <text x="54" y="242" font-size="27" font-weight="500" fill="#e2e8f0">Familiar React.</text>
+    <text x="54" y="289" font-size="17" fill="#cbd5e1">Native controls · Typed props · Composable layouts</text>
+    <rect x="54" y="332" width="252" height="36" rx="18" fill="#1e3a8a"/>
+    <text x="180" y="356" text-anchor="middle" font-size="15" font-weight="600" fill="#dbeafe">33 components. One small library.</text>
+    <rect x="579" y="47" width="568" height="358" rx="18" fill="#020617" opacity=".25"/>
+    <rect x="570" y="36" width="568" height="358" rx="16" fill="#ffffff"/>
+    <circle cx="617" cy="82" r="23" fill="#eff6ff"/>
+    <text x="617" y="89" text-anchor="middle" font-size="18" font-weight="650" fill="#1d4ed8">AL</text>
+    <text x="656" y="79" font-size="19" font-weight="650" fill="#0f172a">Your workspace</text>
+    <text x="656" y="101" font-size="14" fill="#64748b">A few pieces. A complete interface.</text>
+    <rect x="1038" y="64" width="76" height="28" rx="14" fill="#f0fdf4"/>
+    <text x="1076" y="83" text-anchor="middle" font-size="13" font-weight="600" fill="#166534">Active</text>
+    <path d="M594 126h520" stroke="#e2e8f0"/>
+    <text x="594" y="159" font-size="14" font-weight="600" fill="#334155">Project name</text>
+    <rect x="594" y="171" width="520" height="44" rx="8" fill="#ffffff" stroke="#94a3b8"/>
+    <text x="609" y="199" font-size="16" fill="#0f172a">A little room to build</text>
+    <text x="594" y="253" font-size="14" font-weight="600" fill="#334155">Setup progress</text>
+    <text x="1114" y="253" text-anchor="end" font-size="14" fill="#64748b">75%</text>
+    <rect x="594" y="267" width="520" height="8" rx="4" fill="#e2e8f0"/>
+    <rect x="594" y="267" width="390" height="8" rx="4" fill="#2563eb"/>
+    <rect x="594" y="306" width="164" height="44" rx="8" fill="#2563eb"/>
+    <text x="676" y="334" text-anchor="middle" font-size="15" font-weight="600" fill="#ffffff">Save changes</text>
+    <rect x="772" y="306" width="104" height="44" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+    <text x="824" y="334" text-anchor="middle" font-size="15" font-weight="600" fill="#334155">Cancel</text>
+    <text x="1114" y="374" text-anchor="end" font-size="11" letter-spacing="1.2" fill="#64748b">COMPONENT ILLUSTRATION</text>
+  </g>
+</svg>

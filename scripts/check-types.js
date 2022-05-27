@@ -11,11 +11,12 @@ try {
     symlinkSync(join(root, 'node_modules/@types'), join(temporary, 'node_modules/@types'), 'junction');
     copyFileSync(join(__dirname, 'fixtures/consumer.tsx'), join(temporary, 'consumer.tsx'));
     const files = ['consumer.tsx'];
-    for (const name of readdirSync(join(root, 'docs'))) {
-        if (!name.endsWith('.md')) continue;
-        const source = readFileSync(join(root, 'docs', name), 'utf8');
+    const documents = ['README.md', ...readdirSync(join(root, 'docs'))
+        .filter(name => name.endsWith('.md')).map(name => `docs/${name}`)];
+    for (const name of documents) {
+        const source = readFileSync(join(root, name), 'utf8');
         for (const [index, match] of [...source.matchAll(/<!-- typecheck-example -->\s*```tsx\n([\s\S]*?)```/g)].entries()) {
-            const filename = `${name}-${index}.tsx`;
+            const filename = `${name.replace(/\//g, '-')}-${index}.tsx`;
             writeFileSync(join(temporary, filename), match[1]);
             files.push(filename);
         }

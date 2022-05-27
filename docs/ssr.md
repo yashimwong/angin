@@ -1,5 +1,7 @@
 # Server rendering
 
+[← Documentation](../README.md#documentation)
+
 Components can render without `window` or `document`. Dialog focus management,
 Menu listeners, and Toast timeouts run in effects, after the client mounts.
 The package does not inject styles; import the stylesheet through your framework.

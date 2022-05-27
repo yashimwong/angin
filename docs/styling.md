@@ -1,5 +1,7 @@
 # Styling Angin
 
+[← Documentation](../README.md#documentation)
+
 Load the stylesheet once in the application's entry point:
 
 ```ts

@@ -1,5 +1,7 @@
 # A controlled list with pagination
 
+[← Documentation](../README.md#documentation)
+
 Derive the visible slice from the requested page. Pagination uses one-based
 pages and does not fetch data. This example keeps page state in the application,
 clamps it when rows shrink, and names its progress indicator.

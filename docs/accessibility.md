@@ -1,5 +1,7 @@
 # Accessibility contracts
 
+[← Documentation](../README.md#documentation)
+
 Components provide native semantics and keyboard behavior where possible. The
 application still supplies meaningful labels, logical reading order, and content
 that works with its chosen colors and interaction model.

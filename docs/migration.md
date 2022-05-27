@@ -1,5 +1,7 @@
 # Migration notes
 
+[← Documentation](../README.md#documentation)
+
 Existing root imports continue to work. Prefer `angin/styles.css` over the
 still-supported `angin/src/styles/index.css`. Public `angin/base/*` and
 `angin/derived/*` paths avoid tying consumers to a build output format. Both

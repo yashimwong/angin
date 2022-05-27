@@ -1,5 +1,7 @@
 # A native form with async submission
 
+[← Documentation](../README.md#documentation)
+
 Keep field values in the browser when the application only needs them at submit
 time. Give every field a `name` for FormData and an explicit `id` for labels/SSR.
 The callback receives native form data; the submit button exposes loading state,

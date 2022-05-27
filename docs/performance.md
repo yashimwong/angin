@@ -1,5 +1,7 @@
 # Performance and package size
 
+[← Documentation](../README.md#documentation)
+
 Angin has no non-peer runtime dependencies. The class-name helper joins strings,
 conditional objects, and nested arrays locally. React remains external to the
 library so the application can supply one shared copy.
