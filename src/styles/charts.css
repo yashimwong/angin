@@ -1,0 +1,58 @@
+/* Set these on any ancestor to theme an individual chart or dashboard. */
+.angin-chart {
+    --angin-chart-surface: var(--angin-color-white, #fff);
+    --angin-chart-text: var(--angin-color-gray-900, #0f172a);
+    --angin-chart-muted: var(--angin-color-gray-500, #64748b);
+    --angin-chart-grid: var(--angin-color-gray-200, #e2e8f0);
+    box-sizing: border-box;
+    min-width: 0;
+    width: 100%;
+    padding: var(--angin-space-5, 1.25rem);
+    border: 1px solid var(--angin-chart-grid);
+    border-radius: var(--angin-radius-lg, 0.75rem);
+    background: var(--angin-chart-surface);
+    color: var(--angin-chart-text);
+    font-family: var(--angin-font-family, system-ui, sans-serif);
+    font-variant-numeric: tabular-nums;
+}
+.angin-chart *, .angin-chart *::before, .angin-chart *::after { box-sizing: border-box; }
+.angin-chart__header { margin-bottom: 1rem; }
+.angin-chart__title { margin: 0; font-size: 1rem; font-weight: 600; line-height: 1.5; }
+.angin-chart__description, .angin-chart__note { margin: 0.25rem 0 0; font-size: 0.8125rem; color: var(--angin-chart-muted); line-height: 1.5; }
+.angin-chart__canvas { border-radius: 0.375rem; outline-offset: 3px; }
+.angin-chart__canvas:focus-visible, .angin-chart button:focus-visible, .angin-chart summary:focus-visible { outline: 2px solid var(--angin-chart-1, #2563eb); outline-offset: 3px; }
+.angin-chart__canvas svg { display: block; width: 100%; height: auto; overflow: visible; }
+.angin-chart__axes text, .angin-chart__node text { fill: var(--angin-chart-muted); font-size: 11px; }
+.angin-chart__grid { stroke: var(--angin-chart-grid); stroke-width: 1; stroke-dasharray: 3 5; }
+.angin-chart__edges { stroke: var(--angin-chart-muted); opacity: 0.4; }
+.angin-chart__track { fill: var(--angin-chart-grid); }
+.angin-chart__center { fill: var(--angin-chart-text); font-size: 22px; font-weight: 600; }
+.angin-chart__tooltip { display: flex; align-items: center; gap: 0.5rem; min-height: 2.25rem; padding: 0.5rem 0; font-size: 0.8125rem; overflow-wrap: anywhere; }
+.angin-chart__hint { color: var(--angin-chart-muted); }
+.angin-chart__swatch { display: inline-block; flex: 0 0 auto; width: 0.625rem; height: 0.625rem; margin-right: 0.375rem; border-radius: 50%; vertical-align: middle; }
+.angin-chart__legend { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; list-style: none; padding: 0; margin: 0.75rem 0 0; font-size: 0.8125rem; }
+.angin-chart__legend li > span { display: inline-flex; align-items: center; min-height: 2rem; }
+.angin-chart button { font: inherit; color: inherit; cursor: pointer; }
+.angin-chart__legend-button { border: 0; background: transparent; padding: 0.5rem 0.25rem; border-radius: 0.25rem; }
+.angin-chart__legend-button[aria-pressed='false'] { text-decoration: line-through; opacity: 0.55; }
+.angin-chart button:disabled { opacity: 0.45; cursor: default; }
+.angin-chart__controls, .angin-chart__data nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-top: 0.75rem; font-size: 0.8125rem; }
+.angin-chart__controls button, .angin-chart__data button { border: 1px solid var(--angin-chart-grid); border-radius: 0.375rem; background: var(--angin-chart-surface); padding: 0.5rem 0.75rem; min-height: 2.25rem; }
+.angin-chart__state { display: grid; place-items: center; width: 100%; color: var(--angin-chart-muted); font-size: 0.875rem; }
+.angin-chart__details { margin-top: 1rem; border-top: 1px solid var(--angin-chart-grid); padding-top: 0.75rem; font-size: 0.8125rem; }
+.angin-chart__details summary { cursor: pointer; padding: 0.25rem 0; }
+.angin-chart__data { overflow-x: auto; }
+.angin-chart__data table { border-collapse: collapse; width: 100%; text-align: left; margin-top: 0.75rem; }
+.angin-chart__data th, .angin-chart__data td { padding: 0.5rem; border-bottom: 1px solid var(--angin-chart-grid); }
+.angin-chart__data caption { text-align: left; padding: 0.5rem; font-weight: 600; }
+.angin-chart--sparkline { border: 0; padding: 0; background: transparent; }
+.angin-chart--sparkline .angin-chart__header { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+@media (max-width: 480px) { .angin-chart { padding: 0.75rem; } .angin-chart--sparkline { padding: 0; } }
+@media (forced-colors: active) {
+    .angin-chart__line, .angin-chart__radar, .angin-chart__candle line { stroke: CanvasText; }
+    .angin-chart__point, .angin-chart__bar, .angin-chart__slice, .angin-chart__radial-bar, .angin-chart__cell, .angin-chart__node circle { fill: Highlight; stroke: CanvasText; }
+    .angin-chart__grid, .angin-chart__edges { stroke: GrayText; }
+    .angin-chart__candle-body { stroke: CanvasText; }
+    .angin-chart__candle[data-direction='down'] .angin-chart__candle-body { fill: CanvasText; }
+    .angin-chart__candle[data-direction='up'] .angin-chart__candle-body { fill: Canvas; }
+}
