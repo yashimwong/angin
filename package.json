@@ -102,7 +102,21 @@
         "./dist/*": "./dist/*",
         "./package.json": "./package.json",
         "./styles.css": "./src/styles/index.css",
-        "./styles/*": "./src/styles/*"
+        "./styles/*": "./src/styles/*",
+        "./charts": {
+            "types": "./dist/esm/components/charts/index.d.ts",
+            "node": "./dist/cjs/components/charts/index.js",
+            "import": "./dist/esm/components/charts/index.js",
+            "require": "./dist/cjs/components/charts/index.js",
+            "default": "./dist/esm/components/charts/index.js"
+        },
+        "./charts/*": {
+            "types": "./dist/esm/components/charts/*.d.ts",
+            "node": "./dist/cjs/components/charts/*.js",
+            "import": "./dist/esm/components/charts/*.js",
+            "require": "./dist/cjs/components/charts/*.js",
+            "default": "./dist/esm/components/charts/*.js"
+        }
     },
     "typesVersions": {
         "*": {
@@ -120,6 +134,12 @@
             ],
             "utils": [
                 "dist/esm/utils/cx.d.ts"
+            ],
+            "charts": [
+                "dist/esm/components/charts/index.d.ts"
+            ],
+            "charts/*": [
+                "dist/esm/components/charts/*.d.ts"
             ]
         }
     },
