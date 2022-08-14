@@ -1,0 +1,11 @@
+import React from 'react';
+import { Meta, Story } from '@storybook/react';
+import { LineChart, LineChartProps } from '../src/components/charts/LineChart';
+import { revenue } from './chartData';
+export default { title: 'Charts/LineChart', component: LineChart } as Meta;
+export const Default: Story<LineChartProps> = args => <LineChart {...args} />;
+Default.args = { series: revenue, title: 'Revenue over time', description: 'Compare periods; toggle a series in the legend.', showTable: true };
+export const Steps: Story<LineChartProps> = args => <LineChart {...args} />;
+Steps.args = { ...Default.args, interpolation: 'step', showPoints: true };
+export const Dense: Story<LineChartProps> = args => <LineChart {...args} />;
+Dense.args = { title: '100,000 observations', maxPoints: 600, series: [{ id: 'dense', name: 'Signal', data: Array.from({ length: 100000 }, (_, x) => ({ x, y: Math.sin(x / 200) + Math.cos(x / 23) * 0.2 })) }] };
