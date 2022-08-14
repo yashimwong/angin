@@ -1,0 +1,13 @@
+import React from 'react';
+import { Meta, Story } from '@storybook/react';
+import { BarChart, BarChartProps } from '../src/components/charts/BarChart';
+import { revenue, currency } from './chartData';
+export default { title: 'Charts/BarChart', component: BarChart } as Meta;
+export const Default: Story<BarChartProps> = args => <BarChart {...args} />;
+Default.args = { series: revenue.map(entry => ({ ...entry, data: entry.data.slice(0, 6) })), title: 'Sales by period', formatY: currency, showTable: true };
+export const Stacked: Story<BarChartProps> = args => <BarChart {...args} />;
+Stacked.args = { ...Default.args, stacked: true };
+export const Horizontal: Story<BarChartProps> = args => <BarChart {...args} />;
+Horizontal.args = { ...Default.args, horizontal: true };
+export const Signed: Story<BarChartProps> = args => <BarChart {...args} />;
+Signed.args = { title: 'Net movement', stacked: true, series: [{ id: 'a', name: 'North', data: [{ x: 0, y: 30 }, { x: 1, y: -20 }] }, { id: 'b', name: 'South', data: [{ x: 0, y: 20 }, { x: 1, y: -10 }] }] };
