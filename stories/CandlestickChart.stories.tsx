@@ -1,0 +1,11 @@
+import React from 'react';
+import { Meta, Story } from '@storybook/react';
+import { CandlestickChart, CandlestickChartProps } from '../src/components/charts/CandlestickChart';
+import { trades, date } from './chartData';
+export default { title: 'Charts/CandlestickChart', component: CandlestickChart } as Meta;
+export const Default: Story<CandlestickChartProps> = args => <CandlestickChart {...args} />;
+Default.args = { data: trades, title: 'ACME · daily candles', description: 'Synthetic demonstration data. Hollow candles closed at or above their opening price.', formatX: date, formatY: value => value.toFixed(2), showTable: true };
+export const Aggregated: Story<CandlestickChartProps> = args => <CandlestickChart {...args} />;
+Aggregated.args = { ...Default.args, maxPoints: 30, title: 'ACME · aggregated candles' };
+export const PriceOnly: Story<CandlestickChartProps> = args => <CandlestickChart {...args} />;
+PriceOnly.args = { ...Default.args, showVolume: false, showControls: false };
