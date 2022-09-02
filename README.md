@@ -2,7 +2,7 @@
 
 ![Angin: small components, familiar React. An illustrated card combines an avatar, badge, field, progress bar, and buttons.](docs/assets/angin-overview.svg)
 
-A small React UI library with **33 components**, native form props, and composable
+A small React UI library with **46 components**, native form props, and composable
 layouts. Bring your application's React installation; Angin has no additional
 runtime dependencies.
 
@@ -72,6 +72,7 @@ See the [SSR guide](docs/ssr.md) for the complete list and calendar date handlin
 | Content and layout | Text, Heading, Link, Card, Stack, Divider | [Display and layout](docs/display.md) |
 | Status and identity | Alert, Badge, Avatar, Progress, Skeleton, Spinner | [Display and layout](docs/display.md) |
 | Selection and navigation | Tabs, TabbedNavigation, Accordion, Calendar, Menu, Breadcrumbs, Pagination, Stepper | [Composite components](docs/derived.md) |
+| Data visualization | LineChart, AreaChart, BarChart, ScatterChart, BubbleChart, PieChart, DonutChart, RadarChart, RadialBarChart, HeatmapChart, GraphChart, CandlestickChart, Sparkline | [Charts](docs/charts.md) |
 | Overlays and feedback | Modal, Drawer, Toast, EmptyState | [Composite components](docs/derived.md) |
 
 All components are available from `angin`. Use per-component imports when you
@@ -80,10 +81,15 @@ prefer explicit entry points:
 ```tsx
 import { Button } from 'angin/base/Button';
 import { Calendar } from 'angin/derived/Calendar';
+import { CandlestickChart } from 'angin/charts/CandlestickChart';
 ```
 
 Both styles support production tree shaking. [Import details](docs/imports.md)
 cover CommonJS, ES modules, and TypeScript resolution.
+
+Charts include container-aware SVG layout, keyboard and pointer inspection, optional
+data tables, and rendering budgets for dense series. Financial candles support
+OHLC aggregation, volume, and time-range controls. Start with the [chart guide](docs/charts.md).
 
 ## Documentation
 
@@ -91,6 +97,7 @@ cover CommonJS, ES modules, and TypeScript resolution.
 | --- | --- |
 | Set up my first screen | [Getting started](docs/getting-started.md) |
 | Understand values, callbacks, and refs | [Props and callbacks](docs/props.md) |
+| Add charts, financial candles, or a network graph | [Charts](docs/charts.md) |
 | Change colors, spacing, and typography | [Styling](docs/styling.md) |
 | Build a form with async submission | [Form example](docs/form-example.md) |
 | Compose a paginated task list | [Dashboard example](docs/dashboard-example.md) |
@@ -107,8 +114,8 @@ npm ci --legacy-peer-deps
 npm run check
 ```
 
-The check includes TypeScript, unit tests, both package builds, consumer examples,
-server rendering, and bundle budgets. For the component explorer:
+The check includes TypeScript, chart stories, unit tests, both package builds,
+consumer examples, server rendering, chart rendering budgets, and bundle budgets. For the component explorer:
 
 ```sh
 npm run storybook
