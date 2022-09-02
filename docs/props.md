@@ -43,3 +43,17 @@ references for expensive application-derived content when practical.
 `cx('button', enabled && 'enabled', { selected }, ['extra'])` joins conditional
 classes, including readonly nested arrays. Falsy values are ignored. It does not
 resolve conflicting utility classes or remove duplicate strings.
+
+## Chart data and selection
+
+Charts accept readonly data collections and forward refs/native HTML attributes to
+their outer div. `onDatumSelect` receives `ChartDatum`, including `seriesId`,
+`seriesName`, original `index`, numeric `x`/`y`, a display `label`, and optional
+named `values`. Keyboard Enter/Space and pointer clicks invoke the callback.
+Hovering only changes inspection. Aggregated candles and pie Other groups report
+the first source index and aggregated values; see the [chart guides](charts.md).
+
+`CandlestickChart.timeRange` is a controlled inclusive timestamp pair. Apply
+`onTimeRangeChange` to update it; omitting the prop enables internal range state.
+Chart `title` is a heading/name rather than the native HTML hover-title attribute.
+Use `description` for units and context, and `showTable` for plotted data access.
