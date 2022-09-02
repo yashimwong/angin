@@ -17,6 +17,8 @@ import { Input, Stack } from 'angin/base';
 import { Button } from 'angin/base/Button';
 import { Calendar } from 'angin/derived/Calendar';
 import { cx } from 'angin/utils';
+import { LineChart, ChartSeries } from 'angin/charts';
+import { CandlestickChart } from 'angin/charts/CandlestickChart';
 ```
 
 Paths are case sensitive and omit JavaScript extensions. Each public entry has
@@ -45,5 +47,7 @@ styles. Keep React external when building another library on top of Angin.
 
 `angin/styles.css` imports tokens, foundation, and all component rules. Individual
 stylesheets are available under `angin/styles/tokens.css`,
-`angin/styles/foundation.css`, and `angin/styles/components.css`. Import them in
-that order when managing layers yourself; there are no per-component CSS files.
+`angin/styles/foundation.css`, `angin/styles/components.css`, and
+`angin/styles/charts.css`. Import them in that order when managing layers yourself.
+Chart-only integrations can use `angin/styles/charts.css`, which includes token
+fallbacks. The complete stylesheet already includes chart rules.
