@@ -37,3 +37,17 @@ menus during hydration; opening one after mount allows its focus effect to run.
 IDs, compares repeated output, and checks CommonJS/native Node ESM imports.
 This catches browser globals used during render and unstable explicit IDs; it
 does not replace hydration testing in the consuming framework.
+
+## Charts
+
+Every chart server-renders deterministic SVG without `window`, canvas, random
+layout, generated global IDs, or browser measurements. Supply stable titles and
+use deterministic numeric/time formatters (for example an explicit timezone) to
+avoid application-driven hydration differences. Network fallback positions are
+circular and deterministic. Financial timestamps are numeric and caller-owned.
+
+With width omitted, a ResizeObserver starts after mount and updates geometry to
+the container's content width. Server output uses fallback dimensions; explicit
+width/height can fix those dimensions. Environments without ResizeObserver keep
+SVG scaling. Optional data tables mount only when their disclosure is opened.
+Repeated chart SSR is included in `npm run check:ssr`.
