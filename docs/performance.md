@@ -25,8 +25,8 @@ npm run check:package
 npm pack --dry-run --json --ignore-scripts
 ```
 
-The bundle check uses installed webpack in production mode, exports only Button,
-and externalizes React/ReactDOM. It reports raw and gzip bytes for both root and
+The bundle check uses installed webpack in production mode and externalizes
+React/ReactDOM. Its Button measurements export only Button. It reports raw and gzip bytes for both root and
 direct imports. Both must stay below 1,600 gzip bytes, and the root import may
 retain at most 200 raw bytes more than the direct import. These are regression
 budgets, not claims about total application size or the CSS payload.
@@ -44,7 +44,7 @@ Keep expensive application transformations outside render or memoize them using
 actual data dependencies. Native refs support focusing controls without storing
 DOM nodes in React state.
 
-## Final comparison
+## Pre-chart component comparison
 
 With the same installed toolchain after the component changes:
 
@@ -61,3 +61,17 @@ with the added APIs and accessibility behavior. This package measurement exclude
 repository guides (which are not in the package file allowlist). Regenerate
 measurements when changing code or tool versions; budgets intentionally allow
 some headroom.
+
+## Chart budgets
+
+The chart suite adds no runtime dependency. Production checks also measure
+LineChart, CandlestickChart, and the entire chart barrel; root/direct imports
+must remain comparable. Per-chart regression ceilings are 12,000 gzip bytes,
+with 30,000 gzip bytes for the complete suite. These are ceilings, not measured
+payload claims. The command reports actual bytes for the current build.
+
+`npm run check:charts` measures a 100,000-point input and a dense OHLC input,
+asserts bounded geometry and finite output, and reports local preparation/SSR
+times. It uses Node, not a browser performance harness. See
+[chart performance](charts-performance.md) for per-family budgets, sampling
+tradeoffs, memoization, responsive measurement, and data-table pagination.
