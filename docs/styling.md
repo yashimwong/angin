@@ -61,3 +61,12 @@ Keyboard focus uses `--angin-color-primary-500` for component outlines and
 `--angin-focus-ring` for the foundation ring. When changing a theme, keep both
 indicators distinguishable from adjacent backgrounds. Check appearance in your
 application's real layout, including narrow widths and large text sizes.
+
+## Charts
+
+The main stylesheet includes `charts.css`; chart-only consumers can import
+`angin/styles/charts.css`. Charts use the shared typography, spacing, border,
+and focus tokens plus inheritable `--angin-chart-*` properties for surfaces,
+axis text, categorical colors, and candle direction. No animation is enabled by
+default. See [chart themes](charts-theming.md) for a complete dark-theme example
+and sizing behavior. Application classes and inline styles remain supported.
