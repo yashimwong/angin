@@ -3,7 +3,20 @@ const React = require('react');
 const { renderToString } = require('react-dom/server');
 const api = require('angin');
 const noop = () => {};
+const chartSeries = [{ id: 'a', name: 'A', data: [{ x: 0, y: 1 }, { x: 1, y: 3 }, { x: 2, y: 2 }] }];
+const chartSlices = [{ id: 'a', label: 'A', value: 10 }];
+const chartFixtures = {
+    LineChart: { series: chartSeries }, AreaChart: { series: chartSeries }, BarChart: { series: chartSeries },
+    ScatterChart: { series: chartSeries }, BubbleChart: { series: chartSeries },
+    PieChart: { data: chartSlices }, DonutChart: { data: chartSlices },
+    RadarChart: { axes: ['A', 'B', 'C'], series: chartSeries }, RadialBarChart: { data: chartSlices },
+    HeatmapChart: { data: [{ x: 'Mon', y: 'AM', value: 5 }] },
+    GraphChart: { nodes: [{ id: 'a', label: 'A' }], edges: [] },
+    CandlestickChart: { data: [{ time: 1, open: 10, high: 12, low: 9, close: 11, volume: 50 }] },
+    Sparkline: { data: [1, null, 3] },
+};
 const fixtures = {
+    ...chartFixtures,
     Text: { children: 'Text' }, Heading: { children: 'Heading' }, Link: { href: '/', children: 'Home' },
     Button: { children: 'Save' }, IconButton: { icon: '+', label: 'Add' },
     Input: { id: 'input', label: 'Name', helperText: 'Full name' }, Textarea: { id: 'bio', label: 'Bio' },
@@ -31,6 +44,12 @@ const fixtures = {
     }
     assert.strictEqual(require('angin/base/Button').Button, api.Button);
     assert.strictEqual(require('angin/derived').Tabs, api.Tabs);
+    for (const name of Object.keys(chartFixtures)) {
+        assert.strictEqual(require('angin/charts')[name], api[name], `${name} category import`);
+        assert.strictEqual(require(`angin/charts/${name}`)[name], api[name], `${name} direct import`);
+        const html = renderToString(React.createElement(api[name], chartFixtures[name]));
+        assert(!/NaN|Infinity/.test(html), `${name} emitted invalid coordinates`);
+    }
     const esm = await import('angin');
     assert.strictEqual(esm.default.Button, api.Button, 'Native Node ESM interoperability');
     console.log(`${Object.keys(fixtures).length} components server-rendered; CJS and Node ESM imports verified`);
