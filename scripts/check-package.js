@@ -9,7 +9,7 @@ const paths = new Set(files.map(file => file.path));
 assert(!files.some(file => /(?:\.test\.|\/test\/|\.stories\.)/.test(file.path)), 'Tests/stories must not ship');
 for (const field of ['main', 'module', 'types', 'style']) assert(paths.has(pkg[field]), `Missing ${field}: ${pkg[field]}`);
 for (const format of ['cjs', 'esm']) {
-    for (const category of ['base', 'derived']) {
+    for (const category of ['base', 'derived', 'charts']) {
         for (const file of readdirSync(resolve(root, 'src/components', category))) {
             if (!/\.tsx$/.test(file) || /\.test\./.test(file)) continue;
             const stem = `dist/${format}/components/${category}/${file.slice(0, -4)}`;
@@ -22,5 +22,8 @@ for (const file of files.filter(file => /^dist\/.*\.js$/.test(file.path))) {
     const code = readFileSync(resolve(root, file.path), 'utf8');
     assert(!/require\(["']classnames["']\)|from ["']classnames["']/.test(code), 'Unexpected runtime dependency');
 }
+assert(paths.has('src/styles/charts.css'), 'Missing chart stylesheet');
+for (const entry of ['./charts', './charts/*']) assert(pkg.exports[entry], `Missing chart export ${entry}`);
+assert(!pkg.dependencies || Object.keys(pkg.dependencies).length === 0, 'Charts must not add runtime dependencies');
 assert.deepStrictEqual(pkg.sideEffects, ['**/*.css'], 'CSS must remain side effectful');
 console.log(`Package verified: ${files.length} files, ${files.reduce((sum, file) => sum + file.size, 0)} unpacked bytes`);
