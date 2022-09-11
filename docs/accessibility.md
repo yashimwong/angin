@@ -43,3 +43,13 @@ The stylesheet provides focus indicators and reduced-motion overrides. Preserve
 focus visibility in custom themes. Unit tests cover DOM relationships and
 keyboard event handling; they cannot prove screen-reader usability or visual
 contrast. Review those in the consuming application's accessibility process.
+
+## Data visualizations
+
+Charts provide an accessible SVG name/description and a keyboard inspection
+region. Arrow keys, Home/End, Escape, and optional Enter/Space selection operate
+on plotted observations. Keyboard inspection announces exact values; the optional
+`showTable` disclosure provides paginated native table access. Loading/empty
+states use status semantics. Financial candles encode direction with hollow and
+filled bodies in addition to color. See [chart accessibility](charts-accessibility.md)
+for keyboard details, sampling implications, and application responsibilities.
