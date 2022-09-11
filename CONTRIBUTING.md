@@ -33,3 +33,11 @@ introduced. Avoid broad formatting changes alongside a focused fix.
 
 Browser-based verification is not a default requirement. The automated workflow
 uses TypeScript, Jest/jsdom, Node SSR, package checks, and webpack bundle checks.
+
+Chart components live in `src/components/charts`, with shared geometry and
+interaction code in `internal`. Preserve original data indices during reduction,
+avoid mutating caller arrays, and keep missing data distinct from zero. Financial
+reduction must conserve OHLC extrema and volume. Add meaningful geometry or
+interaction regressions when changing these contracts. Keep internal helpers out
+of the public chart barrel. Update chart stories/guides and run the package,
+consumer, SSR, chart-budget, and bundle checks when adding a chart export.
