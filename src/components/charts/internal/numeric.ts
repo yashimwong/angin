@@ -6,8 +6,8 @@ export function positive(value: number | undefined, fallback: number): number {
 export function budget(value: number | undefined, fallback = 1000): number {
     return Math.floor(clamp(positive(value, fallback), 4, 10000));
 }
-export function dimension(value: number | undefined, fallback: number): number {
-    return clamp(positive(value, fallback), 120, 4096);
+export function dimension(value: number | undefined, fallback: number, minimum = 120): number {
+    return clamp(positive(value, fallback), minimum, 4096);
 }
 /** Bounded coordinate precision keeps path strings compact. */
 export function coordinate(value: number): string {

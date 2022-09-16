@@ -11,18 +11,20 @@ export interface ChartFrameProps extends ChartProps {
     children: ReactNode;
     points: readonly InspectPoint[];
     legend?: readonly LegendItem[];
-    hidden?: ReadonlySet<string>;
-    onToggle?: (id: string) => void;
+    hiddenSeries?: ReadonlySet<string>;
+    onSeriesToggle?: (id: string) => void;
     note?: string;
+    footer?: ReactNode;
+    compact?: boolean;
 }
 export const ChartFrame = React.forwardRef<HTMLDivElement, ChartFrameProps>(function ChartFrame({
-    children, points, legend = [], hidden, onToggle, note, title = 'Chart', description,
+    children, points, legend = [], hiddenSeries, onSeriesToggle, note, footer, compact = false, title = 'Chart', description,
     width: requestedWidth, height: requestedHeight, className, style, testId, loading = false,
     emptyMessage = 'No data to display', interactive = true, showLegend = true, showTable = false,
     formatX = formatNumber, formatY = formatNumber, onDatumSelect,
     palette: _palette, maxPoints: _maxPoints, ...props
 }, ref) {
-    const width = dimension(requestedWidth, 640), height = dimension(requestedHeight, 320);
+    const width = dimension(requestedWidth, 640), height = dimension(requestedHeight, compact ? 48 : 320, compact ? 24 : 120);
     const interaction = useChartInteraction(points, width, height, interactive && !loading, onDatumSelect);
     const [tableOpen, setTableOpen] = useState(false);
     const hasData = points.length > 0;
@@ -41,9 +43,10 @@ export const ChartFrame = React.forwardRef<HTMLDivElement, ChartFrameProps>(func
             </div>
             {interactive && <ChartTooltip point={interaction.active} keyboard={interaction.keyboard} formatX={formatX} formatY={formatY} />}
         </>}
+        {footer}
         {note && <p className="angin-chart__note">{note}</p>}
-        {showLegend && legend.length > 0 && <ChartLegend items={legend} hidden={hidden} onToggle={onToggle} />}
-        {showTable && hasData && !loading && <details className="angin-chart__details" onToggle={event => setTableOpen(event.currentTarget.open)}><summary>View chart data</summary>
+        {showLegend && legend.length > 0 && <ChartLegend items={legend} hidden={hiddenSeries} onToggle={onSeriesToggle} />}
+        {showTable && hasData && !loading && <details className="angin-chart__details" onToggle={event => setTableOpen((event.currentTarget as HTMLDetailsElement).open)}><summary>View chart data</summary>
             {tableOpen && <ChartTable points={points} title={title} formatX={formatX} formatY={formatY} />}
         </details>}
     </div>;

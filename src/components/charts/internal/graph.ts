@@ -3,12 +3,12 @@ import { budget, finite, positive, clamp } from './numeric';
 import { extent, scale } from './scales';
 import { polar, TAU } from './polar';
 export function layoutGraph(nodes: readonly GraphNode[], edges: readonly GraphEdge[], box: Plot, maxPoints?: number) {
-    const unique = new Map<string, GraphNode>();
-    for (const node of nodes) if (!unique.has(node.id) && unique.size < budget(maxPoints, 500)) unique.set(node.id, node);
+    const unique = new Map<string, { node: GraphNode; index: number }>();
+    nodes.forEach((node, index) => { if (!unique.has(node.id) && unique.size < budget(maxPoints, 500)) unique.set(node.id, { node, index }); });
     const selected = Array.from(unique.values());
-    const x = scale(extent(selected.map(node => node.x as number)), [box.left + 20, box.right - 20]);
-    const y = scale(extent(selected.map(node => node.y as number)), [box.top + 20, box.bottom - 20]);
-    const positions = selected.map((node, index) => ({ node, radius: clamp(positive(node.size, 7), 3, 18), ...(finite(node.x) && finite(node.y) ? { x: x(node.x), y: y(node.y) } : polar((box.left + box.right) / 2, (box.top + box.bottom) / 2, Math.max(0, Math.min(box.width, box.height) / 2 - 24), index / selected.length * TAU)) }));
+    const x = scale(extent(selected.map(item => item.node.x as number)), [box.left + 20, box.right - 20]);
+    const y = scale(extent(selected.map(item => item.node.y as number)), [box.top + 20, box.bottom - 20]);
+    const positions = selected.map(({ node, index: sourceIndex }, index) => ({ node, index: sourceIndex, radius: clamp(positive(node.size, 7), 3, 18), ...(finite(node.x) && finite(node.y) ? { x: x(node.x), y: y(node.y) } : polar((box.left + box.right) / 2, (box.top + box.bottom) / 2, Math.max(0, Math.min(box.width, box.height) / 2 - 24), index / selected.length * TAU)) }));
     const lookup = new Map(positions.map(point => [point.node.id, point]));
     const links = [];
     for (const edge of edges) {

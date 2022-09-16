@@ -14,6 +14,6 @@ export function arcPath(cx: number, cy: number, outer: number, inner: number, st
     if (radius) {
         const e = polar(cx, cy, radius, start + span), f = polar(cx, cy, radius, mid), g = polar(cx, cy, radius, start);
         path += `L${c(e.x)},${c(e.y)}A${c(radius)},${c(radius)} 0 0 0 ${c(f.x)},${c(f.y)}A${c(radius)},${c(radius)} 0 0 0 ${c(g.x)},${c(g.y)}`;
-    } else path += `L${c(cx)},${c(cy)}`;
+    } else if (span < TAU) path += `L${c(cx)},${c(cy)}`;
     return path + 'Z';
 }

@@ -2,7 +2,8 @@ import { arcPath, polar, TAU } from './polar';
 it('draws full single-slice pies using two nondegenerate arcs', () => {
     const path = arcPath(100, 100, 80, 0, 0, TAU);
     expect((path.match(/A80/g) || []).length).toBe(2);
-    expect(path).toContain('L100,100Z');
+    expect(path).not.toContain('L100,100');
+    expect(path).toMatch(/Z$/);
     expect(path).not.toMatch(/NaN|Infinity/);
 });
 it('closes a donut with reverse inner arcs and skips zero-size slices', () => {

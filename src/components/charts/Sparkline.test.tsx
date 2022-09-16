@@ -13,3 +13,7 @@ it('supports missing segments and optional keyboard inspection', () => {
     expect(container.querySelector('[tabindex]')).not.toBeNull();
     expect(container.querySelector('.angin-chart__line')?.getAttribute('d')?.match(/M/g)).toHaveLength(2);
 });
+it('honors compact heights instead of imposing full-chart dimensions', () => {
+    const container = mount(<Sparkline data={[1, 2]} width={200} height={32} />);
+    expect(container.querySelector('svg')?.getAttribute('viewBox')).toBe('0 0 200 32');
+});

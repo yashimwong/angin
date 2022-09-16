@@ -23,7 +23,7 @@ export interface ChartDatum {
 export interface ChartProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'title' | 'onSelect'>, BaseProps {
     title?: string;
     description?: string;
-    /** SVG coordinate dimensions. The chart scales to its container without observers. */
+    /** SVG coordinate dimensions. Omit width to resize geometry with the container. */
     width?: number;
     height?: number;
     palette?: readonly string[];

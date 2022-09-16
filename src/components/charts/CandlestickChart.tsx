@@ -1,9 +1,10 @@
+import { useChartSize } from './internal/useChartSize';
 import React, { useMemo, useState } from 'react';
 import { Candle, ChartDomain, ChartProps, InspectPoint } from './types';
 import { ChartFrame } from './internal/ChartFrame';
 import { ChartAxes } from './internal/ChartAxes';
 import { aggregateCandles, normalizeCandles } from './internal/financial';
-import { dimension, finite } from './internal/numeric';
+import { finite } from './internal/numeric';
 import { domain, extent, plot, scale } from './internal/scales';
 import { sampleItems } from './internal/sampling';
 import { formatNumber } from './internal/format';
@@ -21,7 +22,7 @@ export const CandlestickChart = React.forwardRef<HTMLDivElement, CandlestickChar
     data, showVolume = true, showControls = true, timeRange, onTimeRangeChange,
     upColor = 'var(--angin-chart-up, #0d9488)', downColor = 'var(--angin-chart-down, #e11d48)', ...props
 }, ref) {
-    const width = dimension(props.width, 720), height = dimension(props.height, 400);
+    const { width, height, ref: rootRef } = useChartSize(props.width, props.height, ref, 720, 400);
     const [internalRange, setInternalRange] = useState<ChartDomain>();
     const normalized = useMemo(() => normalizeCandles(data), [data]);
     const full = useMemo(() => extent(normalized.map(item => item.candle.time)), [normalized]);
@@ -35,7 +36,8 @@ export const CandlestickChart = React.forwardRef<HTMLDivElement, CandlestickChar
         const priceDomain = extent(candles.flatMap(item => [item.candle.low, item.candle.high]));
         const indexDomain: ChartDomain = [-0.5, Math.max(0.5, candles.length - 0.5)];
         const x = scale(indexDomain, [box.left, box.right]), y = scale(priceDomain, [priceBox.bottom, priceBox.top]);
-        const volumeScale = scale(extent(candles.map(item => item.candle.volume || 0), true), [box.bottom, priceBox.bottom + 16]);
+        const maxVolume = candles.reduce((upper, item) => Math.max(upper, item.candle.volume || 0), 0);
+        const volumeScale = scale([0, maxVolume || 1], [box.bottom, priceBox.bottom + 16]);
         const bodyWidth = Math.max(0.5, Math.min(18, box.width / Math.max(1, candles.length) * 0.65));
         const points: InspectPoint[] = candles.map((item, i) => ({ x: x(i), y: y(item.candle.close), color: item.candle.close >= item.candle.open ? upColor : downColor,
             datum: { seriesId: 'price', seriesName: item.candle.close >= item.candle.open ? 'Up candle' : 'Down candle', index: item.index, x: item.candle.time, y: item.candle.close, label: '', values: {
@@ -64,7 +66,7 @@ export const CandlestickChart = React.forwardRef<HTMLDivElement, CandlestickChar
         <button type="button" onClick={() => pan(1)} disabled={range[1] >= full[1]}>Later</button>
         <button type="button" onClick={() => changeRange(full)}>Reset</button>
     </div> : undefined;
-    return <ChartFrame title="Candlestick chart" {...props} ref={ref} width={width} height={height} points={model.points}
+    return <ChartFrame title="Candlestick chart" {...props} ref={rootRef} width={width} height={height} points={model.points}
         legend={[{ id: 'up', label: 'Up / unchanged (hollow)', color: upColor }, { id: 'down', label: 'Down (filled)', color: downColor }]}
         footer={controls} note={model.aggregated ? 'Candles aggregate consecutive observations; OHLC extremes and volume totals are preserved.' : data.length > normalized.length ? 'Invalid candles are omitted; equal timestamps are combined.' : undefined}>
         <ChartAxes box={model.priceBox} xDomain={model.indexDomain} yDomain={model.priceDomain} xTicks={[]} formatY={props.formatY} />

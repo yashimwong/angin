@@ -39,3 +39,12 @@ it('coalesces pointer work and cancels a pending frame when leaving', () => {
     expect(container.querySelector('.angin-chart__active')).toBeNull();
     request.mockRestore(); cancel.mockRestore();
 });
+it('selects the clicked observation without requiring an earlier hover frame', () => {
+    const onDatumSelect = jest.fn();
+    const container = mount(<LineChart series={series} onDatumSelect={onDatumSelect} />);
+    const svg = container.querySelector('svg')!;
+    jest.spyOn(svg, 'getBoundingClientRect').mockReturnValue({ left: 0, top: 0, width: 640, height: 320, right: 640, bottom: 320, x: 0, y: 0, toJSON: () => ({}) });
+    act(() => { svg.dispatchEvent(new MouseEvent('click', { bubbles: true, clientX: 620, clientY: 150 })); });
+    expect(onDatumSelect).toHaveBeenCalledWith(expect.objectContaining({ index: 2, y: 15 }));
+    expect(container.querySelector('.angin-chart__active')).not.toBeNull();
+});

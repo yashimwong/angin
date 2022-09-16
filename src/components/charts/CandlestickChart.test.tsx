@@ -39,3 +39,7 @@ it('keeps doji bodies visible and invalid candles out of the plot', () => {
     expect(container.querySelectorAll('.angin-chart__candle')).toHaveLength(1);
     expect(container.querySelector('.angin-chart__candle-body')?.getAttribute('height')).toBe('1');
 });
+it('renders zero-volume candles with zero-height volume bars', () => {
+    const container = mount(<CandlestickChart data={candles.slice(0, 3).map(candle => ({ ...candle, volume: 0 }))} />);
+    expect(Array.from(container.querySelectorAll('.angin-chart__volume')).every(bar => bar.getAttribute('height') === '0')).toBe(true);
+});

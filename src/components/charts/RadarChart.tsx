@@ -1,13 +1,14 @@
+import { useChartSize } from './internal/useChartSize';
 import React, { useMemo } from 'react';
 import { ChartProps, ChartSeries, InspectPoint } from './types';
 import { ChartFrame } from './internal/ChartFrame';
 import { colorAt } from './internal/colors';
-import { dimension, finite, positive, budget } from './internal/numeric';
+import { finite, positive, budget } from './internal/numeric';
 import { polar, TAU } from './internal/polar';
 import { linePath } from './internal/paths';
 export interface RadarChartProps extends ChartProps { axes: readonly string[]; series: readonly ChartSeries[]; max?: number }
 export const RadarChart = React.forwardRef<HTMLDivElement, RadarChartProps>(function RadarChart({ axes, series, max, ...props }, ref) {
-    const width = dimension(props.width, 640), height = dimension(props.height, 360);
+    const { width, height, ref: rootRef } = useChartSize(props.width, props.height, ref, 640, 360);
     const model = useMemo(() => {
         const labels = axes.slice(0, Math.min(32, budget(props.maxPoints, 32)));
         const radius = Math.max(1, Math.min(width, height) / 2 - 48);
@@ -31,7 +32,7 @@ export const RadarChart = React.forwardRef<HTMLDivElement, RadarChartProps>(func
         });
         return { labels, points, paths, radius, position, upper };
     }, [axes, series, max, width, height, props.maxPoints, props.palette]);
-    return <ChartFrame title="Radar chart" {...props} ref={ref} width={width} height={height} points={model.points} legend={series.map((entry, i) => ({ id: entry.id, label: entry.name, color: entry.color || colorAt(i, props.palette) }))} note={axes.length > model.labels.length ? `Showing the first ${model.labels.length} axes.` : undefined}>
+    return <ChartFrame title="Radar chart" {...props} ref={rootRef} width={width} height={height} points={model.points} legend={series.map((entry, i) => ({ id: entry.id, label: entry.name, color: entry.color || colorAt(i, props.palette) }))} note={axes.length > model.labels.length ? `Showing the first ${model.labels.length} axes.` : undefined}>
         {[0.25, 0.5, 0.75, 1].map(fraction => <path key={fraction} className="angin-chart__grid" fill="none" d={linePath(model.labels.map((_, i) => model.position(i, model.upper * fraction))) + 'Z'} />)}
         {model.labels.map((label, i) => { const point = polar(width / 2, height / 2, model.radius + 18, i / model.labels.length * TAU); const end = model.position(i, model.upper); return <g key={i} className="angin-chart__axes" aria-hidden="true"><line className="angin-chart__grid" x1={width / 2} y1={height / 2} x2={end.x} y2={end.y} /><text x={point.x} y={point.y} textAnchor="middle" dominantBaseline="middle">{label.length > 12 ? label.slice(0, 10) + '…' : label}</text></g>; })}
         {model.paths.map(path => <path key={path.id} className="angin-chart__radar" d={path.path} fill={path.complete ? path.color : 'none'} fillOpacity={0.12} stroke={path.color} strokeWidth={2} />)}

@@ -19,3 +19,8 @@ it('falls back from invalid explicit domains and clamps visible geometry', () =>
     expect(extent([3, 9], true)).toEqual([0, 9]);
     expect(plot(120, 120).height).toBeGreaterThan(0);
 });
+it('preserves subnormal endpoints without halving away their precision', () => {
+    const transform = scale([Number.MIN_VALUE, Number.MIN_VALUE * 2], [0, 100]);
+    expect(transform(Number.MIN_VALUE)).toBe(0);
+    expect(transform(Number.MIN_VALUE * 2)).toBe(100);
+});

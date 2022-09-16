@@ -18,15 +18,16 @@ export function domain(requested: ChartDomain | undefined, fallback: ChartDomain
 export function scale(input: ChartDomain, output: ChartDomain): (value: number) => number {
     const [low, high] = input;
     // Halving avoids overflow when the finite endpoints have opposite signs.
-    const span = high / 2 - low / 2;
+    const halve = !finite(high - low);
+    const span = halve ? high / 2 - low / 2 : high - low;
     return value => {
-        const ratio = span ? clamp((value / 2 - low / 2) / span, 0, 1) : 0.5;
+        const ratio = span ? clamp((halve ? value / 2 - low / 2 : value - low) / span, 0, 1) : 0.5;
         return output[0] * (1 - ratio) + output[1] * ratio;
     };
 }
 export function ticks(input: ChartDomain, count = 5): number[] {
     const size = finite(count) ? Math.round(clamp(count, 2, 12)) : 5;
-    return Array.from({ length: size }, (_, i) => input[0] * (1 - i / (size - 1)) + input[1] * i / (size - 1));
+    return Array.from({ length: size }, (_, i) => input[0] * (1 - i / (size - 1)) + input[1] * (i / (size - 1)));
 }
 export function plot(width: number, height: number, axes = true): Plot {
     const left = axes ? Math.min(64, width * 0.2) : 8;

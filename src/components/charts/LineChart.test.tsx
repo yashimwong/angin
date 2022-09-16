@@ -23,3 +23,7 @@ it('keeps SVG node counts bounded for a large series', () => {
     expect(container.querySelectorAll('svg *').length).toBeLessThan(150);
     expect(container.textContent).toContain('100000 input points');
 });
+it('keeps isolated observations visible on both sides of a gap', () => {
+    const container = mount(<LineChart series={[{ ...series[0], data: [{ x: 0, y: 10 }, { x: 1, y: null }, { x: 2, y: 20 }] }]} />);
+    expect(container.querySelectorAll('.angin-chart__point')).toHaveLength(2);
+});

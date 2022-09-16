@@ -8,13 +8,14 @@ import { domain, extent, scale } from './scales';
 export function prepareCartesian(series: readonly ChartSeries[], box: Plot, options: {
     xDomain?: ChartDomain; yDomain?: ChartDomain; maxPoints?: number; palette?: readonly string[]; independent?: boolean; includeZero?: boolean;
 }) {
-    function* values(axis: 'x' | 'y') {
-        for (const entry of series) for (const point of entry.data) {
-            if (finite(point.x) && finite(point.y)) yield point[axis] as number;
-        }
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    for (const entry of series) for (const point of entry.data) {
+        if (!finite(point.x) || !finite(point.y)) continue;
+        minX = Math.min(minX, point.x); maxX = Math.max(maxX, point.x);
+        minY = Math.min(minY, point.y); maxY = Math.max(maxY, point.y);
     }
-    const xDomain = domain(options.xDomain, extent(values('x')));
-    const yDomain = domain(options.yDomain, extent(values('y'), options.includeZero));
+    const xDomain = domain(options.xDomain, extent([minX, maxX]));
+    const yDomain = domain(options.yDomain, extent([minY, maxY], options.includeZero));
     const x = scale(xDomain, [box.left, box.right]), y = scale(yDomain, [box.bottom, box.top]);
     const points: InspectPoint[] = [];
     const paths = series.map((entry, seriesIndex) => {

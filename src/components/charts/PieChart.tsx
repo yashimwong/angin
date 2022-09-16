@@ -1,12 +1,13 @@
+import { useChartSize } from './internal/useChartSize';
 import React, { useMemo } from 'react';
 import { ChartProps, ChartSlice, InspectPoint } from './types';
 import { ChartFrame } from './internal/ChartFrame';
 import { arcPath, polar, TAU } from './internal/polar';
 import { colorAt } from './internal/colors';
-import { budget, clamp, dimension, finite } from './internal/numeric';
+import { budget, clamp, finite } from './internal/numeric';
 export interface PieChartProps extends ChartProps { data: readonly ChartSlice[]; innerRadius?: number; centerLabel?: string }
 export const PieChart = React.forwardRef<HTMLDivElement, PieChartProps>(function PieChart({ data, innerRadius = 0, centerLabel, ...props }, ref) {
-    const width = dimension(props.width, 640), height = dimension(props.height, 320);
+    const { width, height, ref: rootRef } = useChartSize(props.width, props.height, ref);
     const model = useMemo(() => {
         const valid = data.map((slice, index) => ({ ...slice, index })).filter(slice => finite(slice.value) && slice.value > 0);
         let max = 0;
@@ -35,7 +36,7 @@ export const PieChart = React.forwardRef<HTMLDivElement, PieChartProps>(function
         });
         return { arcs, points, aggregated: valid.length > limit };
     }, [data, width, height, innerRadius, props.maxPoints, props.palette]);
-    return <ChartFrame title="Pie chart" {...props} ref={ref} width={width} height={height} points={model.points} legend={model.arcs} note={model.aggregated ? 'Remaining slices are combined into Other.' : undefined}>
+    return <ChartFrame title="Pie chart" {...props} ref={rootRef} width={width} height={height} points={model.points} legend={model.arcs} note={model.aggregated ? 'Remaining slices are combined into Other.' : undefined}>
         {model.arcs.map(arc => <path key={arc.id} className="angin-chart__slice" d={arc.path} fill={arc.color} stroke="var(--angin-chart-surface, #fff)" strokeWidth={2} />)}
         {innerRadius > 0 && centerLabel && <text className="angin-chart__center" x={width / 2} y={height / 2} textAnchor="middle" dominantBaseline="middle">{centerLabel}</text>}
     </ChartFrame>;

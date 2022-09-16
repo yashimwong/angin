@@ -1,15 +1,16 @@
+import { useChartSize } from './internal/useChartSize';
 import React, { useMemo } from 'react';
 import { CartesianChartProps, InspectPoint } from './types';
 import { ChartFrame } from './internal/ChartFrame';
 import { ChartAxes } from './internal/ChartAxes';
 import { colorAt } from './internal/colors';
-import { dimension, finite } from './internal/numeric';
+import { finite } from './internal/numeric';
 import { domain, extent, plot, scale } from './internal/scales';
 import { sampleItems } from './internal/sampling';
 import { formatNumber } from './internal/format';
 export interface BarChartProps extends Omit<CartesianChartProps, 'xDomain'> { stacked?: boolean; horizontal?: boolean }
 export const BarChart = React.forwardRef<HTMLDivElement, BarChartProps>(function BarChart({ series, stacked = false, horizontal = false, yDomain, showAxes = true, showGrid = true, ...props }, ref) {
-    const width = dimension(props.width, 640), height = dimension(props.height, 320);
+    const { width, height, ref: rootRef } = useChartSize(props.width, props.height, ref);
     const model = useMemo(() => {
         const box = plot(width, height, showAxes);
         const maps = series.map(entry => new Map(entry.data.map((point, index) => [point.x, { point, index }])));
@@ -53,7 +54,7 @@ export const BarChart = React.forwardRef<HTMLDivElement, BarChartProps>(function
         return { box, bars, points, valueDomain, categoryDomain, labels, sourceCount: categories.size, count: values.length };
     }, [series, width, height, showAxes, stacked, horizontal, yDomain, props.maxPoints, props.palette, props.formatX]);
     const legend = series.map((entry, i) => ({ id: entry.id, label: entry.name, color: entry.color || colorAt(i, props.palette) }));
-    return <ChartFrame title="Bar chart" {...props} ref={ref} width={width} height={height} points={model.points} legend={legend} note={model.sourceCount > model.count ? `Showing ${model.count} of ${model.sourceCount} categories.` : undefined}>
+    return <ChartFrame title="Bar chart" {...props} ref={rootRef} width={width} height={height} points={model.points} legend={legend} note={model.sourceCount > model.count ? `Showing ${model.count} of ${model.sourceCount} categories.` : undefined}>
         <ChartAxes box={model.box} xDomain={horizontal ? model.valueDomain : model.categoryDomain} yDomain={horizontal ? model.categoryDomain : model.valueDomain}
             xTicks={horizontal ? undefined : model.labels} yTicks={horizontal ? model.labels : undefined} formatX={horizontal ? props.formatY : props.formatX} formatY={props.formatY} showAxes={showAxes} showGrid={showGrid} />
         {model.bars.map((bar, i) => <rect key={i} className="angin-chart__bar" x={bar.x} y={bar.y} width={bar.width} height={bar.height} rx={stacked ? 0 : 2} fill={bar.color} />)}

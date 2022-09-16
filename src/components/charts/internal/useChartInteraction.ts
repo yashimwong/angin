@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, KeyboardEvent, PointerEvent } from 'react';
+import { useEffect, useRef, useState, KeyboardEvent, PointerEvent, MouseEvent } from 'react';
 import { ChartDatum, InspectPoint } from '../types';
 
 export function useChartInteraction(points: readonly InspectPoint[], width: number, height: number, enabled: boolean, onSelect?: (datum: ChartDatum) => void) {
@@ -41,6 +41,21 @@ export function useChartInteraction(points: readonly InspectPoint[], width: numb
         onFocus: () => { if (enabled) { setKeyboard(true); setIndex(current => current < 0 ? 0 : current); } },
         onBlur: () => { cancel(); setIndex(-1); },
         onPointerLeave: () => { cancel(); if (!keyboard) setIndex(-1); },
-        onClick: () => { if (active && onSelect) onSelect(active.datum); },
+        onClick: (event: MouseEvent<SVGSVGElement>) => {
+            if (!enabled || !points.length) return;
+            cancel();
+            const rect = event.currentTarget.getBoundingClientRect();
+            let nearest = Math.max(0, index), distance = Infinity;
+            if (rect.width && rect.height) {
+                const x = (event.clientX - rect.left) / rect.width * width;
+                const y = (event.clientY - rect.top) / rect.height * height;
+                for (let i = 0; i < points.length; i++) {
+                    const next = (points[i].x - x) ** 2 + (points[i].y - y) ** 2;
+                    if (next < distance) { distance = next; nearest = i; }
+                }
+            }
+            nearest = Math.min(nearest, points.length - 1);
+            setKeyboard(false); setIndex(nearest); onSelect?.(points[nearest].datum);
+        },
     };
 }
