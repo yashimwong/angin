@@ -7,9 +7,9 @@ const { gzipSync } = require('zlib');
 const webpack = require('webpack');
 const root = resolve(process.argv[2] || join(__dirname, '..'));
 const temporary = mkdtempSync(join(tmpdir(), 'angin-bundle-'));
-async function measure(name, modulePath) {
+async function measure(name, modulePath, component = 'Button') {
     const entry = join(temporary, `${name}.js`);
-    writeFileSync(entry, `export { Button } from ${JSON.stringify(join(root, modulePath))};\n`);
+    writeFileSync(entry, `export ${component === '*' ? '*' : `{ ${component} }`} from ${JSON.stringify(join(root, modulePath))};\n`);
     const compiler = webpack({
         mode: 'production', target: 'web', entry,
         output: { path: temporary, filename: `${name}.bundle.js`, library: { type: 'commonjs2' } },
@@ -32,7 +32,19 @@ async function measure(name, modulePath) {
     try {
         const barrel = await measure('barrel', 'dist/esm/index.js');
         const direct = await measure('direct', 'dist/esm/components/base/Button.js');
-        console.log(JSON.stringify({ barrel, direct }, null, 2));
+        const charts = {};
+        if (!process.argv[2]) {
+            for (const component of ['LineChart', 'CandlestickChart']) {
+                const chartBarrel = await measure(`${component}-barrel`, 'dist/esm/index.js', component);
+                const chartDirect = await measure(`${component}-direct`, `dist/esm/components/charts/${component}.js`, component);
+                charts[component] = { barrel: chartBarrel, direct: chartDirect };
+                assert(chartBarrel.gzip <= 12000 && chartDirect.gzip <= 12000, `${component} exceeds 12000 gzip bytes`);
+                assert(chartBarrel.bytes <= chartDirect.bytes + 200, `${component} barrel retains unrelated charts`);
+            }
+            charts.suite = await measure('charts-suite', 'dist/esm/components/charts/index.js', '*');
+            assert(charts.suite.gzip <= 30000, 'Chart suite exceeds 30000 gzip bytes');
+        }
+        console.log(JSON.stringify({ barrel, direct, charts }, null, 2));
         if (!process.argv[2]) {
             assert(barrel.gzip <= 1600, `Button barrel exceeds 1600 gzip bytes: ${barrel.gzip}`);
             assert(direct.gzip <= 1600, `Button direct exceeds 1600 gzip bytes: ${direct.gzip}`);
