@@ -23,8 +23,10 @@
         "check:bundle": "node scripts/check-bundle.js",
         "check:types": "node scripts/check-types.js",
         "check:ssr": "node scripts/check-ssr.js",
-        "check": "npm run typecheck && npm test && npm run build && npm run check:package && npm run check:types && npm run check:ssr && npm run check:bundle",
-        "prepack": "npm run build && npm run check:package"
+        "check": "npm run typecheck && npm run check:stories && npm test && npm run build && npm run check:package && npm run check:types && npm run check:ssr && npm run check:bundle && npm run check:charts",
+        "prepack": "npm run build && npm run check:package",
+        "check:charts": "node scripts/check-charts.js",
+        "check:stories": "tsc -p tsconfig.stories.json"
     },
     "author": "yashimwong",
     "license": "MIT",
