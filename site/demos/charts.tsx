@@ -1,0 +1,18 @@
+import React from 'react';
+import { LineChart, AreaChart, BarChart, ScatterChart, BubbleChart, PieChart, DonutChart, RadarChart, RadialBarChart, HeatmapChart, GraphChart, CandlestickChart, Sparkline, ChartSeries } from '../../src';
+const series: readonly ChartSeries[] = [{ id: 'current', name: 'This period', data: [14, 23, 20, 35, 31, 42, 38, 52].map((y, x) => ({ x, y })) }, { id: 'previous', name: 'Previous period', data: [11, 14, 18, 20, 23, 29, 25, 32].map((y, x) => ({ x, y })) }];
+const slices = [{ id: 'direct', label: 'Direct', value: 42 }, { id: 'search', label: 'Search', value: 32 }, { id: 'referrals', label: 'Referrals', value: 18 }, { id: 'social', label: 'Social', value: 8 }];
+const candles = Array.from({ length: 36 }, (_, i) => { const open = 100 + i / 2 + Math.sin(i) * 4, close = open + Math.cos(i * 2) * 3; return { time: Date.UTC(2022, 8, i + 1), open, close, high: Math.max(open, close) + 2, low: Math.min(open, close) - 2, volume: 1000 + i * 40 }; });
+export function LineChartDemo() { return <LineChart title="Weekly revenue" series={series} height={230} formatX={value => `W${value + 1}`} showTable />; }
+export function AreaChartDemo() { return <AreaChart title="Revenue growth" series={series} height={260} showTable />; }
+export function BarChartDemo() { return <BarChart title="Sales by period" series={series.map(item => ({ ...item, data: item.data.slice(0, 5) }))} height={280} stacked showTable />; }
+export function ScatterChartDemo() { return <ScatterChart title="Value and reach" series={series} height={280} showTable />; }
+export function BubbleChartDemo() { return <BubbleChart title="Audience opportunities" series={series.map(item => ({ ...item, data: item.data.map((point, i) => ({ ...point, size: 50 + i * 30 })) }))} height={280} showTable />; }
+export function PieChartDemo() { return <PieChart title="Acquisition channels" data={slices} height={280} showTable />; }
+export function DonutChartDemo() { return <DonutChart title="Traffic mix" data={slices} centerLabel="100%" height={280} showTable />; }
+export function RadarChartDemo() { return <RadarChart title="Product dimensions" axes={['Speed', 'Quality', 'Support', 'Value', 'Reach']} series={series.map(item => ({ ...item, data: item.data.slice(0, 5) }))} max={60} height={320} showTable />; }
+export function RadialBarChartDemo() { return <RadialBarChart title="Channel goals" data={slices} max={50} height={280} showTable />; }
+export function HeatmapChartDemo() { return <HeatmapChart title="Weekly activity" data={['Mon', 'Tue', 'Wed', 'Thu', 'Fri'].flatMap((x, i) => ['Morning', 'Afternoon', 'Evening'].map((y, j) => ({ x, y, value: 10 + (i * 17 + j * 13) % 80 })))} height={260} showTable />; }
+export function GraphChartDemo() { return <GraphChart title="Service connections" nodes={[{ id: 'api', label: 'API' }, { id: 'auth', label: 'Identity' }, { id: 'data', label: 'Data' }, { id: 'events', label: 'Events' }]} edges={[{ source: 'api', target: 'auth' }, { source: 'api', target: 'data' }, { source: 'data', target: 'events' }, { source: 'events', target: 'api' }]} height={300} showTable />; }
+export function CandlestickChartDemo() { return <CandlestickChart title="ACME · daily prices" description="Synthetic demonstration data" data={candles} formatX={value => new Date(value).toISOString().slice(5, 10)} formatY={value => value.toFixed(2)} height={340} showTable />; }
+export function SparklineDemo() { return <div style={{ maxWidth: 320 }}><p style={{ margin: '0 0 12px', fontSize: 13 }}>Revenue trend</p><Sparkline title="Revenue trend" data={series[0].data.map(point => point.y)} height={60} filled interactive showTable /></div>; }
