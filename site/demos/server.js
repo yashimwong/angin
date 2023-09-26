@@ -5,9 +5,9 @@ const { escape } = require('../build/html');
 async function createPreview(bundle) {
     delete require.cache[require.resolve(bundle)];
     const registry = require(bundle), examples = new Map();
-    for (const component of components) {
-        const Demo = await registry.loadDemo(component.name);
-        examples.set(component.name, renderToStaticMarkup(React.createElement('div', { className: 'angin-root' }, React.createElement(Demo))));
+    for (const name of [...components.map(component => component.name), 'Playground']) {
+        const Demo = await registry.loadDemo(name);
+        examples.set(name, renderToStaticMarkup(React.createElement('div', { className: 'angin-root' }, React.createElement(Demo))));
     }
     return (name, { compact = false, heading = true } = {}) => {
         if (!examples.has(name)) throw new Error(`No preview for ${name}`);

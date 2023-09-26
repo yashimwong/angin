@@ -1,4 +1,5 @@
 const modules = {
+    playground: () => import(/* webpackChunkName: "demo-playground" */ './playground.tsx'),
     actions: () => import(/* webpackChunkName: "demo-actions" */ './actions.tsx'),
     forms: () => import(/* webpackChunkName: "demo-forms" */ './forms.tsx'),
     display: () => import(/* webpackChunkName: "demo-display" */ './display.tsx'),
@@ -7,6 +8,7 @@ const modules = {
     charts: () => import(/* webpackChunkName: "demo-charts" */ './charts.tsx'),
 };
 export const demoGroups = {
+    playground: ['Playground'],
     actions: ['Button', 'IconButton', 'Link', 'Tooltip'],
     forms: ['Input', 'Textarea', 'Select', 'Checkbox', 'Radio', 'Switch'],
     display: ['Text', 'Heading', 'Card', 'Stack', 'Divider', 'Avatar', 'Badge', 'Alert', 'Progress', 'Spinner', 'Skeleton', 'EmptyState'],

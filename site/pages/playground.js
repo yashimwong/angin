@@ -1,0 +1,5 @@
+module.exports = ({ preview }) => ({ path: '/playground/', title: 'Make it your own', group: 'Playground', description: 'Adjust chart density, switch visualizations, and explore button variants. Copy the code for your current chart settings.',
+    headings: [{ id: 'explorer', title: 'Interactive explorer', depth: 2 }, { id: 'how-it-works', title: 'How it works', depth: 2 }],
+    searchText: 'interactive playground chart settings line area bar point count density button size variant code copy',
+    html: `<h2 id="explorer">Interactive explorer</h2>${preview('Playground', { heading: false })}<h2 id="how-it-works">How it works</h2><p>The preview runs locally in your browser with synthetic data. The chart shares a 600-point rendering budget across the available modes; increasing the observation count demonstrates reduction without adding an unbounded number of marks.</p><p>Use the preview’s reset action to return all controls to their starting values. Changing settings does not modify your project or send data to a server.</p>`,
+});
