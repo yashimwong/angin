@@ -1,0 +1,4 @@
+const { href } = require('../build/routes');
+module.exports = () => ({ path: '/404/', title: 'This page took a different turn', group: '404', description: 'The page you requested is not here. Find your way back to a component, guide, or the documentation home.', noIndex: true,
+    html: `<div class="callout"><strong>Let’s get you back to building.</strong><p>Check the address, use the search in the header, or explore a starting point below.</p></div><div class="guide-grid"><a class="guide-card" href="${href('/docs/getting-started/')}"><h3>Getting started</h3><p>Installation and your first screen.</p></a><a class="guide-card" href="${href('/components/')}"><h3>Component reference</h3><p>All 46 components in one place.</p></a></div><p><a href="${href('/')}">Return to the home page →</a></p>`,
+});
