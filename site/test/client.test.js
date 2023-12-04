@@ -1,0 +1,87 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const { pathToFileURL } = require('node:url');
+const path = require('node:path');
+const { JSDOM } = require('jsdom');
+const load = name => import(pathToFileURL(path.join(__dirname, `../client/${name}.js`)));
+function dom(html) { return new JSDOM(html, { url: 'https://docs.example/', pretendToBeVisual: true }); }
+const searchMarkup = '<a href="/search/" data-search-open>Search</a><dialog id="docs-search"><input data-search-input><button data-search-close>Close</button><p data-search-status></p><ul data-search-results></ul><a href="/search/">Index</a></dialog>';
+test('opens search by keyboard, traps focus, and returns it on Escape', async () => {
+    const { initSearch } = await load('search');
+    const instance = dom(searchMarkup), { window } = instance, { document } = window;
+    const trigger = document.querySelector('a'); trigger.focus();
+    const cleanup = initSearch(document, window);
+    document.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true, cancelable: true }));
+    assert.equal(document.querySelector('dialog').open, true);
+    assert.equal(document.activeElement, document.querySelector('input'));
+    document.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true, cancelable: true }));
+    assert.equal(document.activeElement.textContent, 'Index');
+    document.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
+    assert.equal(document.querySelector('dialog').open, false);
+    assert.equal(document.activeElement, trigger);
+    cleanup(); window.close();
+});
+test('does not hijack slash while editing a field', async () => {
+    const { initSearch } = await load('search');
+    const { window } = dom(searchMarkup + '<textarea></textarea>'), { document } = window;
+    const cleanup = initSearch(document, window); document.querySelector('textarea').focus();
+    document.dispatchEvent(new window.KeyboardEvent('keydown', { key: '/', bubbles: true, cancelable: true }));
+    assert.equal(document.querySelector('dialog').open, false);
+    cleanup(); window.close();
+});
+test('loads search lazily, safely renders results, and supports a failed request retry', async () => {
+    const { initSearch } = await load('search');
+    const { window } = dom(searchMarkup + '<input data-page-search><p data-page-status></p><ul data-page-results></ul>'), { document } = window;
+    document.documentElement.dataset.searchIndex = '/assets/search.json';
+    let calls = 0;
+    window.fetch = async () => { calls++; if (calls === 1) throw new Error('offline'); return { ok: true, json: async () => [{ title: '<img src=x>', url: '/components/button/', description: 'Button', content: 'button', group: 'Actions' }] }; };
+    const cleanup = initSearch(document, window);
+    assert.equal(calls, 0);
+    const input = document.querySelector('[data-page-search]'); input.value = 'button';
+    input.dispatchEvent(new window.Event('input', { bubbles: true }));
+    await new Promise(resolve => setImmediate(resolve));
+    assert.match(document.querySelector('[data-page-status]').textContent, /could not load/);
+    input.dispatchEvent(new window.Event('input', { bubbles: true }));
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(document.querySelector('[data-page-results] img'), null);
+    assert.equal(document.querySelector('[data-page-results] strong').textContent, '<img src=x>');
+    assert.equal(calls, 2);
+    cleanup(); window.close();
+});
+test('cycles themes and works when persistent storage is denied', async () => {
+    const { initTheme } = await load('theme');
+    const { window } = dom('<button data-theme-toggle>Theme</button>'), { document } = window;
+    window.matchMedia = () => ({ matches: true, addEventListener() {}, removeEventListener() {} });
+    Object.defineProperty(window, 'localStorage', { get() { throw new Error('denied'); } });
+    const cleanup = initTheme(document, window), button = document.querySelector('button');
+    assert.equal(document.documentElement.dataset.theme, 'dark');
+    button.click(); assert.equal(document.documentElement.dataset.theme, 'light');
+    button.click(); assert.equal(document.documentElement.dataset.theme, 'dark');
+    assert.match(button.getAttribute('aria-label'), /system/);
+    cleanup(); window.close();
+});
+test('copies exact code and provides a fallback when clipboard access is denied', async () => {
+    const { copyText } = await load('copy');
+    const { window } = dom('<button>Copy</button>'), { document } = window;
+    const button = document.querySelector('button'); button.focus();
+    let copied;
+    window.navigator.clipboard = { writeText: async text => { copied = text; } };
+    assert.equal(await copyText('<Button>Save</Button>', document, window), true);
+    assert.equal(copied, '<Button>Save</Button>');
+    window.navigator.clipboard.writeText = async () => { throw new Error('denied'); };
+    document.execCommand = () => true;
+    assert.equal(await copyText('fallback', document, window), true);
+    assert.equal(document.querySelector('textarea'), null);
+    assert.equal(document.activeElement, button);
+    window.close();
+});
+test('filters real component links and keeps group headings in sync', async () => {
+    const { initNavigation } = await load('navigation');
+    const { window } = dom('<input data-component-filter><p data-filter-status></p><section data-component-group><a data-component-card="Button" href="/button/">Button</a></section><section data-component-group><a data-component-card="Line Chart" href="/line/">Line</a></section>'), { document } = window;
+    const cleanup = initNavigation(document, window), input = document.querySelector('input');
+    input.value = 'line'; input.dispatchEvent(new window.Event('input', { bubbles: true }));
+    assert.equal(document.querySelector('section').hidden, true);
+    assert.equal(document.querySelector('[data-filter-status]').textContent, '1 component matching your filter');
+    assert.equal(new URL(window.location.href).searchParams.get('q'), 'line');
+    cleanup(); window.close();
+});
