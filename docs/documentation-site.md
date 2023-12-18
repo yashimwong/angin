@@ -42,6 +42,21 @@ This runs the library's behavior, declaration, SSR, bundle, and chart checks, th
 
 The documentation checks do not launch a browser. DOM and HTTP tests cover behavior without making claims about visual or assistive-technology verification. For a release, evaluate responsive layouts and assistive technology in the consuming environment when that verification is requested.
 
+## Performance budgets
+
+The initial production build measures roughly 5 KB of JavaScript and 11 KB of CSS, gzipped. These figures describe transferred assets, not runtime memory or a browser performance score. React, ReactDOM, demo code, and the search index are deferred until their features are requested; activating a demo adds those downloads.
+
+The build validator enforces these gzip limits:
+
+| Resource | Maximum |
+| --- | --- |
+| Initial JavaScript | 8,000 bytes |
+| Shared stylesheet | 14,000 bytes |
+| Lazy search index | 65,000 bytes |
+| Each HTML page | 60,000 bytes |
+
+Content changes can alter measured sizes. Use the generated performance report for current values, and investigate regressions before increasing a budget. Theme initialization runs before the stylesheet to reduce theme flashing. Code highlighting runs at build time, search results are bounded, and the table of contents uses an observer instead of continuous scroll handlers.
+
 ## Deploy static files
 
 Upload the contents of `out/` to a static host. The tracked `.openai/hosting.json` selects this output directory for the private Sites deployment. Source files and generated caches are not needed by the running site. The site requires no server runtime, database, or application credentials.
