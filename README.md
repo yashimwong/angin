@@ -93,6 +93,12 @@ OHLC aggregation, volume, and time-range controls. Start with the [chart guide](
 
 ## Documentation
 
+The documentation site includes searchable references for all 46 components,
+interactive examples, generated prop tables, a chart gallery, and a playground.
+Run `npm run build:docs` then `npm run docs` to open it locally at
+`http://127.0.0.1:4173`. See [maintaining the site](docs/documentation-site.md)
+for content authoring, checks, and static deployment.
+
 | I want to… | Read |
 | --- | --- |
 | Set up my first screen | [Getting started](docs/getting-started.md) |

@@ -41,6 +41,7 @@ const guides = [
     ['dashboard-example', 'Dashboard', 'Recipes', 'Compose a controlled, paginated task view.'],
     ['performance', 'Performance', 'Engineering', 'Measure package size and production bundles.'],
     ['testing', 'Testing', 'Engineering', 'Validate behavior, declarations, and SSR.'],
+    ['documentation-site', 'Documentation site', 'Engineering', 'Build, maintain, validate, and deploy this static site.'],
     ['migration', 'Migration notes', 'Engineering', 'Adopt new APIs without losing existing behavior.'],
 ].map(([slug, title, group, description]) => ({ slug, title, group, description, source: `docs/${slug}.md`, path: `/docs/${slug}/` }));
 module.exports = { groups, components, guides, slug };
