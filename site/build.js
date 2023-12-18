@@ -46,7 +46,8 @@ async function build() {
     if (routes.has('/404/')) fs.copyFileSync(outputFile('/404/'), path.join(config.output, '404.html'));
     fs.writeFileSync(path.join(config.output, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${pages.filter(page => page.path !== '/404/').map(page => `<url><loc>${absolute(page.path)}</loc></url>`).join('')}</urlset>`);
     fs.writeFileSync(path.join(config.output, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${absolute('/sitemap.xml')}\n`);
-    fs.writeFileSync(path.join(config.output, '_headers'), `/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n/*\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n`);
+    const immutableHeaders = fs.readdirSync(path.join(config.output, 'assets')).filter(name => /\.[a-f0-9]{8,}\./.test(name)).map(name => `${href('/assets/' + name)}\n  Cache-Control: public, max-age=31536000, immutable`).join('\n');
+    fs.writeFileSync(path.join(config.output, '_headers'), `/*\n  Cache-Control: no-cache\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n${immutableHeaders}\n`);
     fs.writeFileSync(path.join(config.cache, 'site-manifest.json'), JSON.stringify({ pages: pages.map(({ path, title, headings }) => ({ path, title, headings })), assets, api }, null, 2));
     console.log(`Built ${pages.length} static documentation pages, ${components.length} component references, and ${guides.length} guides.`);
 }

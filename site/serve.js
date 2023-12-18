@@ -6,7 +6,7 @@ const { basePath } = require('./build/routes');
 const mime = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.json': 'application/json; charset=utf-8', '.svg': 'image/svg+xml', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8' };
 function createServer({ directory = config.output, prefix = basePath() } = {}) {
     basePath(prefix);
-    const root = path.resolve(directory);
+    const root = fs.realpathSync(directory);
     return http.createServer((request, response) => {
         response.setHeader('X-Content-Type-Options', 'nosniff');
         const send = (status, body, type = 'text/plain; charset=utf-8') => {

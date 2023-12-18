@@ -8,6 +8,12 @@ function extractApi() {
         esModuleInterop: true, strict: true, skipLibCheck: true, noEmit: true,
     });
     const checker = program.getTypeChecker();
+    const readableType = (type, declaration) => {
+        const format = value => checker.typeToString(value, declaration, ts.TypeFormatFlags.NoTruncation);
+        const value = type.isUnion() && type.types.every(item => item.isLiteral() || (item.flags & (ts.TypeFlags.Undefined | ts.TypeFlags.Null)))
+            ? type.types.map(format).join(' | ') : format(type);
+        return value.replace(/import\("[^"]+"\)\./g, '');
+    };
     const result = {};
     for (const component of components) {
         const source = program.getSourceFile(path.join(config.root, `src/components/${component.category}/${component.name}.tsx`));
@@ -20,7 +26,7 @@ function extractApi() {
         }).map(property => ({
             name: property.name,
             required: !(property.flags & ts.SymbolFlags.Optional),
-            type: checker.typeToString(checker.getTypeOfSymbolAtLocation(property, declaration), declaration, ts.TypeFormatFlags.NoTruncation),
+            type: readableType(checker.getTypeOfSymbolAtLocation(property, declaration), declaration),
             description: ts.displayPartsToString(property.getDocumentationComment(checker)),
         })).sort((a, b) => Number(b.required) - Number(a.required) || a.name.localeCompare(b.name));
     }

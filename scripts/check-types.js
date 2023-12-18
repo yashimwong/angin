@@ -12,7 +12,7 @@ try {
     copyFileSync(join(__dirname, 'fixtures/consumer.tsx'), join(temporary, 'consumer.tsx'));
     const files = ['consumer.tsx'];
     const documents = ['README.md', ...readdirSync(join(root, 'docs'))
-        .filter(name => name.endsWith('.md')).map(name => `docs/${name}`)];
+        .filter(name => name.endsWith('.md')).map(name => `docs/${name}`), ...readdirSync(join(root, 'site/components')).filter(name => name.endsWith('.md')).map(name => `site/components/${name}`)];
     for (const name of documents) {
         const source = readFileSync(join(root, name), 'utf8');
         for (const [index, match] of [...source.matchAll(/<!-- typecheck-example -->\s*```tsx\n([\s\S]*?)```/g)].entries()) {
