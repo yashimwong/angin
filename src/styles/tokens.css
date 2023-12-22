@@ -38,16 +38,17 @@
     --angin-color-red-50: #fef2f2;
     --angin-color-red-600: #dc2626;
 
-    --angin-radius-sm: 0.25rem;
-    --angin-radius-md: 0.5rem;
-    --angin-radius-lg: 0.75rem;
+    --angin-radius-sm: 0.375rem;
+    --angin-radius-md: 0.625rem;
+    --angin-radius-lg: 1rem;
     --angin-radius-full: 9999px;
-    --angin-shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06);
-    --angin-shadow-md: 0 10px 25px rgb(15 23 42 / 0.12);
+    --angin-shadow-sm: 0 1px 2px rgb(15 23 42 / 0.04), 0 2px 4px rgb(15 23 42 / 0.02);
+    --angin-shadow-md: 0 4px 8px -4px rgb(15 23 42 / 0.08), 0 16px 40px -8px rgb(15 23 42 / 0.16);
     --angin-focus-ring: 0 0 0 3px rgb(37 99 235 / 0.25);
     --angin-duration-fast: 140ms;
     --angin-duration-normal: 220ms;
     --angin-duration-slow: 320ms;
     --angin-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --angin-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --angin-shadow-lg: 0 8px 24px -8px rgb(15 23 42 / 0.12), 0 24px 64px -16px rgb(15 23 42 / 0.24);
 }
