@@ -53,3 +53,6 @@
         animation-iteration-count: 1 !important;
     }
 }
+
+.angin-root::before, .angin-root::after,
+.angin-root *::before, .angin-root *::after { box-sizing: border-box; }
