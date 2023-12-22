@@ -45,4 +45,9 @@
     --angin-shadow-sm: 0 1px 2px rgb(15 23 42 / 0.06);
     --angin-shadow-md: 0 10px 25px rgb(15 23 42 / 0.12);
     --angin-focus-ring: 0 0 0 3px rgb(37 99 235 / 0.25);
+    --angin-duration-fast: 140ms;
+    --angin-duration-normal: 220ms;
+    --angin-duration-slow: 320ms;
+    --angin-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --angin-ease-standard: cubic-bezier(0.2, 0, 0, 1);
 }
