@@ -56,3 +56,9 @@
 
 .angin-root::before, .angin-root::after,
 .angin-root *::before, .angin-root *::after { box-sizing: border-box; }
+
+.angin-root :where(button, input, select, textarea) {
+    -webkit-appearance: none;
+    appearance: none;
+}
+.angin-root button { touch-action: manipulation; }
