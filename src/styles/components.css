@@ -1592,3 +1592,7 @@
     background: var(--angin-color-primary-50);
     box-shadow: var(--angin-shadow-sm);
 }
+
+.angin-button--danger:hover:not(:disabled) {
+    filter: brightness(0.92);
+}
