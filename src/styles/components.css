@@ -103,7 +103,11 @@
     cursor: pointer;
     font-weight: 600;
     line-height: 1;
-    transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+    transition: background-color var(--angin-duration-fast) ease, border-color var(--angin-duration-fast) ease, color var(--angin-duration-fast) ease, box-shadow var(--angin-duration-normal) ease, transform var(--angin-duration-fast) var(--angin-ease-out);
+    font-family: var(--angin-font-family);
+    letter-spacing: -0.01em;
+    user-select: none;
+    vertical-align: middle;
 }
 
 .angin-button:disabled {
