@@ -140,6 +140,7 @@
 .angin-button--solid {
     color: var(--angin-color-white);
     background: var(--angin-color-primary-600);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.16), 0 1px 3px rgb(15 23 42 / 0.16);
 }
 
 .angin-button--solid:hover:not(:disabled) {
