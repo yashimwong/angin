@@ -1587,3 +1587,8 @@
 .angin-spinner {
     flex-shrink: 0;
 }
+
+.angin-button--outline:hover:not(:disabled) {
+    background: var(--angin-color-primary-50);
+    box-shadow: var(--angin-shadow-sm);
+}
