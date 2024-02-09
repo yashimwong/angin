@@ -1596,3 +1596,6 @@
 .angin-button--danger:hover:not(:disabled) {
     filter: brightness(0.92);
 }
+
+.angin-button:active:not(:disabled),
+.angin-icon-button:active:not(:disabled) { transform: translateY(1px); }
