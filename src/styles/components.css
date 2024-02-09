@@ -188,6 +188,9 @@
     border: 1px solid transparent;
     border-radius: var(--angin-radius-md);
     cursor: pointer;
+    flex-shrink: 0;
+    line-height: 1;
+    transition: background-color var(--angin-duration-fast) ease, box-shadow var(--angin-duration-fast) ease, transform var(--angin-duration-fast) var(--angin-ease-out);
 }
 
 .angin-icon-button:disabled {
