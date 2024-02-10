@@ -225,6 +225,8 @@
     color: var(--angin-color-gray-700);
     font-size: var(--angin-font-size-sm);
     font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.005em;
 }
 
 .angin-input {
