@@ -235,7 +235,11 @@
     border-radius: var(--angin-radius-md);
     color: var(--angin-color-gray-900);
     background: var(--angin-color-white);
-    transition: border-color 120ms ease, box-shadow 120ms ease;
+    transition: border-color var(--angin-duration-fast) ease, box-shadow var(--angin-duration-normal) ease, background-color var(--angin-duration-fast) ease;
+    appearance: none;
+    min-width: 0;
+    box-shadow: var(--angin-shadow-sm);
+    line-height: 1.5;
 }
 
 .angin-input:focus {
