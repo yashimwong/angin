@@ -1614,3 +1614,7 @@
 .angin-button__spinner { flex-shrink: 0; }
 .angin-button > svg, .angin-icon-button > svg { display: block; flex-shrink: 0; }
 .angin-button[aria-busy="true"], .angin-icon-button[aria-busy="true"] { cursor: progress; }
+
+.angin-input::placeholder, .angin-textarea::placeholder { color: var(--angin-color-gray-400); opacity: 1; }
+.angin-input:hover:not(:disabled):not(:focus):not([aria-invalid="true"]),
+.angin-textarea:hover:not(:disabled):not(:focus):not([aria-invalid="true"]) { border-color: var(--angin-color-gray-400); }
