@@ -1602,3 +1602,7 @@
 
 .angin-button:active:not(:disabled),
 .angin-icon-button:active:not(:disabled) { transform: translateY(1px); }
+
+.angin-button__spinner { flex-shrink: 0; }
+.angin-button > svg, .angin-icon-button > svg { display: block; flex-shrink: 0; }
+.angin-button[aria-busy="true"], .angin-icon-button[aria-busy="true"] { cursor: progress; }
