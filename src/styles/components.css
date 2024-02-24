@@ -1618,3 +1618,6 @@
 .angin-input::placeholder, .angin-textarea::placeholder { color: var(--angin-color-gray-400); opacity: 1; }
 .angin-input:hover:not(:disabled):not(:focus):not([aria-invalid="true"]),
 .angin-textarea:hover:not(:disabled):not(:focus):not([aria-invalid="true"]) { border-color: var(--angin-color-gray-400); }
+
+.angin-input:disabled, .angin-textarea:disabled { background: var(--angin-color-gray-100); color: var(--angin-color-gray-500); cursor: not-allowed; opacity: 0.7; }
+.angin-input:read-only, .angin-textarea:read-only { background: var(--angin-color-gray-50); }
