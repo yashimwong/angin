@@ -272,7 +272,9 @@
 
 .angin-field__message {
     color: var(--angin-color-gray-500);
-    font-size: var(--angin-font-size-sm);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
 .angin-field__message--error {
