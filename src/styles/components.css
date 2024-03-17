@@ -1621,3 +1621,5 @@
 
 .angin-input:disabled, .angin-textarea:disabled { background: var(--angin-color-gray-100); color: var(--angin-color-gray-500); cursor: not-allowed; opacity: 0.7; }
 .angin-input:read-only, .angin-textarea:read-only { background: var(--angin-color-gray-50); }
+
+.angin-input[aria-invalid="true"]:focus, .angin-textarea[aria-invalid="true"]:focus { border-color: var(--angin-color-red-600); box-shadow: 0 0 0 3px rgb(220 38 38 / 0.16); }
