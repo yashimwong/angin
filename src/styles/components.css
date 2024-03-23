@@ -367,10 +367,20 @@
 }
 
 .angin-check-field__control {
-    width: 1rem;
-    height: 1rem;
-    margin: 0.2rem 0 0;
+    width: 1.125rem;
+    height: 1.125rem;
+    margin: 0.18rem 0 0;
     accent-color: var(--angin-color-primary-600);
+    appearance: none;
+    -webkit-appearance: none;
+    display: inline-grid;
+    place-content: center;
+    flex-shrink: 0;
+    border: 1.5px solid var(--angin-color-gray-400);
+    border-radius: 0.3125rem;
+    background: var(--angin-color-white);
+    cursor: pointer;
+    transition: background-color var(--angin-duration-fast) ease, border-color var(--angin-duration-fast) ease, box-shadow var(--angin-duration-fast) ease;
 }
 
 .angin-check-field__message {
