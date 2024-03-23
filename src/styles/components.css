@@ -1639,3 +1639,12 @@
 .angin-input:read-only, .angin-textarea:read-only { background: var(--angin-color-gray-50); }
 
 .angin-input[aria-invalid="true"]:focus, .angin-textarea[aria-invalid="true"]:focus { border-color: var(--angin-color-red-600); box-shadow: 0 0 0 3px rgb(220 38 38 / 0.16); }
+
+.angin-check-field__control[type='checkbox']::before {
+    content: ''; width: 0.55rem; height: 0.3rem;
+    border-left: 2px solid white; border-bottom: 2px solid white;
+    transform: translateY(-1px) rotate(-45deg) scale(0);
+    transition: transform var(--angin-duration-fast) var(--angin-ease-out);
+}
+.angin-check-field__control:checked { border-color: var(--angin-color-primary-600); background: var(--angin-color-primary-600); }
+.angin-check-field__control[type='checkbox']:checked::before { transform: translateY(-1px) rotate(-45deg) scale(1); }
