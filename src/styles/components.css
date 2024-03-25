@@ -1655,3 +1655,6 @@
     transform: scale(0); transition: transform var(--angin-duration-fast) var(--angin-ease-out);
 }
 .angin-check-field__control[type='radio']:checked::before { transform: scale(1); }
+
+.angin-check-field__control[type='checkbox']:indeterminate { background: var(--angin-color-primary-600); border-color: var(--angin-color-primary-600); }
+.angin-check-field__control[type='checkbox']:indeterminate::before { width: 0.5rem; height: 0; border-left: 0; transform: none; }
