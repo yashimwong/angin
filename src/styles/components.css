@@ -1648,3 +1648,10 @@
 }
 .angin-check-field__control:checked { border-color: var(--angin-color-primary-600); background: var(--angin-color-primary-600); }
 .angin-check-field__control[type='checkbox']:checked::before { transform: translateY(-1px) rotate(-45deg) scale(1); }
+
+.angin-check-field__control[type='radio'] { border-radius: 50%; }
+.angin-check-field__control[type='radio']::before {
+    content: ''; width: 0.375rem; height: 0.375rem; border-radius: 50%; background: white;
+    transform: scale(0); transition: transform var(--angin-duration-fast) var(--angin-ease-out);
+}
+.angin-check-field__control[type='radio']:checked::before { transform: scale(1); }
