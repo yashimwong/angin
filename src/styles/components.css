@@ -1662,3 +1662,6 @@
 .angin-check-field__control:hover:not(:disabled) { border-color: var(--angin-color-primary-500); }
 .angin-check-field__control:disabled { opacity: 0.45; cursor: not-allowed; }
 .angin-check-field__control:disabled + span { color: var(--angin-color-gray-400); cursor: not-allowed; }
+
+.angin-check-field__message { padding-inline-start: 1.625rem; line-height: 1.5; font-size: 0.8125rem; }
+.angin-check-field__control[aria-invalid="true"] { border-color: var(--angin-color-red-600); }
