@@ -1665,3 +1665,10 @@
 
 .angin-check-field__message { padding-inline-start: 1.625rem; line-height: 1.5; font-size: 0.8125rem; }
 .angin-check-field__control[aria-invalid="true"] { border-color: var(--angin-color-red-600); }
+
+@media (forced-colors: active) {
+    .angin-check-field__control { border-color: ButtonText; background: Canvas; }
+    .angin-check-field__control:checked, .angin-check-field__control:indeterminate { background: Highlight; border-color: Highlight; forced-color-adjust: none; }
+    .angin-check-field__control[type='checkbox']::before { border-color: HighlightText; }
+    .angin-check-field__control[type='radio']::before { background: HighlightText; }
+}
