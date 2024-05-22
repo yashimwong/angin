@@ -1678,3 +1678,6 @@
 }
 
 .angin-switch-field__input:focus-visible + .angin-switch-field__track { outline: 2px solid var(--angin-color-primary-500); outline-offset: 3px; box-shadow: var(--angin-focus-ring); }
+
+.angin-switch-field__input:disabled + .angin-switch-field__track { opacity: 0.45; cursor: not-allowed; }
+.angin-switch-field__input:disabled ~ span:last-child { color: var(--angin-color-gray-400); cursor: not-allowed; }
