@@ -1676,3 +1676,5 @@
     .angin-check-field__control[type='checkbox']::before { border-color: HighlightText; }
     .angin-check-field__control[type='radio']::before { background: HighlightText; }
 }
+
+.angin-switch-field__input:focus-visible + .angin-switch-field__track { outline: 2px solid var(--angin-color-primary-500); outline-offset: 3px; box-shadow: var(--angin-focus-ring); }
