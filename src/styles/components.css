@@ -1684,3 +1684,10 @@
 
 [dir='rtl'] .angin-switch-field__input:checked + .angin-switch-field__track .angin-switch-field__thumb { transform: translateX(-1rem); }
 .angin-switch-field__message { padding-left: 0; padding-inline-start: 3.25rem; font-size: 0.8125rem; }
+
+@media (forced-colors: active) {
+    .angin-switch-field__track { border: 1px solid ButtonText; background: Canvas; }
+    .angin-switch-field__thumb { background: ButtonText; }
+    .angin-switch-field__input:checked + .angin-switch-field__track { background: Highlight; forced-color-adjust: none; }
+    .angin-switch-field__input:checked + .angin-switch-field__track .angin-switch-field__thumb { background: HighlightText; }
+}
