@@ -458,7 +458,10 @@
     border: 1px solid transparent;
     border-radius: var(--angin-radius-full);
     font-weight: 600;
-    line-height: 1;
+    line-height: 1.25;
+    gap: var(--angin-space-1);
+    vertical-align: middle;
+    letter-spacing: 0.01em;
 }
 
 .angin-badge--sm {
