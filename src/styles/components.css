@@ -516,7 +516,10 @@
     gap: var(--angin-space-4);
     padding: var(--angin-space-4);
     border: 1px solid;
-    border-radius: var(--angin-radius-md);
+    border-radius: var(--angin-radius-lg);
+    border-width: 0 0 0 3px;
+    box-shadow: var(--angin-shadow-sm);
+    line-height: 1.6;
 }
 
 .angin-alert__content {
