@@ -1698,3 +1698,7 @@
     .angin-switch-field__input:checked + .angin-switch-field__track { background: Highlight; forced-color-adjust: none; }
     .angin-switch-field__input:checked + .angin-switch-field__track .angin-switch-field__thumb { background: HighlightText; }
 }
+
+.angin-alert__dismiss { display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: var(--angin-radius-sm); transition: background-color var(--angin-duration-fast) ease; }
+.angin-alert__dismiss:hover { background: rgb(15 23 42 / 0.06); }
+.angin-alert__content { min-width: 0; overflow-wrap: anywhere; }
