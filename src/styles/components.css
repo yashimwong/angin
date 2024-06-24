@@ -576,7 +576,7 @@
 
 .angin-card--interactive {
     cursor: pointer;
-    transition: box-shadow 120ms ease, transform 120ms ease;
+    transition: box-shadow var(--angin-duration-normal) var(--angin-ease-out), transform var(--angin-duration-normal) var(--angin-ease-out), border-color var(--angin-duration-normal) ease;
 }
 
 .angin-card--interactive:hover {
