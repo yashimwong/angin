@@ -1706,3 +1706,6 @@
 
 .angin-card--interactive:focus-visible { outline: 2px solid var(--angin-color-primary-500); outline-offset: 3px; box-shadow: var(--angin-shadow-md); }
 .angin-card--interactive:active { transform: translateY(0); }
+
+.angin-stack { min-width: 0; }
+.angin-stack > * { min-width: 0; }
