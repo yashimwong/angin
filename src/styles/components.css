@@ -1712,3 +1712,7 @@
 
 .angin-stack { min-width: 0; }
 .angin-stack > * { min-width: 0; }
+
+.angin-progress__bar { transition: width var(--angin-duration-slow) var(--angin-ease-out); }
+[dir='rtl'] .angin-progress--indeterminate .angin-progress__bar { animation-name: angin-progress-rtl; }
+@keyframes angin-progress-rtl { 0% { transform: translateX(100%); } 100% { transform: translateX(-250%); } }
