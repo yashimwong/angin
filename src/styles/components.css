@@ -1702,3 +1702,6 @@
 .angin-alert__dismiss { display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: var(--angin-radius-sm); transition: background-color var(--angin-duration-fast) ease; }
 .angin-alert__dismiss:hover { background: rgb(15 23 42 / 0.06); }
 .angin-alert__content { min-width: 0; overflow-wrap: anywhere; }
+
+.angin-card--interactive:focus-visible { outline: 2px solid var(--angin-color-primary-500); outline-offset: 3px; box-shadow: var(--angin-shadow-md); }
+.angin-card--interactive:active { transform: translateY(0); }
