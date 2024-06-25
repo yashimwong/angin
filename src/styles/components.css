@@ -588,6 +588,7 @@
 .angin-card__footer {
     padding: var(--angin-space-4) var(--angin-space-5);
     color: var(--angin-color-gray-700);
+    background: var(--angin-color-gray-50);
 }
 
 .angin-card__header {
