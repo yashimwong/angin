@@ -801,10 +801,10 @@
 
 .angin-skeleton {
     min-height: 1rem;
-    border-radius: var(--angin-radius-sm);
+    border-radius: var(--angin-radius-md);
     background: linear-gradient(90deg, var(--angin-color-gray-100), var(--angin-color-gray-50), var(--angin-color-gray-100));
     background-size: 200% 100%;
-    animation: angin-skeleton 1400ms ease-in-out infinite;
+    animation: angin-skeleton 1800ms ease-in-out infinite;
 }
 
 .angin-skeleton--circle {
