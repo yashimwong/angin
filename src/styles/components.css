@@ -845,6 +845,10 @@
 .angin-breadcrumbs__link {
     color: var(--angin-color-primary-600);
     text-decoration: none;
+    text-underline-offset: 0.2em;
+    border-radius: var(--angin-radius-sm);
+    transition: color var(--angin-duration-fast) ease;
+    overflow-wrap: anywhere;
 }
 
 .angin-breadcrumbs__link:hover {
