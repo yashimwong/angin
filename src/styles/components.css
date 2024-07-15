@@ -1722,3 +1722,6 @@
 @keyframes angin-progress-rtl { 0% { transform: translateX(100%); } 100% { transform: translateX(-250%); } }
 
 .angin-pagination__control, .angin-pagination__page { font-variant-numeric: tabular-nums; font-weight: 500; transition: background-color var(--angin-duration-fast) ease, border-color var(--angin-duration-fast) ease, color var(--angin-duration-fast) ease; }
+
+.angin-pagination__page--active:hover { color: var(--angin-color-white); background: var(--angin-color-primary-500); }
+.angin-pagination__control:hover:not(:disabled), .angin-pagination__page:not(.angin-pagination__page--active):hover { background: var(--angin-color-primary-50); }
