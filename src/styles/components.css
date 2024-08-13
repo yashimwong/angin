@@ -1729,3 +1729,6 @@
 
 .angin-pagination__page--active:hover { color: var(--angin-color-white); background: var(--angin-color-primary-500); }
 .angin-pagination__control:hover:not(:disabled), .angin-pagination__page:not(.angin-pagination__page--active):hover { background: var(--angin-color-primary-50); }
+
+.angin-menu__trigger:hover { border-color: var(--angin-color-gray-400); background: var(--angin-color-gray-50); }
+.angin-menu__trigger[aria-expanded="true"] { border-color: var(--angin-color-primary-500); box-shadow: var(--angin-focus-ring); }
