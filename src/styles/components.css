@@ -978,6 +978,9 @@
     background: var(--angin-color-white);
     cursor: pointer;
     font-weight: 600;
+    gap: var(--angin-space-2);
+    box-shadow: var(--angin-shadow-sm);
+    transition: border-color var(--angin-duration-fast) ease, background-color var(--angin-duration-fast) ease, box-shadow var(--angin-duration-normal) ease;
 }
 
 .angin-menu__list {
