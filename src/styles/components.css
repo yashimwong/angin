@@ -988,14 +988,20 @@
     z-index: 10;
     top: calc(100% + var(--angin-space-2));
     right: 0;
-    min-width: 10rem;
-    padding: var(--angin-space-1);
+    min-width: 12rem;
+    padding: var(--angin-space-2);
     margin: 0;
     border: 1px solid var(--angin-color-gray-200);
-    border-radius: var(--angin-radius-md);
+    border-radius: var(--angin-radius-lg);
     background: var(--angin-color-white);
     box-shadow: var(--angin-shadow-md);
     list-style: none;
+    max-width: min(24rem, calc(100vw - 2rem));
+    max-height: min(22rem, 60vh);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform-origin: top right;
+    animation: angin-pop-in var(--angin-duration-normal) var(--angin-ease-out);
 }
 
 .angin-menu__item {
