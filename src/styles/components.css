@@ -1738,3 +1738,6 @@
 
 .angin-menu__trigger:hover { border-color: var(--angin-color-gray-400); background: var(--angin-color-gray-50); }
 .angin-menu__trigger[aria-expanded="true"] { border-color: var(--angin-color-primary-500); box-shadow: var(--angin-focus-ring); }
+
+@keyframes angin-pop-in { from { opacity: 0; transform: translateY(-4px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes angin-fade-in { from { opacity: 0; } to { opacity: 1; } }
