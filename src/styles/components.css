@@ -1013,7 +1013,10 @@
     color: var(--angin-color-gray-700);
     background: transparent;
     cursor: pointer;
-    text-align: left;
+    text-align: start;
+    min-height: 2.25rem;
+    overflow-wrap: anywhere;
+    transition: background-color var(--angin-duration-fast) ease, color var(--angin-duration-fast) ease;
 }
 
 .angin-menu__item:hover:not(:disabled) {
