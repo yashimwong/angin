@@ -1083,8 +1083,10 @@
     width: min(100%, 24rem);
     padding: var(--angin-space-4);
     border: 1px solid;
-    border-radius: var(--angin-radius-md);
+    border-radius: var(--angin-radius-lg);
     box-shadow: var(--angin-shadow-md);
+    border-width: 0 0 0 3px;
+    animation: angin-pop-in var(--angin-duration-normal) var(--angin-ease-out);
 }
 
 .angin-toast__content {
