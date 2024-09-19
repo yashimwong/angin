@@ -1040,12 +1040,15 @@
     width: max-content;
     max-width: 16rem;
     padding: var(--angin-space-2) var(--angin-space-3);
-    border-radius: var(--angin-radius-sm);
+    border-radius: var(--angin-radius-md);
     color: var(--angin-color-white);
     background: var(--angin-color-gray-900);
-    box-shadow: var(--angin-shadow-sm);
-    font-size: var(--angin-font-size-sm);
+    box-shadow: var(--angin-shadow-md);
+    font-size: 0.8125rem;
     line-height: var(--angin-line-height-normal);
+    overflow-wrap: anywhere;
+    animation: angin-fade-in var(--angin-duration-fast) ease;
+    pointer-events: none;
 }
 
 .angin-tooltip__content--top {
