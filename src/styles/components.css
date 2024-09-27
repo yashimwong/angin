@@ -1755,3 +1755,5 @@
 .angin-toast__close { display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: var(--angin-radius-sm); transition: background-color var(--angin-duration-fast) ease; }
 .angin-toast__close:hover { background: rgb(15 23 42 / 0.06); }
 .angin-toast__content { min-width: 0; overflow-wrap: anywhere; }
+
+.angin-modal__backdrop, .angin-drawer__backdrop { background: rgb(15 23 42 / 0.4); animation: angin-fade-in var(--angin-duration-normal) ease; }
