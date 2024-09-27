@@ -1751,3 +1751,7 @@
 @keyframes angin-fade-in { from { opacity: 0; } to { opacity: 1; } }
 
 .angin-menu__item:focus-visible { color: var(--angin-color-primary-600); background: var(--angin-color-primary-50); outline: 2px solid var(--angin-color-primary-500); outline-offset: -2px; box-shadow: none; }
+
+.angin-toast__close { display: grid; place-items: center; width: 1.75rem; height: 1.75rem; border-radius: var(--angin-radius-sm); transition: background-color var(--angin-duration-fast) ease; }
+.angin-toast__close:hover { background: rgb(15 23 42 / 0.06); }
+.angin-toast__content { min-width: 0; overflow-wrap: anywhere; }
