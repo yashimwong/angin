@@ -1146,11 +1146,13 @@
 
 .angin-modal {
     width: min(100%, 32rem);
-    max-height: min(90vh, 40rem);
+    max-height: min(90dvh, 40rem);
     overflow: auto;
     border-radius: var(--angin-radius-lg);
     background: var(--angin-color-white);
-    box-shadow: var(--angin-shadow-md);
+    box-shadow: var(--angin-shadow-lg);
+    animation: angin-pop-in var(--angin-duration-normal) var(--angin-ease-out);
+    overscroll-behavior: contain;
 }
 
 .angin-modal__header,
