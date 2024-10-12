@@ -1759,3 +1759,6 @@
 .angin-toast__content { min-width: 0; overflow-wrap: anywhere; }
 
 .angin-modal__backdrop, .angin-drawer__backdrop { background: rgb(15 23 42 / 0.4); animation: angin-fade-in var(--angin-duration-normal) ease; }
+
+.angin-modal__close, .angin-drawer__close { display: grid; place-items: center; width: 2rem; height: 2rem; flex-shrink: 0; transition: background-color var(--angin-duration-fast) ease, color var(--angin-duration-fast) ease; }
+.angin-modal__close:hover, .angin-drawer__close:hover { color: var(--angin-color-gray-900); background: var(--angin-color-gray-100); }
