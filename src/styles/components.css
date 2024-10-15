@@ -1766,3 +1766,7 @@
 .angin-tabs__tab { transition: color var(--angin-duration-fast) ease, background-color var(--angin-duration-fast) ease; border-radius: var(--angin-radius-sm) var(--angin-radius-sm) 0 0; }
 .angin-tabs__tab:focus-visible { outline: 2px solid var(--angin-color-primary-500); outline-offset: -2px; box-shadow: none; }
 .angin-tabs__list { scrollbar-width: thin; }
+
+.angin-calendar__day { font-size: var(--angin-font-size-sm); font-variant-numeric: tabular-nums; transition: background-color var(--angin-duration-fast) ease, color var(--angin-duration-fast) ease; }
+.angin-calendar__day--selected:hover:not(:disabled) { color: var(--angin-color-white); background: var(--angin-color-primary-500); }
+.angin-calendar__day--selected { font-weight: 600; box-shadow: var(--angin-shadow-sm); }
