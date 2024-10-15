@@ -1762,3 +1762,7 @@
 
 .angin-modal__close, .angin-drawer__close { display: grid; place-items: center; width: 2rem; height: 2rem; flex-shrink: 0; transition: background-color var(--angin-duration-fast) ease, color var(--angin-duration-fast) ease; }
 .angin-modal__close:hover, .angin-drawer__close:hover { color: var(--angin-color-gray-900); background: var(--angin-color-gray-100); }
+
+.angin-tabs__tab { transition: color var(--angin-duration-fast) ease, background-color var(--angin-duration-fast) ease; border-radius: var(--angin-radius-sm) var(--angin-radius-sm) 0 0; }
+.angin-tabs__tab:focus-visible { outline: 2px solid var(--angin-color-primary-500); outline-offset: -2px; box-shadow: none; }
+.angin-tabs__list { scrollbar-width: thin; }
