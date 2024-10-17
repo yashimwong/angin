@@ -1778,3 +1778,7 @@
 .angin-accordion__trigger:focus-visible { outline: 2px solid var(--angin-color-primary-500); outline-offset: -3px; box-shadow: none; }
 .angin-accordion__item--expanded .angin-accordion__trigger { background: var(--angin-color-gray-50); }
 .angin-accordion__panel { padding-top: var(--angin-space-3); line-height: 1.65; animation: angin-fade-in var(--angin-duration-normal) ease; }
+
+.angin-tabbed-navigation__item { transition: color var(--angin-duration-fast) ease, background-color var(--angin-duration-fast) ease; }
+.angin-tabbed-navigation--vertical .angin-tabbed-navigation__item--active { background: var(--angin-color-primary-50); }
+.angin-tabbed-navigation__item:focus-visible { outline: 2px solid var(--angin-color-primary-500); outline-offset: -2px; box-shadow: none; }
