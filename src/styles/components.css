@@ -1773,3 +1773,8 @@
 
 .angin-calendar__nav { display: grid; place-items: center; width: 2.25rem; height: 2.25rem; transition: background-color var(--angin-duration-fast) ease; }
 .angin-calendar__weekdays { padding-block: var(--angin-space-2); font-weight: 500; }
+
+.angin-accordion__trigger { gap: var(--angin-space-4); text-align: start; transition: background-color var(--angin-duration-fast) ease; }
+.angin-accordion__trigger:focus-visible { outline: 2px solid var(--angin-color-primary-500); outline-offset: -3px; box-shadow: none; }
+.angin-accordion__item--expanded .angin-accordion__trigger { background: var(--angin-color-gray-50); }
+.angin-accordion__panel { padding-top: var(--angin-space-3); line-height: 1.65; animation: angin-fade-in var(--angin-duration-normal) ease; }
