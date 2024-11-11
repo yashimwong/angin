@@ -1788,3 +1788,8 @@
 .angin-drawer__body { min-height: 0; overscroll-behavior: contain; }
 @keyframes angin-drawer-right { from { transform: translateX(100%); } to { transform: translateX(0); } }
 @keyframes angin-drawer-left { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+
+.angin-stepper__step { min-width: 0; }
+.angin-stepper__indicator { transition: background-color var(--angin-duration-normal) ease, border-color var(--angin-duration-normal) ease, color var(--angin-duration-normal) ease; }
+.angin-stepper__button { border-radius: var(--angin-radius-sm); text-align: start; }
+.angin-stepper__button:disabled { cursor: not-allowed; opacity: 0.5; }
