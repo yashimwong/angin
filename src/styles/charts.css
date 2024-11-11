@@ -60,3 +60,8 @@
     .angin-chart__candle[data-direction='down'] .angin-chart__candle-body { fill: CanvasText; }
     .angin-chart__candle[data-direction='up'] .angin-chart__candle-body { fill: Canvas; }
 }
+
+.angin-chart__legend-button { transition: background-color var(--angin-duration-fast, 140ms) ease, opacity var(--angin-duration-fast, 140ms) ease; }
+.angin-chart__legend-button:hover:not(:disabled) { background: var(--angin-chart-grid); }
+.angin-chart__controls button, .angin-chart__data button { appearance: none; box-shadow: var(--angin-shadow-sm); transition: border-color var(--angin-duration-fast, 140ms) ease; }
+.angin-chart__controls button:hover:not(:disabled), .angin-chart__data button:hover:not(:disabled) { border-color: var(--angin-chart-muted); }
