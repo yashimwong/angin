@@ -65,3 +65,8 @@
 .angin-chart__legend-button:hover:not(:disabled) { background: var(--angin-chart-grid); }
 .angin-chart__controls button, .angin-chart__data button { appearance: none; box-shadow: var(--angin-shadow-sm); transition: border-color var(--angin-duration-fast, 140ms) ease; }
 .angin-chart__controls button:hover:not(:disabled), .angin-chart__data button:hover:not(:disabled) { border-color: var(--angin-chart-muted); }
+
+.angin-chart__details summary { display: flex; align-items: center; gap: 0.5rem; list-style: none; }
+.angin-chart__details summary::-webkit-details-marker { display: none; }
+.angin-chart__details summary::before { content: ""; width: 0.4rem; height: 0.4rem; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); transition: transform var(--angin-duration-fast, 140ms) ease; }
+.angin-chart__details[open] summary::before { transform: rotate(45deg); }
