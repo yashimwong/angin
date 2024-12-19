@@ -1805,3 +1805,16 @@
 .angin-accordion__icon { display: inline-flex; flex-shrink: 0; transition: transform var(--angin-duration-normal) var(--angin-ease-out); }
 .angin-calendar__previous { transform: rotate(90deg); }
 .angin-calendar__next { transform: rotate(-90deg); }
+
+/* Custom select: the native element remains only as a form adapter. */
+.angin-select__container { position: relative; min-width: 0; }
+.angin-select__native { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); clip-path: inset(50%); white-space: nowrap; border: 0; pointer-events: none; }
+.angin-select { display: flex; align-items: center; justify-content: space-between; gap: var(--angin-space-3); appearance: none; font-family: var(--angin-font-family); text-align: start; line-height: 1.5; box-shadow: var(--angin-shadow-sm); transition: border-color var(--angin-duration-fast) ease, box-shadow var(--angin-duration-normal) ease, background-color var(--angin-duration-fast) ease; }
+.angin-select:hover:not(:disabled) { border-color: var(--angin-color-gray-400); }
+.angin-select:focus-visible, .angin-select[aria-expanded='true'] { outline: none; border-color: var(--angin-color-primary-500); box-shadow: var(--angin-focus-ring); }
+.angin-select:disabled { color: var(--angin-color-gray-500); background: var(--angin-color-gray-100); cursor: not-allowed; opacity: 0.7; }
+.angin-select__value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.angin-select__chevron { flex-shrink: 0; color: var(--angin-color-gray-500); transition: transform var(--angin-duration-normal) var(--angin-ease-out); }
+.angin-select[aria-expanded='true'] .angin-select__chevron { transform: rotate(180deg); }
+.angin-select[aria-invalid='true'] { border-color: var(--angin-color-red-600); }
+.angin-select[aria-invalid='true']:focus-visible { box-shadow: 0 0 0 3px rgb(220 38 38 / 0.16); }
