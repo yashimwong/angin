@@ -1818,3 +1818,18 @@
 .angin-select[aria-expanded='true'] .angin-select__chevron { transform: rotate(180deg); }
 .angin-select[aria-invalid='true'] { border-color: var(--angin-color-red-600); }
 .angin-select[aria-invalid='true']:focus-visible { box-shadow: 0 0 0 3px rgb(220 38 38 / 0.16); }
+
+.angin-select__list { position: absolute; z-index: 1100; top: calc(100% + 6px); inset-inline: 0; max-height: min(20rem, 60vh); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: var(--angin-space-1); border: 1px solid var(--angin-color-gray-200); border-radius: var(--angin-radius-lg); color: var(--angin-color-gray-900); background: var(--angin-color-white); box-shadow: var(--angin-shadow-md); font-family: var(--angin-font-family); font-size: var(--angin-font-size-sm); line-height: 1.5; animation: angin-pop-in var(--angin-duration-normal) var(--angin-ease-out); }
+.angin-select__list--inline { position: static; margin-top: var(--angin-space-2); box-shadow: none; animation: none; }
+.angin-select__option { display: flex; align-items: center; justify-content: space-between; gap: var(--angin-space-3); min-height: 2.5rem; padding: var(--angin-space-2) var(--angin-space-3); border-radius: var(--angin-radius-md); cursor: pointer; transition: background-color var(--angin-duration-fast) ease, color var(--angin-duration-fast) ease; }
+.angin-select__option > span { min-width: 0; overflow-wrap: anywhere; }
+.angin-select__option > svg { flex-shrink: 0; }
+.angin-select__option[aria-selected='true'] { color: var(--angin-color-primary-600); font-weight: 600; }
+.angin-select__option--active:not([aria-disabled='true']) { color: var(--angin-color-primary-600); background: var(--angin-color-primary-50); outline: 1px solid var(--angin-color-primary-500); outline-offset: -1px; }
+.angin-select__option[aria-disabled='true'] { opacity: 0.45; cursor: not-allowed; }
+.angin-select__group { padding: var(--angin-space-2) var(--angin-space-3) var(--angin-space-1); color: var(--angin-color-gray-500); font-size: var(--angin-font-size-xs); font-weight: 600; }
+@media (forced-colors: active) {
+    .angin-select:focus-visible { outline: 2px solid Highlight; outline-offset: 2px; }
+    .angin-select__option--active:not([aria-disabled='true']) { outline-color: Highlight; }
+    .angin-select__option[aria-disabled='true'] { color: GrayText; opacity: 1; }
+}
