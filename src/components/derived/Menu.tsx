@@ -1,3 +1,4 @@
+import { ControlIcon } from '../internal/ControlIcon';
 import React, { HTMLAttributes, ReactNode, useEffect, useRef, useState } from 'react';
 import { useDerivedId } from '../../utils/derivedId';
 import { BaseProps } from '../../types';
@@ -90,6 +91,7 @@ export function Menu({
                 type="button"
             >
                 {label}
+                <ControlIcon className="angin-menu__chevron" />
             </button>
             {isOpen && (
                 <ul

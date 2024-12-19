@@ -1,3 +1,4 @@
+import { ControlIcon } from '../internal/ControlIcon';
 import React, { HTMLAttributes, ReactNode, useState } from 'react';
 import { useDerivedId } from '../../utils/derivedId';
 import { BaseProps } from '../../types';
@@ -90,7 +91,7 @@ export function Accordion({
                             >
                                 <span>{item.title}</span>
                                 <span aria-hidden="true" className="angin-accordion__icon">
-                                    +
+                                    <ControlIcon />
                                 </span>
                             </button>
                         </h3>

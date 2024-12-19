@@ -1,3 +1,4 @@
+import { ControlIcon } from '../internal/ControlIcon';
 import React, { HTMLAttributes, ReactNode, useEffect, useRef } from 'react';
 import { BaseProps, Tone } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
@@ -45,7 +46,7 @@ export function Toast({
                 {title && <strong className="angin-toast__title">{title}</strong>}
                 <div>{children}</div>
             </div>
-            {onClose && <button aria-label={closeLabel} className="angin-toast__close" onClick={onClose} type="button">×</button>}
+            {onClose && <button aria-label={closeLabel} className="angin-toast__close" onClick={onClose} type="button"><ControlIcon kind="close" /></button>}
         </div>
     );
 }

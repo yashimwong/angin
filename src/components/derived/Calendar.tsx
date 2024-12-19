@@ -1,3 +1,4 @@
+import { ControlIcon } from '../internal/ControlIcon';
 import React, { HTMLAttributes, useMemo, useState } from 'react';
 import { BaseProps } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
@@ -90,11 +91,11 @@ export function Calendar({
         <div {...props} {...dataTestId(testId)} className={cx('angin-calendar', className)}>
             <div className="angin-calendar__header">
                 <button aria-label={previousMonthLabel} className="angin-calendar__nav" onClick={() => changeMonth(-1)} type="button">
-                    ‹
+                    <ControlIcon className="angin-calendar__previous" />
                 </button>
                 <strong aria-live="polite" className="angin-calendar__month">{formatter.format(visibleMonth)}</strong>
                 <button aria-label={nextMonthLabel} className="angin-calendar__nav" onClick={() => changeMonth(1)} type="button">
-                    ›
+                    <ControlIcon className="angin-calendar__next" />
                 </button>
             </div>
             <div aria-hidden="true" className="angin-calendar__weekdays">

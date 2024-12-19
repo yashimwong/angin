@@ -1369,7 +1369,7 @@
 }
 
 .angin-accordion__item--expanded .angin-accordion__icon {
-    transform: rotate(45deg);
+    transform: rotate(180deg);
 }
 
 .angin-accordion__panel {
@@ -1799,3 +1799,9 @@
         animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important;
     }
 }
+
+.angin-menu__chevron { flex-shrink: 0; color: var(--angin-color-gray-500); transition: transform var(--angin-duration-normal) var(--angin-ease-out); }
+.angin-menu__trigger[aria-expanded="true"] .angin-menu__chevron { transform: rotate(180deg); }
+.angin-accordion__icon { display: inline-flex; flex-shrink: 0; transition: transform var(--angin-duration-normal) var(--angin-ease-out); }
+.angin-calendar__previous { transform: rotate(90deg); }
+.angin-calendar__next { transform: rotate(-90deg); }

@@ -1,3 +1,4 @@
+import { ControlIcon } from '../internal/ControlIcon';
 import { useDerivedDialog } from '../../utils/derivedDialog';
 import React, { HTMLAttributes, ReactNode } from 'react';
 import { useDerivedId } from '../../utils/derivedId';
@@ -58,7 +59,7 @@ export function Modal({
                         </h2>
                     )}
                     <button aria-label="Close dialog" className="angin-modal__close" onClick={onClose} type="button">
-                        ×
+                        <ControlIcon kind="close" />
                     </button>
                 </div>
                 <div className="angin-modal__body">{children}</div>
