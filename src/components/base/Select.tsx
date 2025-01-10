@@ -102,6 +102,11 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
         triggerRef.current?.focus();
     };
     const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+        const forwarded = new KeyboardEvent('keydown', { key: event.key, code: event.code,
+            altKey: event.altKey, ctrlKey: event.ctrlKey, metaKey: event.metaKey, shiftKey: event.shiftKey,
+            bubbles: true, cancelable: true });
+        if (nativeRef.current?.dispatchEvent(forwarded) === false) { event.preventDefault(); return; }
+        if (Date.now() - search.current.time >= 700) search.current.text = '';
         if (event.key === 'Escape' && visible) {
             event.preventDefault(); event.stopPropagation(); setOpen(false); return;
         }
@@ -142,6 +147,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
             {choice.group && (index === 0 || choices[index - 1].group !== choice.group)
                 && <div className="angin-select__group" role="presentation">{choice.group}</div>}
             <div id={`${id}-option-${index}`} data-index={index} role="option"
+                aria-label={choice.group ? `${choice.group}: ${choice.label}` : undefined}
                 aria-selected={selected.includes(choice.value)} aria-disabled={choice.disabled || undefined}
                 className={cx('angin-select__option', index === active && 'angin-select__option--active')}
                 onMouseMove={() => !choice.disabled && setActive(index)} onClick={() => choose(index)}>
@@ -154,7 +160,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
         {label && <label className="angin-field__label" id={`${id}-label`} htmlFor={id}
             onClick={event => { event.preventDefault(); triggerRef.current?.focus(); }}>{label}</label>}
         <div className="angin-select__container">
-            <select {...props} {...dataTestId(testId)} ref={assignRef} id={id} tabIndex={-1} aria-hidden="true"
+            <select {...props} autoFocus={false} {...dataTestId(testId)} ref={assignRef} id={id} tabIndex={-1} aria-hidden="true"
                 className="angin-select__native" aria-describedby={describedBy}
                 aria-invalid={error || invalid ? true : props['aria-invalid']}
                 onFocus={event => { props.onFocus?.(event); triggerRef.current?.focus(); }}
@@ -169,6 +175,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
                 aria-activedescendant={expanded && enabled.includes(active) ? `${id}-option-${active}` : undefined}
                 disabled={props.disabled} tabIndex={props.tabIndex} autoFocus={props.autoFocus} title={props.title}
                 className={cx('angin-select', `angin-select--${controlSize}`, (error || invalid) && 'angin-select--error', className)}
+                onFocus={() => nativeRef.current?.dispatchEvent(new FocusEvent('focusin', { bubbles: true }))}
+                onBlur={event => nativeRef.current?.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: event.relatedTarget }))}
                 onClick={() => visible ? setOpen(false) : openList()} onKeyDown={onKeyDown}>
                 <span className="angin-select__value">{choices.filter(choice => selected.includes(choice.value)).map(choice => choice.label).join(', ') || '\u00a0'}</span>
                 <ControlIcon className="angin-select__chevron" />

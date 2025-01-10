@@ -141,3 +141,27 @@ it('renders numeric size as an inline custom list and handles empty choices', ()
     click(trigger(empty)); key(trigger(empty), 'ArrowDown'); key(trigger(empty), 'Enter');
     expect(trigger(empty).hasAttribute('aria-activedescendant')).toBe(false);
 });
+
+it('preserves native focus and keyboard callbacks including cancellation', () => {
+    const focused: EventTarget[] = [];
+    const blurred = jest.fn();
+    const container = mount(<Select options={options} onFocus={event => focused.push(event.currentTarget)}
+        onBlur={blurred} onKeyDown={event => event.preventDefault()} />);
+    act(() => trigger(container).focus());
+    expect(focused).toEqual([container.querySelector('select')]);
+    key(trigger(container), 'ArrowDown');
+    expect(trigger(container).getAttribute('aria-expanded')).toBe('false');
+    act(() => trigger(container).blur());
+    expect(blurred).toHaveBeenCalledTimes(1);
+});
+
+it('lets Space commit after a typeahead sequence expires', () => {
+    const now = jest.spyOn(Date, 'now').mockReturnValue(1000);
+    const container = mount(<Select options={options} />);
+    click(trigger(container)); key(trigger(container), 'c');
+    now.mockReturnValue(2000);
+    key(trigger(container), ' ');
+    expect(trigger(container).textContent).toBe('Cherry');
+    expect(trigger(container).getAttribute('aria-expanded')).toBe('false');
+    now.mockRestore();
+});
