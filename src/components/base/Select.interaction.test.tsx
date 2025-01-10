@@ -108,3 +108,36 @@ it('focuses the visible trigger from native refs and required validation', () =>
     expect(ref.current!.checkValidity()).toBe(true);
     expect(trigger(container).hasAttribute('aria-invalid')).toBe(false);
 });
+
+it('honors disabled option groups and accessible field descriptions', () => {
+    const container = mount(<Select id="grouped" label="Fruit" helperText="Choose a seasonal fruit" aria-describedby="external">
+        <optgroup label="Unavailable" disabled><option value="a">Apple</option></optgroup>
+        <optgroup label="Fresh"><option value="c">Cherry</option><option value="d">Date</option></optgroup>
+    </Select>);
+    click(trigger(container));
+    expect(option(0).getAttribute('aria-disabled')).toBe('true');
+    key(trigger(container), 'Home');
+    expect(trigger(container).getAttribute('aria-activedescendant')).toBe(option(1).id);
+    expect(trigger(container).getAttribute('aria-labelledby')).toBe('grouped-label');
+    expect(trigger(container).getAttribute('aria-describedby')).toBe('external grouped-description');
+    expect(document.querySelectorAll('.angin-select__group')).toHaveLength(2);
+});
+
+it('keeps controlled values authoritative and reflects parent updates', () => {
+    const onChange = jest.fn();
+    const container = mount(<Select options={options} value="a" onChange={onChange} />);
+    click(trigger(container)); click(option(2));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(trigger(container).textContent).toBe('Apple');
+    act(() => { ReactDOM.render(<Select options={options} value="d" onChange={onChange} />, container); });
+    expect(trigger(container).textContent).toBe('Date');
+});
+
+it('renders numeric size as an inline custom list and handles empty choices', () => {
+    const container = mount(<Select options={options} size={3} />);
+    expect(container.querySelector('[role="listbox"]')).not.toBeNull();
+    expect(trigger(container).getAttribute('aria-expanded')).toBe('true');
+    const empty = mount(<Select options={[]} />);
+    click(trigger(empty)); key(trigger(empty), 'ArrowDown'); key(trigger(empty), 'Enter');
+    expect(trigger(empty).hasAttribute('aria-activedescendant')).toBe(false);
+});
