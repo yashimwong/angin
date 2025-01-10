@@ -74,3 +74,37 @@ it('does not open disabled controls or select disabled choices', () => {
     expect(onChange).not.toHaveBeenCalled();
     expect(trigger(container).textContent).toBe('Apple');
 });
+
+it('submits selected values and resets an uncontrolled selection', () => {
+    jest.useFakeTimers();
+    const container = mount(<form><Select name="fruit" options={options} defaultValue="c" /></form>);
+    click(trigger(container)); click(option(3));
+    const form = container.querySelector('form')!;
+    expect(new FormData(form).get('fruit')).toBe('d');
+    act(() => { form.reset(); jest.runOnlyPendingTimers(); });
+    expect(trigger(container).textContent).toBe('Cherry');
+    expect(new FormData(form).get('fruit')).toBe('c');
+    jest.useRealTimers();
+});
+
+it('keeps the popup open when toggling multiple form values', () => {
+    const container = mount(<form><Select multiple name="fruit" options={options} defaultValue={['a']} /></form>);
+    click(trigger(container)); click(option(2));
+    expect(new FormData(container.querySelector('form')!).getAll('fruit')).toEqual(['a', 'c']);
+    expect(trigger(container).getAttribute('aria-expanded')).toBe('true');
+    click(option(0));
+    expect(new FormData(container.querySelector('form')!).getAll('fruit')).toEqual(['c']);
+});
+
+it('focuses the visible trigger from native refs and required validation', () => {
+    const ref = React.createRef<HTMLSelectElement>();
+    const container = mount(<Select ref={ref} label="Fruit" required options={[{ value: '', label: 'Choose fruit' }, ...options]} />);
+    act(() => ref.current!.focus());
+    expect(document.activeElement).toBe(trigger(container));
+    act(() => { expect(ref.current!.checkValidity()).toBe(false); });
+    expect(trigger(container).getAttribute('aria-invalid')).toBe('true');
+    expect(container.querySelector('.angin-field__message--error')?.textContent).toBeTruthy();
+    click(trigger(container)); click(option(1));
+    expect(ref.current!.checkValidity()).toBe(true);
+    expect(trigger(container).hasAttribute('aria-invalid')).toBe(false);
+});
