@@ -1,9 +1,11 @@
 import React, { forwardRef, ReactNode, SelectHTMLAttributes, useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { useSelectPopup } from '../internal/useSelectPopup';
 import { BaseProps, Size } from '../../types';
 import { useControlId } from '../../utils/controlId';
 import { cx, dataTestId } from '../../utils/cx';
 import { ControlIcon } from '../internal/ControlIcon';
-import { collectChoices } from '../internal/selectOptions';
+import { Choice, collectChoices } from '../internal/selectOptions';
 
 export interface SelectOption {
     disabled?: boolean;
@@ -24,7 +26,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
     label, options, testId, ...props
 }, ref) {
     const id = useControlId(suppliedId);
-    const choices = options || collectChoices(children);
+    const choices: readonly Choice[] = options || collectChoices(children);
     const nativeRef = useRef<HTMLSelectElement | null>(null);
     const triggerRef = useRef<HTMLButtonElement>(null);
     const rootRef = useRef<HTMLDivElement>(null);
@@ -41,6 +43,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
     const visible = open && !props.disabled;
     const inline = Boolean(props.size && props.size > 1);
     const expanded = inline || visible;
+    const popupStyle = useSelectPopup(visible && !inline, triggerRef, listRef);
     const message = error || (invalid && nativeRef.current?.validationMessage) || helperText;
     const descriptionId = message ? `${id}-description` : undefined;
     const describedBy = [props['aria-describedby'], descriptionId].filter(Boolean).join(' ') || undefined;
@@ -132,11 +135,11 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
     const list = expanded && <div ref={listRef} id={`${id}-list`} role="listbox"
         aria-label={props['aria-label']} aria-labelledby={labelledBy || `${id}-trigger`}
         aria-multiselectable={props.multiple || undefined}
-        className={cx('angin-select__list', inline && 'angin-select__list--inline')}
-        style={inline ? { maxHeight: `${Math.max(2, props.size || 2) * 2.5}rem` } : undefined}
+        className={cx('angin-root', 'angin-select__list', inline && 'angin-select__list--inline')}
+        style={inline ? { maxHeight: `${Math.max(2, props.size || 2) * 2.5}rem` } : popupStyle}
         onMouseDown={event => event.preventDefault()}>
         {choices.map((choice, index) => <React.Fragment key={`${choice.value}-${index}`}>
-            {'group' in choice && choice.group && (index === 0 || !('group' in choices[index - 1]) || (choices[index - 1] as { group?: string }).group !== choice.group)
+            {choice.group && (index === 0 || choices[index - 1].group !== choice.group)
                 && <div className="angin-select__group" role="presentation">{choice.group}</div>}
             <div id={`${id}-option-${index}`} data-index={index} role="option"
                 aria-selected={selected.includes(choice.value)} aria-disabled={choice.disabled || undefined}
@@ -170,7 +173,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
                 <span className="angin-select__value">{choices.filter(choice => selected.includes(choice.value)).map(choice => choice.label).join(', ') || '\u00a0'}</span>
                 <ControlIcon className="angin-select__chevron" />
             </button>
-            {list}
+            {list && (inline ? list : createPortal(list, rootRef.current?.closest('[role="dialog"]') || document.body))}
         </div>
         {message && <span className={cx('angin-field__message', (error || invalid) && 'angin-field__message--error')} id={descriptionId}>{message}</span>}
     </div>;
