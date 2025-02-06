@@ -1,7 +1,7 @@
-import ReactDOM from 'react-dom';
+import { cleanup } from './render';
 
-// Unmount before clearing the document so portals and document listeners clean up.
+// Unmount roots before clearing the document so portals and listeners clean up.
 afterEach(() => {
-    Array.from(document.body.children).forEach(container => ReactDOM.unmountComponentAtNode(container));
+    cleanup();
     document.body.innerHTML = '';
 });
