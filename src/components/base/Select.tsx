@@ -56,7 +56,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
     const sync = () => {
         const node = nativeRef.current;
         if (!node) return;
-        const next = Array.from(node.selectedOptions, option => option.value);
+        const next = Array.from(node.options).filter(option => option.selected).map(option => option.value);
         setSelected(previous => JSON.stringify(previous) === JSON.stringify(next) ? previous : next);
     };
     // Read back the browser's form value, including controlled reconciliation and removed options.
