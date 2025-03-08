@@ -200,3 +200,25 @@ it('updates popup placement when the viewport resizes', () => {
     act(() => { window.dispatchEvent(new Event('resize')); });
     expect(document.querySelector<HTMLElement>('[role="listbox"]')!.style.top).toBe('96px');
 });
+
+it('retains the latest controlled value when its form resets', () => {
+    jest.useFakeTimers();
+    const container = mount(<form><Select options={options} value="a" onChange={() => {}} /></form>);
+    act(() => { ReactDOM.render(<form><Select options={options} value="d" onChange={() => {}} /></form>, container); });
+    act(() => { container.querySelector('form')!.reset(); jest.runOnlyPendingTimers(); });
+    expect(trigger(container).textContent).toBe('Date');
+    expect(container.querySelector('select')!.value).toBe('d');
+    jest.useRealTimers();
+});
+
+it('reports native ref focus once and allows click cancellation', () => {
+    const onFocus = jest.fn();
+    const onBlur = jest.fn();
+    const ref = React.createRef<HTMLSelectElement>();
+    const container = mount(<Select ref={ref} options={options} onFocus={onFocus} onBlur={onBlur} onClick={event => event.preventDefault()} />);
+    act(() => ref.current!.focus());
+    expect(onFocus).toHaveBeenCalledTimes(1);
+    expect(onBlur).not.toHaveBeenCalled();
+    click(trigger(container));
+    expect(trigger(container).getAttribute('aria-expanded')).toBe('false');
+});

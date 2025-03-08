@@ -31,6 +31,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
     const triggerRef = useRef<HTMLButtonElement>(null);
     const rootRef = useRef<HTMLDivElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
+    const controlledValue = useRef(props.value);
+    controlledValue.current = props.value;
     const search = useRef({ text: '', time: 0 });
     const [open, setOpen] = useState(false);
     const [active, setActive] = useState(-1);
@@ -65,7 +67,15 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
         const node = nativeRef.current;
         const form = node?.form;
         let timer: ReturnType<typeof setTimeout>;
-        const reset = () => { timer = setTimeout(() => { sync(); setInvalid(false); setOpen(false); }, 0); };
+        const reset = (event: Event) => { timer = setTimeout(() => {
+            if (event.defaultPrevented) return;
+            const value = controlledValue.current;
+            if (node && value !== undefined) {
+                const values = Array.isArray(value) ? value.map(String) : [String(value)];
+                Array.from(node.options).forEach(option => { option.selected = values.includes(option.value); });
+            }
+            sync(); setInvalid(false); setOpen(false);
+        }, 0); };
         form?.addEventListener('reset', reset);
         return () => { form?.removeEventListener('reset', reset); clearTimeout(timer); };
     }, [props.form]);
@@ -163,7 +173,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
             <select {...props} autoFocus={false} {...dataTestId(testId)} ref={assignRef} id={id} tabIndex={-1} aria-hidden="true"
                 className="angin-select__native" aria-describedby={describedBy}
                 aria-invalid={error || invalid ? true : props['aria-invalid']}
-                onFocus={event => { props.onFocus?.(event); triggerRef.current?.focus(); }}
+                onFocus={event => { if (document.activeElement === event.currentTarget) triggerRef.current?.focus(); else props.onFocus?.(event); }}
+                onBlur={event => { if (event.relatedTarget !== triggerRef.current) props.onBlur?.(event); }}
                 onChange={event => { props.onChange?.(event); sync(); }}
                 onInvalid={event => { props.onInvalid?.(event); if (!event.defaultPrevented) { event.preventDefault(); setInvalid(true); triggerRef.current?.focus(); } }}>
                 {options ? options.map(option => <option key={option.value} {...option}>{option.label}</option>) : children}
@@ -173,11 +184,15 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
                 aria-invalid={error || invalid ? true : props['aria-invalid']} aria-required={props.required || undefined}
                 aria-expanded={expanded} aria-haspopup="listbox" aria-controls={expanded ? `${id}-list` : undefined}
                 aria-activedescendant={expanded && enabled.includes(active) ? `${id}-option-${active}` : undefined}
+                style={props.style} dir={props.dir} lang={props.lang}
                 disabled={props.disabled} tabIndex={props.tabIndex} autoFocus={props.autoFocus} title={props.title}
                 className={cx('angin-select', `angin-select--${controlSize}`, (error || invalid) && 'angin-select--error', className)}
                 onFocus={() => nativeRef.current?.dispatchEvent(new FocusEvent('focusin', { bubbles: true }))}
                 onBlur={event => nativeRef.current?.dispatchEvent(new FocusEvent('focusout', { bubbles: true, relatedTarget: event.relatedTarget }))}
-                onClick={() => visible ? setOpen(false) : openList()} onKeyDown={onKeyDown}>
+                onClick={() => {
+                    if (nativeRef.current?.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true })) === false) return;
+                    if (visible) setOpen(false); else openList();
+                }} onKeyDown={onKeyDown}>
                 <span className="angin-select__value">{choices.filter(choice => selected.includes(choice.value)).map(choice => choice.label).join(', ') || '\u00a0'}</span>
                 <ControlIcon className="angin-select__chevron" />
             </button>
