@@ -84,3 +84,9 @@
 .search-footer a { margin-left: auto; color: var(--docs-accent); }
 @media (max-width: 1000px) { .hero { gap: 36px; min-height: 560px; } .hero h1 { font-size: 50px; } .resource-card { padding: 22px; } .hero-composition { padding: 16px; } .hero-demo-chart { margin-left: 0; } .code-intro { gap: 36px; } .home-callout { flex-wrap: wrap; } }
 @media (max-width: 700px) { .wide-main { padding: 0 20px; } .hero { grid-template-columns: 1fr; padding: 50px 0; gap: 36px; } .hero h1 { font-size: clamp(40px, 10vw, 54px); letter-spacing: -2px; } .hero-copy { max-width: 520px; } .hero-composition { max-width: 520px; width: 100%; margin: auto; } .principles { gap: 18px; padding: 26px 0; } .principles > div { padding: 0; border: 0; } .principles h2 { font-size: 11px; } .principles p { font-size: 10px; } .resource-grid { grid-template-columns: 1fr; gap: 14px; } .home-section { margin: 52px 0; } .code-intro { grid-template-columns: 1fr; gap: 16px; } .demo-stage { padding: 20px 14px; } .home-callout { padding: 24px; } .section-heading h2, .code-intro h2 { font-size: 28px; } }
+
+.playground-controls > .angin-field { flex: 1 1 10rem; min-width: 0; }
+.playground-controls .angin-check-field { align-self: center; }
+.playground-controls input[type='range'] { appearance: none; padding: 0; height: 0.375rem; border: 0; border-radius: 999px; background: var(--docs-line); cursor: pointer; }
+.playground-controls input[type='range']::-webkit-slider-thumb { appearance: none; width: 1rem; height: 1rem; border: 2px solid var(--docs-bg); border-radius: 50%; background: var(--docs-accent); box-shadow: 0 1px 4px rgb(0 0 0 / 0.2); }
+.playground-controls input[type='range']::-moz-range-thumb { width: 0.75rem; height: 0.75rem; border: 2px solid var(--docs-bg); border-radius: 50%; background: var(--docs-accent); box-shadow: 0 1px 4px rgb(0 0 0 / 0.2); }
