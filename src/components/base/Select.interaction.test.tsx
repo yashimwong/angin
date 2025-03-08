@@ -165,3 +165,38 @@ it('lets Space commit after a typeahead sequence expires', () => {
     expect(trigger(container).getAttribute('aria-expanded')).toBe('false');
     now.mockRestore();
 });
+
+it('portals outside clipping surfaces and flips above a low trigger', () => {
+    const container = mount(<div style={{ overflow: 'hidden' }}><Select options={options} /></div>);
+    const button = trigger(container);
+    jest.spyOn(button, 'getBoundingClientRect').mockReturnValue({ top: 700, bottom: 740, left: 20, right: 260, width: 240, height: 40, x: 20, y: 700, toJSON() {} });
+    click(button);
+    const list = document.querySelector<HTMLElement>('[role="listbox"]')!;
+    expect(container.contains(list)).toBe(false);
+    expect(list.style.position).toBe('fixed');
+    expect(list.style.top).toBe('auto');
+    expect(list.style.bottom).toBe('74px');
+    expect(list.style.width).toBe('240px');
+});
+
+it('keeps popups inside their dialog and consumes Escape before dialog dismissal', () => {
+    const onEscape = jest.fn();
+    document.addEventListener('keydown', onEscape);
+    const container = mount(<div role="dialog"><Select options={options} /></div>);
+    click(trigger(container));
+    expect(container.querySelector('[role="dialog"]')?.contains(document.querySelector('[role="listbox"]'))).toBe(true);
+    key(trigger(container), 'Escape');
+    expect(onEscape).not.toHaveBeenCalled();
+    document.removeEventListener('keydown', onEscape);
+});
+
+it('updates popup placement when the viewport resizes', () => {
+    const container = mount(<Select options={options} />);
+    const rect = jest.spyOn(trigger(container), 'getBoundingClientRect');
+    rect.mockReturnValue({ top: 10, bottom: 50, left: 20, right: 260, width: 240, height: 40, x: 20, y: 10, toJSON() {} });
+    click(trigger(container));
+    expect(document.querySelector<HTMLElement>('[role="listbox"]')!.style.top).toBe('56px');
+    rect.mockReturnValue({ top: 50, bottom: 90, left: 20, right: 260, width: 240, height: 40, x: 20, y: 50, toJSON() {} });
+    act(() => { window.dispatchEvent(new Event('resize')); });
+    expect(document.querySelector<HTMLElement>('[role="listbox"]')!.style.top).toBe('96px');
+});
