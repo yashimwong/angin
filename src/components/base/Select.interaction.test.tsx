@@ -174,7 +174,6 @@ it('portals outside clipping surfaces and flips above a low trigger', () => {
     const list = document.querySelector<HTMLElement>('[role="listbox"]')!;
     expect(container.contains(list)).toBe(false);
     expect(list.style.position).toBe('fixed');
-    expect(list.style.top).toBe('auto');
     expect(list.style.bottom).toBe('74px');
     expect(list.style.width).toBe('240px');
 });

@@ -173,8 +173,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
             <select {...props} autoFocus={false} {...dataTestId(testId)} ref={assignRef} id={id} tabIndex={-1} aria-hidden="true"
                 className="angin-select__native" aria-describedby={describedBy}
                 aria-invalid={error || invalid ? true : props['aria-invalid']}
-                onFocus={event => { if (document.activeElement === event.currentTarget) triggerRef.current?.focus(); else props.onFocus?.(event); }}
-                onBlur={event => { if (event.relatedTarget !== triggerRef.current) props.onBlur?.(event); }}
+                onFocus={event => { event.stopPropagation(); if (document.activeElement === event.currentTarget) triggerRef.current?.focus(); else props.onFocus?.(event); }}
+                onBlur={event => { event.stopPropagation(); if (event.relatedTarget !== triggerRef.current) props.onBlur?.(event); }}
+                onKeyDown={event => { props.onKeyDown?.(event); event.stopPropagation(); }}
+                onClick={event => { props.onClick?.(event); event.stopPropagation(); }}
                 onChange={event => { props.onChange?.(event); sync(); }}
                 onInvalid={event => { props.onInvalid?.(event); if (!event.defaultPrevented) { event.preventDefault(); setInvalid(true); triggerRef.current?.focus(); } }}>
                 {options ? options.map(option => <option key={option.value} {...option}>{option.label}</option>) : children}
