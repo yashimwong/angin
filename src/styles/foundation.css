@@ -69,3 +69,13 @@
         outline-offset: 3px;
     }
 }
+
+/* Direct component imports retain keyboard focus treatment without a root wrapper. */
+:where(.angin-button, .angin-icon-button, .angin-input, .angin-textarea,
+.angin-check-field__control, .angin-menu__trigger, .angin-pagination__page,
+.angin-pagination__control, .angin-calendar__nav, .angin-calendar__day,
+.angin-alert__dismiss, .angin-toast__close, .angin-modal__close,
+.angin-drawer__close, .angin-stepper__button):focus-visible {
+    outline: 2px solid var(--angin-color-primary-500);
+    outline-offset: 3px;
+}
