@@ -49,3 +49,16 @@ tables. Financial candles add OHLC aggregation, volume, and controlled/uncontrol
 time ranges. Review the [chart guide](charts.md) before mapping existing data:
 rendering budgets intentionally reduce dense inputs, and tables reflect plotted
 or aggregated observations. Raw-data export remains an application concern.
+
+## Custom control appearance
+
+Select now renders a combobox trigger and custom listbox. Remove CSS that relies
+on a visible native select arrow. `className` and `style` decorate the trigger;
+`ref`, `name`, `form`, `testId`, and validation remain on the hidden select adapter.
+Its `focus()` redirects to the trigger. Use `getByRole('combobox')` in interaction
+tests and native `option`/`optgroup` children for grouped choices. Numeric `size`
+greater than one shows an inline custom list instead of a platform listbox.
+
+Checkboxes and radios use custom marks with native checked state. Remove external
+`appearance` or `accent-color` overrides that assume platform drawing. Motion and
+radii are shared CSS tokens; reduced motion remains supported.
