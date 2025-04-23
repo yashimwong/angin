@@ -70,3 +70,20 @@ and focus tokens plus inheritable `--angin-chart-*` properties for surfaces,
 axis text, categorical colors, and candle direction. No animation is enabled by
 default. See [chart themes](charts-theming.md) for a complete dark-theme example
 and sizing behavior. Application classes and inline styles remain supported.
+
+## Control appearance and motion
+
+Select popups, checkbox marks, radio dots, switch tracks, and disclosure chevrons
+are drawn by the library. Checkboxes and radios keep their native inputs and form
+behavior. Selected, disabled, invalid, hover, and keyboard focus states share the
+same palette and radii. High contrast mode preserves visible selection marks.
+
+Motion uses `--angin-duration-fast` (140ms), `--angin-duration-normal` (220ms),
+`--angin-duration-slow` (320ms), `--angin-ease-out`, and `--angin-ease-standard`.
+Override these properties on your themed container to adjust the pace. Dialogs,
+drawers, menus, and toasts animate on entry; dismissal remains immediate. Reduced
+motion shortens transitions and entrances both inside and outside `angin-root`.
+
+Select popups render outside clipping containers, or inside their enclosing
+dialog, and copy the trigger's resolved `--angin-*` properties. Set popup theme
+values through these tokens instead of relying on an ancestor CSS selector.
