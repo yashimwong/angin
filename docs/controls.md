@@ -3,7 +3,7 @@
 [← Documentation](../README.md#documentation)
 
 Use native React props for values, validation, and events. Controls forward refs
-to their interactive DOM element; `Tooltip` forwards its ref to a wrapper span.
+to their native DOM element; `Select` keeps a hidden form adapter whose `focus()` forwards to its custom trigger. `Tooltip` forwards its ref to a wrapper span.
 
 ## Buttons
 
@@ -47,7 +47,7 @@ export function Actions({ onSave, saving }: { onSave: () => void; saving: boolea
 
 `Input`, `Textarea`, and `Select` share `label`, `helperText`, `error`, and
 `controlSize`. An error replaces helper text and marks the control invalid.
-`className`, `testId`, and `ref` target the native control.
+`Input` and `Textarea` apply `className`, `testId`, and `ref` to the native control. `Select` applies `className` and `style` to its visible trigger; `testId` and `ref` target its hidden native form adapter.
 
 <!-- typecheck-example -->
 ```tsx
@@ -88,7 +88,7 @@ Existing `aria-describedby` IDs are combined with that message ID.
 ### Native props and option groups
 
 `controlSize` changes visual sizing. Native numeric `size` remains available for
-input width or select row count. Select accepts readonly `options` collections,
+input width or an inline custom select list's approximate row count. Select accepts readonly `options` collections,
 whose entries have `value`, `label`, and optional `disabled`.
 
 Omit `options` to provide native children, including option groups:
@@ -101,6 +101,19 @@ Omit `options` to provide native children, including option groups:
     </optgroup>
 </Select>
 ```
+
+Select uses a custom popup, including for `multiple`. Up/Down, Home/End, and
+label typeahead preview options; Enter/Space select them. Escape cancels the
+preview and Tab dismisses without trapping focus. Disabled choices and groups
+are skipped. In multiple mode, selecting an option toggles it and keeps the list
+open. Use unique option values and native `option`/`optgroup` children or fragments.
+
+Form values, `onChange`, `required`, external `form` association, and resets use
+the native adapter. Controlled parents must apply the next value. Click, focus,
+blur, and keydown callbacks also retain the native select as `currentTarget`.
+The visible control exposes combobox semantics; target it by role in UI tests.
+Programmatic value changes should dispatch a bubbling change event. Native
+`showPicker()` is not the custom popup API.
 
 For async submission and loading/error feedback, see the complete
 [form example](form-example.md).

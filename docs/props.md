@@ -13,7 +13,7 @@ props: unsupported values become DOM attributes.
 | Native control ref | `ref` on base controls, pointed at the input/button/select |
 | Visual field size | `controlSize="sm"`, `"md"`, or `"lg"` |
 | Native text input width | Numeric `size` |
-| Native select rows | Numeric `size` with optional `multiple` |
+| Custom select rows | Numeric `size` greater than one shows an inline list; `multiple` toggles choices |
 | Button appearance | `size`, `variant`, `fullWidth`, `loading` |
 | Field feedback | `helperText` or overriding `error` |
 
