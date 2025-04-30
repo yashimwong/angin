@@ -383,9 +383,7 @@
 }
 
 .angin-check-field__message {
-    padding-left: 1.5rem;
     color: var(--angin-color-gray-500);
-    font-size: var(--angin-font-size-sm);
 }
 
 .angin-check-field--error .angin-check-field__message {
@@ -446,9 +444,7 @@
 }
 
 .angin-switch-field__message {
-    padding-left: 3.25rem;
     color: var(--angin-color-gray-500);
-    font-size: var(--angin-font-size-sm);
 }
 
 .angin-badge {
@@ -778,7 +774,6 @@
     height: 100%;
     border-radius: inherit;
     background: var(--angin-color-primary-600);
-    transition: width 180ms ease;
 }
 
 .angin-progress--indeterminate .angin-progress__bar {
@@ -1259,8 +1254,6 @@
 }
 
 .angin-calendar__nav {
-    width: 2rem;
-    height: 2rem;
     border: 0;
     border-radius: var(--angin-radius-md);
     color: var(--angin-color-gray-700);
@@ -1349,7 +1342,6 @@
     background: var(--angin-color-white);
     cursor: pointer;
     font-weight: 600;
-    text-align: left;
 }
 
 .angin-accordion__trigger:hover:not(:disabled) {
@@ -1364,7 +1356,6 @@
 .angin-accordion__icon {
     color: var(--angin-color-gray-500);
     font-size: var(--angin-font-size-lg);
-    transition: transform 120ms ease;
 }
 
 .angin-accordion__item--expanded .angin-accordion__icon {
@@ -1442,7 +1433,6 @@
     flex-direction: column;
     width: min(100%, 25rem);
     background: var(--angin-color-white);
-    box-shadow: var(--angin-shadow-md);
 }
 
 .angin-drawer--left {
@@ -1531,7 +1521,6 @@
     color: var(--angin-color-gray-500);
     background: transparent;
     cursor: pointer;
-    text-align: left;
 }
 
 .angin-stepper__step--current .angin-stepper__button,
@@ -1623,11 +1612,6 @@
     .angin-modal__close, .angin-drawer__close,
     .angin-menu__item, .angin-calendar__day,
     .angin-stepper__button, .angin-tabbed-navigation__item):focus-visible {
-    outline: 2px solid var(--angin-color-primary-500);
-    outline-offset: 2px;
-}
-
-.angin-switch-field__input:focus-visible + .angin-switch-field__track {
     outline: 2px solid var(--angin-color-primary-500);
     outline-offset: 2px;
 }

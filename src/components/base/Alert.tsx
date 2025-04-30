@@ -20,7 +20,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert
             </div>
             {onDismiss && (
                 <button aria-label={dismissLabel} className="angin-alert__dismiss" onClick={onDismiss} type="button">
-                    ×
+                    <ControlIcon kind="close" />
                 </button>
             )}
         </div>
