@@ -1,3 +1,4 @@
+import { ControlIcon } from '../internal/ControlIcon';
 import React, { HTMLAttributes, ReactNode } from 'react';
 import { BaseProps, Tone } from '../../types';
 import { cx, dataTestId } from '../../utils/cx';
