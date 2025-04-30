@@ -1,5 +1,6 @@
 import React, { forwardRef, ReactNode, SelectHTMLAttributes, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { isControlDisabled } from '../internal/isControlDisabled';
 import { useSelectPopup } from '../internal/useSelectPopup';
 import { BaseProps, Size } from '../../types';
 import { useControlId } from '../../utils/controlId';
@@ -94,7 +95,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
     }, [active, expanded]);
     const enabled = choices.map((choice, index) => choice.disabled ? -1 : index).filter(index => index >= 0);
     const openList = (last = false) => {
-        if (nativeRef.current?.matches(':disabled')) return;
+        if (isControlDisabled(nativeRef.current)) return;
         const chosen = choices.findIndex(choice => selected.includes(choice.value) && !choice.disabled);
         setActive(chosen >= 0 ? chosen : enabled[last ? enabled.length - 1 : 0] ?? -1);
         search.current = { text: '', time: 0 };
@@ -102,7 +103,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
     };
     const choose = (index: number) => {
         const node = nativeRef.current;
-        if (!node || node.matches(':disabled') || !choices[index] || choices[index].disabled) return;
+        if (!node || isControlDisabled(node) || !choices[index] || choices[index].disabled) return;
         if (props.multiple) node.options[index].selected = !node.options[index].selected;
         else node.selectedIndex = index;
         node.dispatchEvent(new Event('input', { bubbles: true }));

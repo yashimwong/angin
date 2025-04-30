@@ -1826,3 +1826,5 @@
     .angin-select[aria-expanded='true'] { outline: 2px solid Highlight; outline-offset: 2px; }
     .angin-check-field__control:disabled { border-color: GrayText; }
 }
+
+.angin-field[hidden] { display: none; }

@@ -233,7 +233,7 @@ it('closes when disabled and stays closed when re-enabled', () => {
 
 it('keeps disabled fieldset values unchanged and respects cancelled resets', () => {
     jest.useFakeTimers();
-    const container = mount(<form onReset={event => event.preventDefault()}><fieldset disabled><Select options={options} size={3} /></fieldset></form>);
+    const container = mount(<form onReset={event => event.preventDefault()}><fieldset disabled><Select options={options} size={3} defaultValue="a" /></fieldset></form>);
     click(container.querySelector('[role="option"][data-index="2"]')!);
     expect(container.querySelector('select')!.value).toBe('a');
     act(() => { ReactDOM.render(<form onReset={event => event.preventDefault()}><Select options={options} defaultValue="a" /></form>, container); });
@@ -241,4 +241,10 @@ it('keeps disabled fieldset values unchanged and respects cancelled resets', () 
     act(() => { container.querySelector('form')!.reset(); jest.runOnlyPendingTimers(); });
     expect(trigger(container).textContent).toBe('Cherry');
     jest.useRealTimers();
+});
+
+it('allows controls in a disabled fieldsets first legend', () => {
+    const container = mount(<fieldset disabled><legend><Select options={options} defaultValue="a" /></legend></fieldset>);
+    click(trigger(container)); click(option(2));
+    expect(trigger(container).textContent).toBe('Cherry');
 });
