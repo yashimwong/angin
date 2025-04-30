@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const config = require('./config');
+const { minifyStyles } = require('./build/styles');
 const { guides, components } = require('./catalog');
 const { basePath, origin, href, outputFile, absolute } = require('./build/routes');
 const { renderMarkdown } = require('./build/markdown');
@@ -35,7 +36,8 @@ async function build() {
     }
     const routes = new Set();
     for (const page of pages) { if (routes.has(page.path)) throw new Error(`Duplicate route ${page.path}`); routes.add(page.path); page.url = href(page.path); }
-    const css = ['tokens.css', 'layout.css', 'content.css', 'components.css'].map(name => fs.readFileSync(path.join(__dirname, 'styles', name), 'utf8')).join('\n') + '\n' + ['tokens.css', 'foundation.css', 'components.css', 'charts.css'].map(name => fs.readFileSync(path.join(config.root, 'src/styles', name), 'utf8')).join('\n');
+    const cssSource = ['tokens.css', 'layout.css', 'content.css', 'components.css'].map(name => fs.readFileSync(path.join(__dirname, 'styles', name), 'utf8')).join('\n') + '\n' + ['tokens.css', 'foundation.css', 'components.css', 'charts.css'].map(name => fs.readFileSync(path.join(config.root, 'src/styles', name), 'utf8')).join('\n');
+    const css = minifyStyles(cssSource);
     const search = JSON.stringify(createSearchIndex(pages));
     const assets = { css: `styles.${hash(css)}.css`, search: `search.${hash(search)}.json`, client: bundles.client };
     fs.writeFileSync(path.join(config.output, 'assets', assets.css), css);
