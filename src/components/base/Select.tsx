@@ -61,6 +61,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
         const next = Array.from(node.options).filter(option => option.selected).map(option => option.value);
         setSelected(previous => JSON.stringify(previous) === JSON.stringify(next) ? previous : next);
     };
+    useEffect(() => { if (props.disabled) setOpen(false); }, [props.disabled]);
     // Read back the browser's form value, including controlled reconciliation and removed options.
     useEffect(sync);
     useEffect(() => {
@@ -166,7 +167,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select
             </div>
         </React.Fragment>)}
     </div>;
-    return <div className="angin-field" ref={rootRef}>
+    return <div className="angin-field" ref={rootRef} hidden={props.hidden}>
         {label && <label className="angin-field__label" id={`${id}-label`} htmlFor={id}
             onClick={event => { event.preventDefault(); triggerRef.current?.focus(); }}>{label}</label>}
         <div className="angin-select__container">

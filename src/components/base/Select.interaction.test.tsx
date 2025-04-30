@@ -221,3 +221,24 @@ it('reports native ref focus once and allows click cancellation', () => {
     click(trigger(container));
     expect(trigger(container).getAttribute('aria-expanded')).toBe('false');
 });
+
+it('closes when disabled and stays closed when re-enabled', () => {
+    const container = mount(<Select options={options} />);
+    click(trigger(container));
+    act(() => { ReactDOM.render(<Select options={options} disabled />, container); });
+    expect(document.querySelector('[role="listbox"]')).toBeNull();
+    act(() => { ReactDOM.render(<Select options={options} />, container); });
+    expect(trigger(container).getAttribute('aria-expanded')).toBe('false');
+});
+
+it('keeps disabled fieldset values unchanged and respects cancelled resets', () => {
+    jest.useFakeTimers();
+    const container = mount(<form onReset={event => event.preventDefault()}><fieldset disabled><Select options={options} size={3} /></fieldset></form>);
+    click(container.querySelector('[role="option"][data-index="2"]')!);
+    expect(container.querySelector('select')!.value).toBe('a');
+    act(() => { ReactDOM.render(<form onReset={event => event.preventDefault()}><Select options={options} defaultValue="a" /></form>, container); });
+    click(trigger(container)); click(option(2));
+    act(() => { container.querySelector('form')!.reset(); jest.runOnlyPendingTimers(); });
+    expect(trigger(container).textContent).toBe('Cherry');
+    jest.useRealTimers();
+});
