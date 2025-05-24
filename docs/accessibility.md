@@ -22,6 +22,13 @@ Field errors set `aria-invalid`; message IDs are combined with caller-provided
 `aria-describedby`. A hidden or absent helper must not become the only place
 where a required instruction appears. `testId` has no accessibility meaning.
 
+Select exposes a custom combobox and listbox. Up/Down, Home/End, and label
+typeahead move the active option; Enter/Space select it. Escape dismisses without
+committing the preview, and Tab leaves the control. Disabled options and groups
+are skipped. Multi-selection toggles choices without closing. A hidden native
+select handles forms and validation; its ref forwards focus to the trigger.
+Checkboxes, radios, and switches keep native input semantics with custom drawing.
+
 Tabs use Left/Right, Home, and End to select enabled entries. Accordion headers
 use Up/Down, Home, and End for focus; Enter/Space activate the native button.
 Menu opens with Up/Down, skips disabled items during arrow navigation, closes on

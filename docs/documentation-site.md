@@ -44,7 +44,7 @@ The documentation checks do not launch a browser. DOM and HTTP tests cover behav
 
 ## Performance budgets
 
-The initial production build measures roughly 5 KB of JavaScript and 11 KB of CSS, gzipped. These figures describe transferred assets, not runtime memory or a browser performance score. React, ReactDOM, demo code, and the search index are deferred until their features are requested; activating a demo adds those downloads.
+After the custom control refresh, the production build measures roughly 5 KB of JavaScript and 13 KB of CSS, gzipped. The generated stylesheet is minified; source and published library CSS remain readable. These figures describe transferred assets, not runtime memory or a browser performance score. React, ReactDOM, demo code, and the search index are deferred until their features are requested; activating a demo adds those downloads.
 
 The build validator enforces these gzip limits:
 

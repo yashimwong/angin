@@ -9,7 +9,9 @@ library so the application can supply one shared copy.
 Production JavaScript excludes tests and test helpers. Every full build removes
 the previous `dist` first, preventing renamed components and deleted tests from
 remaining in a release. CSS is explicitly side-effectful; JavaScript exports
-are eligible for tree shaking. Native controls avoid extra wrapper state.
+are eligible for tree shaking. Text inputs and choice controls keep native form
+state. Select adds local popup/active-option state and preserves its native form
+adapter; importing other controls does not retain that popup code.
 
 Calendar memoizes its month grid using primitive month-timestamp/week-start values,
 so unrelated rerenders do not allocate another 42 dates. Date boundaries are
@@ -75,3 +77,14 @@ asserts bounded geometry and finite output, and reports local preparation/SSR
 times. It uses Node, not a browser performance harness. See
 [chart performance](charts-performance.md) for per-family budgets, sampling
 tradeoffs, memoization, responsive measurement, and data-table pagination.
+
+
+## Custom control styling
+
+After the custom control refresh, the documentation build measured 12,840 gzip
+bytes for its shared stylesheet and 4,981 for the initial script. Both remain
+under the existing 14,000/8,000-byte limits. The build minifies its generated CSS
+with a pinned development dependency; the published library styles remain readable
+and no runtime dependency is added. `npm run check` validates behavior, types,
+SSR, package contents, JavaScript budgets, and documentation output without a
+browser. Regenerate `.site-cache/performance.json` for current measurements.
